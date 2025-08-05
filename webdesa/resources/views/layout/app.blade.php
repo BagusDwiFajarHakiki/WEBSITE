@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Pasiraman- Dashboard</title>
+    <title>Pasiraman - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('templete/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
