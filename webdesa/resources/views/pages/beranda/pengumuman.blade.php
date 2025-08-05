@@ -14,7 +14,7 @@
             <h5>Buat Pengumuman Baru</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('pengumuman.store') }}" method="POST">
+            <form action="" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul</label>
