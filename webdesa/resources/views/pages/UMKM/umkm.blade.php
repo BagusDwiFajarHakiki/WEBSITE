@@ -12,7 +12,7 @@
     <!-- Modal Tambah UMKM -->
     <div class="modal fade" id="tambahUmkmModal" tabindex="-1" role="dialog" aria-labelledby="tambahUmkmModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
               <div class="modal-header">
@@ -23,6 +23,10 @@
               </div>
               <div class="modal-body">
                 <div class="form-group">
+                  <label for="foto">Foto UMKM</label>
+                  <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+                </div>
+                <div class="form-group">
                   <label for="nama">Nama UMKM</label>
                   <input type="text" class="form-control" id="nama" name="nama" required>
                 </div>
@@ -31,8 +35,12 @@
                   <input type="text" class="form-control" id="pemilik" name="pemilik" required>
                 </div>
                 <div class="form-group">
-                  <label for="alamat">Alamat</label>
-                  <input type="text" class="form-control" id="alamat" name="alamat" required>
+                  <label for="alamat">Link Lokasi Google Maps</label>
+                  <input type="url" class="form-control" id="alamat" name="alamat" placeholder="https://maps.google.com/..." required>
+                </div>
+                <div class="form-group">
+                  <label for="deskripsi">Deskripsi UMKM</label>
+                  <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
                 </div>
               </div>
               <div class="modal-footer">
@@ -52,9 +60,11 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Foto</th>
                             <th>Nama UMKM</th>
                             <th>Pemilik</th>
                             <th>Alamat</th>
+                            <th>Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -62,9 +72,19 @@
                         @forelse($umkm as $umkm)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    @if($umkm->foto)
+                                        <img src="{{ asset('storage/' . $umkm->foto) }}" alt="Foto UMKM" width="80">
+                                    @else
+                                        <span class="text-muted">Tidak ada foto</span>
+                                    @endif
+                                </td>
                                 <td>{{ $umkm->nama }}</td>
                                 <td>{{ $umkm->pemilik }}</td>
-                                <td>{{ $umkm->alamat }}</td>
+                                <td>
+                                    <a href="{{ $umkm->alamat }}" target="_blank">Lihat Lokasi</a>
+                                </td>
+                                <td>{{ $umkm->deskripsi }}</td>
                                 <td>
                                     <a href="" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="" method="POST" style="display:inline;">
@@ -77,7 +97,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data UMKM.</td>
+                                <td colspan="7" class="text-center">Tidak ada data UMKM.</td>
                             </tr>
                         @endforelse
                     </tbody>
