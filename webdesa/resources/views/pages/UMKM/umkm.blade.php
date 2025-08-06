@@ -12,7 +12,7 @@
     <!-- Modal Tambah UMKM -->
     <div class="modal fade" id="tambahUmkmModal" tabindex="-1" role="dialog" aria-labelledby="tambahUmkmModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="/simpan_video" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
               <div class="modal-header">

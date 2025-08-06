@@ -14,5 +14,5 @@ class UMKMController extends Controller
             'umkm' => $umkm,
         ]);
     }
-
+   
 }
