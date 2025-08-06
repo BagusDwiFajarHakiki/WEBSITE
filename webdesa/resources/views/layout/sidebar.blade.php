@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">DESA PASIRAMAN</div>
+        <div class="sidebar-brand-text mx-3">ADMIN DESA PASIRAMAN</div>
     </a>
 
     <!-- Divider -->
@@ -74,51 +74,24 @@
     </li>
 
     <!-- Nav Item - UMKM Collapse Menu -->
-    <li class="nav-item {{ request()->is('daftar_umkm') || request()->is('tambah_umkm') ? 'active' : '' }}">
-        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseUmkm"
-            aria-expanded="false" aria-controls="collapseUmkm">
+    <li class="nav-item {{ request()->is('umkm') ? 'active' : '' }}">
+        <a class="nav-link" href="/umkm">
             <i class="fas fa-fw fa-store-alt"></i>
-            <span>UMKM</span>
-        </a>
-        <div id="collapseUmkm" class="collapse" aria-labelledby="headingUmkm" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">UMKM Menu:</h6>
-                <a class="collapse-item" href="/daftar_umkm"><i class="fas fa-list mr-2"></i>Daftar UMKM</a>
-                <a class="collapse-item" href="/tambah_umkm"><i class="fas fa-plus mr-2"></i>Tambah UMKM</a>
-            </div>
-        </div>
+            <span>UMKM</span></a>
     </li>
 
     <!-- Nav Item - KKN Collapse Menu -->
-    <li class="nav-item {{ request()->is('daftar_kkn') || request()->is('tambah_kkn') ? 'active' : '' }}">
-        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseKkn"
-            aria-expanded="false" aria-controls="collapseKkn">
+    <li class="nav-item {{ request()->is('kkn') ? 'active' : '' }}">
+        <a class="nav-link" href="/kkn">
             <i class="fas fa-fw fa-user-graduate"></i>
-            <span>KKN</span>
-        </a>
-        <div id="collapseKkn" class="collapse" aria-labelledby="headingKkn" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">KKN Menu:</h6>
-                <a class="collapse-item" href="/daftar_kkn"><i class="fas fa-list-alt mr-2"></i>Daftar KKN</a>
-                <a class="collapse-item" href="/tambah_kkn"><i class="fas fa-user-plus mr-2"></i>Tambah KKN</a>
-            </div>
-        </div>
+            <span>KKN</span></a>
     </li>
 
     <!-- Nav Item - Gallery Collapse Menu -->
-    <li class="nav-item {{ request()->is('lihat_gallery') || request()->is('tambah_gallery') ? 'active' : '' }}">
-        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseGallery"
-            aria-expanded="false" aria-controls="collapseGallery">
+    <li class="nav-item {{ request()->is('gallery') ? 'active' : '' }}">
+        <a class="nav-link" href="/gallery">
             <i class="fas fa-fw fa-images"></i>
-            <span>GALLERY</span>
-        </a>
-        <div id="collapseGallery" class="collapse" aria-labelledby="headingGallery" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Gallery Menu:</h6>
-                <a class="collapse-item" href="/lihat_gallery"><i class="fas fa-eye mr-2"></i>Lihat Gallery</a>
-                <a class="collapse-item" href="/tambah_gallery"><i class="fas fa-plus-square mr-2"></i>Tambah Foto</a>
-            </div>
-        </div>
+            <span>GALLERY</span></a>
     </li>
 
     <!-- Divider -->

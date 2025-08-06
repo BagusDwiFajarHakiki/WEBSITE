@@ -6,21 +6,12 @@ use Illuminate\Http\Request;
 
 class KKNController extends Controller
 {
-    public function daftar_kkn()
+    public function kkn()
     {
-        $daftar_kkn = \App\Models\kkn::all();
+        $kkn = \App\Models\kkn::all();
 
-        return view('pages.KKN.daftar_kkn', [
-            'daftar_kkn' => $daftar_kkn,
-        ]);
-    }
-
-    public function tambah_kkn()
-    {
-        $tambah_kkn = \App\Models\kkn::all();
-
-        return view('pages.KKN.tambah_kkn', [
-            'tambah_kkn' => $tambah_kkn,
+        return view('pages.KKN.kkn', [
+            'kkn' => $kkn,
         ]);
     }
 }

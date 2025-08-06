@@ -6,21 +6,12 @@ use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    public function lihat_gallery()
+    public function gallery()
     {
-        $lihat_gallery = \App\Models\gallery::all();
+        $gallery = \App\Models\gallery::all();
 
-        return view('pages.gallery.lihat_gallery', [
-            'lihat_gallery' => $lihat_gallery,
-        ]);
-    }
-
-    public function tambah_gallery()
-    {
-        $tambah_gallery = \App\Models\gallery::all();
-
-        return view('pages.gallery.tambah_gallery', [
-            'tambah_gallery' => $tambah_gallery,
+        return view('pages.gallery.gallery', [
+            'gallery' => $gallery,
         ]);
     }
 }

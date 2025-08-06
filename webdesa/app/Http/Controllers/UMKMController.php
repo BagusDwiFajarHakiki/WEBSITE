@@ -6,21 +6,12 @@ use Illuminate\Http\Request;
 
 class UMKMController extends Controller
 {
-    public function daftar_umkm()
+    public function umkm()
     {
-        $daftar_umkm = \App\Models\umkm::all();
+        $umkm = \App\Models\umkm::all();
 
-        return view('pages.UMKM.daftar_umkm', [
-            'daftar_umkm' => $daftar_umkm,
-        ]);
-    }
-
-    public function tambah_umkm()
-    {
-        $tambah_umkm = \App\Models\umkm::all();
-
-        return view('pages.UMKM.tambah_umkm', [
-            'tambah_umkm' => $tambah_umkm,
+        return view('pages.UMKM.umkm', [
+            'umkm' => $umkm,
         ]);
     }
 

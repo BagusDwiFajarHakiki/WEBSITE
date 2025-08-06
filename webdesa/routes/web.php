@@ -22,11 +22,8 @@ Route::get('/peta_desa', [App\Http\Controllers\ProfilController::class, 'peta_de
 Route::get('/profil_bumdes', [App\Http\Controllers\BumdesController::class, 'profil_bumdes']);
 Route::get('/usaha_bumdes', [App\Http\Controllers\BumdesController::class, 'usaha_bumdes']);
 
-Route::get('/daftar_umkm', [App\Http\Controllers\UmkmController::class, 'daftar_umkm']);
-Route::get('/tambah_umkm', [App\Http\Controllers\UmkmController::class, 'tambah_umkm']);
+Route::get('/umkm', [App\Http\Controllers\UmkmController::class, 'umkm']);
 
-Route::get('/daftar_kkn', [App\Http\Controllers\KknController::class, 'daftar_kkn']);
-Route::get('/tambah_kkn', [App\Http\Controllers\KknController::class, 'tambah_kkn']);
+Route::get('/kkn', [App\Http\Controllers\KknController::class, 'kkn']);
 
-Route::get('/lihat_gallery', [App\Http\Controllers\GalleryController::class, 'lihat_gallery']);
-Route::get('/tambah_gallery', [App\Http\Controllers\GalleryController::class, 'tambah_gallery']);
+Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'gallery']);
