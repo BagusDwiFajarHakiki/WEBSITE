@@ -39,6 +39,17 @@ class BerandaController extends Controller
             'is_main' => 'boolean',
         ]);
 
+        if ($request->hasFile('file_path')) {
+    $path = $request->file('file_path')->store('videos', 'public');
+}
+
+beranda::create([
+    'name' => $request->input('name'),
+    'file_path' => $path ?? null,
+    'is_main' => $request->boolean('is_main', false),
+]);
+
+
         beranda::create($request->validated());
 
         return redirect()->route('beranda.video_profil')->with('success', 'Video Profil berhasil ditambahkan.');

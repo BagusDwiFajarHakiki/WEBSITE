@@ -9,6 +9,8 @@
         </button>
     </div>
 
+    
+
     <!-- Modal Pilih Jenis Data -->
     <div class="modal fade" id="chooseTypeModal" tabindex="-1" aria-labelledby="chooseTypeModalLabel" aria-hidden="true">
       <div class="modal-dialog">
