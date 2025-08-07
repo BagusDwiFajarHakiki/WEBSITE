@@ -36,6 +36,11 @@ Route::get('/profil_bumdes', [App\Http\Controllers\BumdesController::class, 'pro
 Route::get('/usaha_bumdes', [App\Http\Controllers\BumdesController::class, 'usaha_bumdes']);
 
 Route::get('/umkm', [App\Http\Controllers\UmkmController::class, 'umkm']);
+Route::get('/tambah_umkm', [App\Http\Controllers\UmkmController::class, 'tambah_umkm']);
+Route::post('/simpan_umkm', [App\Http\Controllers\UmkmController::class, 'simpan_umkm']);
+Route::get('/edit_umkm/{id}', [App\Http\Controllers\UmkmController::class, 'edit_umkm']);
+Route::put('/update_umkm/{id}', [App\Http\Controllers\UmkmController::class, 'update_umkm']);
+Route::delete('/hapus_umkm/{id}', [App\Http\Controllers\UmkmController::class, 'hapus_umkm']);
 
 Route::get('/kkn', [App\Http\Controllers\KknController::class, 'kkn']);
 
