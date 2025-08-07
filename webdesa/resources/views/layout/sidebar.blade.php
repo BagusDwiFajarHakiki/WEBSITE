@@ -15,7 +15,8 @@
     <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
         <a class="nav-link" href="/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>DASHBOARD</span></a>
+            <span>DASHBOARD</span>
+        </a>
     </li>
 
     <!-- Divider -->

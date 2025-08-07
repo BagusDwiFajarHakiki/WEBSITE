@@ -176,13 +176,13 @@
                                     data-kontak="{{ $umkm->kontak }}"
                                     data-alamat="{{ $umkm->alamat }}"
                                     data-deskripsi="{{ $umkm->deskripsi }}">
-                                    Edit
+                                    <i class="fas fa-fw fa-pen"></i>
                                 </button>
                                 <!-- Tombol Hapus -->
                                 <button type="button" class="btn btn-danger btn-sm delete-btn"
                                     data-toggle="modal" data-target="#hapusUmkmModal"
                                     data-id="{{ $umkm->id }}">
-                                    Hapus
+                                    <i class="fas fa-fw fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
