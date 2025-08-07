@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Agu 2025 pada 06.22
+-- Waktu pembuatan: 07 Agu 2025 pada 03.48
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -230,7 +230,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('6tXk3wI3rBiEAMHbjuV17MmsYB85cXoPQed1oJZv', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiTDhaMzJaR1BzMVREck00SDJCaUxuZUhZellzUGNVd3hteXpWSDBPNiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC92aWRlb19wcm9maWwiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1754453997);
+('BYZZxfbNHPZaRntM5qFkThNQWDDR5p8COUN74Wsf', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZkxtaGt6eXEyUGlUNktkR01QUWN5WXd4OENRUTFFV0NjaUlBTlJEVyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bWttIjt9fQ==', 1754531128);
 
 -- --------------------------------------------------------
 
@@ -254,14 +254,27 @@ CREATE TABLE `slogans` (
 
 CREATE TABLE `umkm` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama_umkm` varchar(255) NOT NULL,
-  `alamat` varchar(255) NOT NULL,
-  `kontak` varchar(255) NOT NULL,
-  `deskripsi` text DEFAULT NULL,
   `foto` varchar(255) DEFAULT NULL,
+  `nama_umkm` varchar(255) DEFAULT NULL,
+  `pemilik` varchar(255) DEFAULT NULL,
+  `kontak` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `umkm`
+--
+
+INSERT INTO `umkm` (`id`, `foto`, `nama_umkm`, `pemilik`, `kontak`, `alamat`, `deskripsi`, `created_at`, `updated_at`) VALUES
+(1, 'bahasa', 'sehat', 'abadi', '+620849479474993', 'desa krenceng', 'ushaoa mejbeuakn', NULL, NULL),
+(2, 'C:\\xampp\\tmp\\php5A36.tmp', 'FOTO', 'Bu dewi', '+628518927303873', 'https://maps.google', 'tueihogkgd', '2025-08-06 15:24:21', '2025-08-06 15:24:21'),
+(4, 'C:\\xampp\\tmp\\php9BDF.tmp', 'FOTO', 'Bu dewi', '+628518927303873', 'https://maps.google', 'tueihogkgd', '2025-08-06 15:25:52', '2025-08-06 15:25:52'),
+(5, 'C:\\xampp\\tmp\\phpDB1B.tmp', 'PEMANDANGAN', 'bundA', '+628518927305786', 'https://maps.google', 'hebast dabvaguo', '2025-08-06 16:12:59', '2025-08-06 16:12:59'),
+(6, 'fotosa', 'sitindinr', 'toksodoshf', '+62403649374683542', 'jgakdbai  dgsds', 'f efdfedsvsdg', NULL, NULL),
+(7, 'C:\\xampp\\tmp\\php3196.tmp', 'hijau', 'sitioalj', '+628518303786873', 'https://maps.googlecvd', 'gfhfy5rtry', '2025-08-06 18:02:34', '2025-08-06 18:02:34');
 
 -- --------------------------------------------------------
 
@@ -480,7 +493,7 @@ ALTER TABLE `slogans`
 -- AUTO_INCREMENT untuk tabel `umkm`
 --
 ALTER TABLE `umkm`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
