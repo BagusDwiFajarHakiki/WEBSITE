@@ -14,6 +14,7 @@
     <div class="modal-dialog" role="document">
         <form action="/simpan_umkm" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('POST')
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tambahUmkmModalLabel">Tambah Data UMKM</h5>
@@ -59,45 +60,46 @@
 <!-- Modal Edit UMKM -->
 <div class="modal fade" id="editUmkmModal" tabindex="-1" role="dialog" aria-labelledby="editUmkmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="/update_umkm/{{ $umkm->id }}" method="POST" enctype="multipart/form-data">
+        <form id="edit-umkm-form" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editUmkmModalLabel">Tambah Data UMKM</h5>
+                    <h5 class="modal-title" id="editUmkmModalLabel">Edit Data UMKM</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="foto">Foto UMKM</label>
-                        <input type="file" id="foto" name="foto" accept="image/*" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto', $umkm->foto) }}" required>
+                        <label for="edit_foto">Foto UMKM</label>
+                        <input type="file" class="form-control" id="edit_foto" name="foto" accept="image/*">
+                        <small class="form-text text-muted">Biarkan kosong jika tidak ingin mengubah foto.</small>
                     </div>
                     <div class="form-group">
-                        <label for="nama_umkm">Nama UMKM</label>
-                        <input type="text" id="nama_umkm" name="nama_umkm" class="form-control @error('nama_umkm') is-invalid @enderror" value="{{ old('nama_umkm', $umkm->nama_umkm) }}" required>
+                        <label for="edit_nama_umkm">Nama UMKM</label>
+                        <input type="text" class="form-control" id="edit_nama_umkm" name="nama_umkm" required>
                     </div>
                     <div class="form-group">
-                        <label for="pemilik">Pemilik</label>
-                        <input type="text" id="pemilik" name="pemilik" class="form-control @error('pemilik') is-invalid @enderror" value="{{ old('pemilik', $umkm->pemilik) }}" required>
+                        <label for="edit_pemilik">Pemilik</label>
+                        <input type="text" class="form-control" id="edit_pemilik" name="pemilik" required>
                     </div>
                     <div class="form-group">
-                        <label for="kontak">Nomor WhatsApp (Kontak)</label>
-                        <input type="text" id="kontak" name="kontak" placeholder="e.g., +6281234567890" class="form-control @error('kontak') is-invalid @enderror" value="{{ old('kontak', $umkm->kontak) }}" required>
+                        <label for="edit_kontak">Nomor WhatsApp (Kontak)</label>
+                        <input type="text" class="form-control" id="edit_kontak" name="kontak" placeholder="e.g., +6281234567890" required>
                     </div>
                     <div class="form-group">
-                        <label for="alamat">Link Lokasi Google Maps</label>
-                        <input type="url" id="alamat" name="alamat" placeholder="Salin link Google Maps di sini (contoh: https://maps.app.goo.gl/...)" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat', $umkm->alamat) }}" required>
+                        <label for="edit_alamat">Link Lokasi Google Maps</label>
+                        <input type="url" class="form-control" id="edit_alamat" name="alamat" placeholder="Salin link Google Maps di sini (contoh: https://maps.app.goo.gl/...)" required>
                     </div>
                     <div class="form-group">
-                        <label for="deskripsi">Deskripsi UMKM</label>
-                        <textarea id="deskripsi" name="deskripsi" rows="3" class="form-control @error('deskripsi') is-invalid @enderror" value="{{ old('deskripsi', $umkm->deskripsi) }}" required></textarea>
+                        <label for="edit_deskripsi">Deskripsi UMKM</label>
+                        <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-warning">Update</button>
                 </div>
             </div>
         </form>
