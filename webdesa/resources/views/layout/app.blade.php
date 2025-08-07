@@ -88,8 +88,8 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('templete/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('templete/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY33qJ9sFGLp44F4E+qA51pG3/3mB5xJ33KxKz6w5a2z2f5c53c52a5c51a" crossorigin="anonymous"></script>
+    <script src="{{asset('templete/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('templete/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
