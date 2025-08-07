@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\beranda;
 use Illuminate\Http\Request;
 
+
 class BerandaController extends Controller
 {
     public function video_profil()
@@ -36,27 +37,28 @@ class BerandaController extends Controller
     try {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'file_path' => 'required|file|mimes:mp4,avi,mov|max:20480', // 20MB max
-            'is_main' => 'boolean',
+            'file_path' => 'required|file|mimes:mp4,avi,mov|max:20480',
+            'is_main' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('file_path')) {
             $path = $request->file('file_path')->store('videos', 'public');
+
+            \App\Models\beranda::create([
+                'name' => $validated['name'],
+                'file_path' => $path,
+                'is_main' => $request->boolean('is_main'),
+            ]);
+
+            return redirect()->route('beranda.video_profil')->with('success', 'Video Profil berhasil ditambahkan.');
         } else {
-            return redirect()->back()->with('error', 'File video tidak ditemukan.');
+            return redirect()->back()->withErrors(['file_path' => 'File video wajib diunggah.']);
         }
-
-        \App\Models\beranda::create([
-            'name' => $validated['name'],
-            'file_path' => $path,
-            'is_main' => $request->boolean('is_main', false),
-        ]);
-
-        return redirect()->route('beranda.video_profil')->with('success', 'Video Profil berhasil ditambahkan.');
     } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        return redirect()->back()->withErrors(['exception' => $e->getMessage()]);
     }
 }
+
 
     public function simpan_foto(Request $request)
     {
