@@ -10,7 +10,8 @@ route::get('/', function () {
     return view('pages.dashboard');
 });
 
-Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil']);
+Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('beranda.video_profil');
+
 Route::get('/tambah_video', [App\Http\Controllers\BerandaController::class, 'tambah_video']);
 Route::post('/simpan_video', [App\Http\Controllers\BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
 Route::get('/tambah_foto', [App\Http\Controllers\BerandaController::class, 'tambah_foto']);
