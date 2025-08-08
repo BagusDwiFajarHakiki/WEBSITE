@@ -16,3 +16,4 @@ route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UmkmController::class, 'updateStatus'])->name('umkm.update-status');
 
 Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('beranda.video_profil');
+Route::post('/simpan_video', [App\Http\Controllers\BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
