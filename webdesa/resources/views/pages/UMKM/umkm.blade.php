@@ -141,19 +141,26 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="table-layout: fixed;">
                 <thead style="text-align: center;">
                     <tr>
+                        <th style="width: 4.5%;"></th>
                         <th style="width: 4%;">No</th>
                         <th style="width: 10%;">Foto</th>
                         <th style="width: 18%;">Nama UMKM</th>
                         <th style="width: 11%;">Pemilik</th>
-                        <th style="width: 17%;">Kontak</th>
+                        <th style="width: 15%;">Kontak</th>
                         <th style="width: 10%;">Alamat</th>
-                        <th style="width: 20%;">Deskripsi</th>
+                        <th style="width: 17.5%;">Deskripsi</th>
                         <th style="width: 9%;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($umkm as $umkm)
                         <tr>
+                            <td style="text-align: center; align-content: center;">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input umkm-status-toggle" id="statusSwitch-{{ $umkm->id }}" data-id="{{ $umkm->id }}" {{ $umkm->status ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="statusSwitch-{{ $umkm->id }}"></label>
+                                </div>
+                            </td>
                             <td style="align-content: center; text-align: center;">{{ $loop->iteration }}</td>
                             <td>
                                 @if($umkm->foto)
@@ -248,6 +255,35 @@
         // Atur action form hapus
         var deleteUrl = `{{ url('umkm') }}/${umkm_id}`;
         modal.find('#deleteFormUmkm').attr('action', deleteUrl);
+    });
+
+    // Skrip untuk menangani perubahan status UMKM
+    $(document).ready(function() {
+        $('.umkm-status-toggle').on('change', function() {
+            var umkm_id = $(this).data('id');
+            var isChecked = $(this).is(':checked');
+            var newStatus = isChecked ? 1 : 0;
+            
+            // Lakukan permintaan AJAX
+            $.ajax({
+                url: `{{ url('umkm/update-status') }}/${umkm_id}`,
+                method: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    status: newStatus
+                },
+                success: function(response) {
+                    console.log('Status updated successfully:', response);
+                    // Anda bisa menambahkan notifikasi sukses di sini
+                },
+                error: function(xhr) {
+                    console.error('Error updating status:', xhr.responseText);
+                    // Jika ada error, kembalikan status checkbox ke kondisi semula
+                    $('#statusSwitch-' + umkm_id).prop('checked', !isChecked);
+                    // Anda bisa menambahkan notifikasi error di sini
+                }
+            });
+        });
     });
 </script>
 

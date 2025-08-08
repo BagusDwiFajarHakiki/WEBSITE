@@ -104,4 +104,12 @@ class UMKMController extends Controller
 
         return Redirect::route('umkm.index')->with('success', 'UMKM berhasil dihapus.');
     }
+
+    public function updateStatus(Request $request, Umkm $umkm)
+{
+    $umkm->status = $request->status;
+    $umkm->save();
+    
+    return response()->json(['message' => 'Status berhasil diperbarui!']);
+}
 }

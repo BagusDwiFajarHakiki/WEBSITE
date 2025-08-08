@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('kontak')->nullable();
             $table->string('alamat')->nullable();
             $table->text('deskripsi')->nullable();
+            $table->boolean('status')->default(0)->nullable();
             $table->timestamps();
         });
     }
