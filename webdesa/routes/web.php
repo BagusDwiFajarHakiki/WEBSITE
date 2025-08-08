@@ -16,8 +16,12 @@ route::get('/', function () {
 Route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UmkmController::class, 'updateStatus'])->name('umkm.update-status');
 
-//ROUTE PROFILS
+//ROUTE DATA PROFIL DESA
 Route::resource('/profil', ProfilController::class);
+Route::post('/simpan-profil-desa', [ProfilController::class,'store']);
+Route::get('/ambil-profil-desa', [ProfilController::class,'show']);
+
+//ROUTE PERANGKAT DESA
 
 
 Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('beranda.video_profil');
