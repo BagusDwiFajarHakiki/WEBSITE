@@ -4,9 +4,17 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">DATA UMKM</h1>
-    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#tambahUmkmModal">
-        <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
-    </button>
+    <!-- Bagian Pencarian dan Tombol Tambah Data -->
+    <div class="d-flex align-items-center">
+        <!-- Kolom Pencarian dengan lebar yang lebih pendek -->
+        <div class="input-group mr-3" style="width: 300px;">
+            <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama UMKM atau Pemilik..." aria-label="Cari Nama UMKM atau Pemilik" aria-describedby="searchButton">
+        </div>
+        <!-- Tombol Tambah Data -->
+        <button type="button" class="btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#tambahUmkmModal">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
+        </button>
+    </div>
 </div>
 
 <!-- Modal Tambah UMKM -->
@@ -39,8 +47,15 @@
                         <input type="text" class="form-control" id="kontak" name="kontak" placeholder="e.g., +6281234567890" required>
                     </div>
                     <div class="form-group">
-                        <label for="alamat">Link Lokasi Google Maps</label>
-                        <input type="url" class="form-control" id="alamat" name="alamat" placeholder="Salin link Google Maps di sini (contoh: https://maps.app.goo.gl/...)" required>
+                        <label for="edit_alamat">Link Lokasi Google Maps</label>
+                        <div class="input-group">
+                            <input type="url" class="form-control" id="edit_alamat" name="alamat" placeholder="Salin link Google Maps di sini..." required>
+                            <div class="input-group-append">
+                                <a href="https://www.google.com/maps" target="_blank" class="btn btn-outline-secondary">
+                                    <i class="fas fa-map-marker-alt"></i> Buka Google Maps
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="deskripsi">Deskripsi UMKM</label>
@@ -93,7 +108,14 @@
                     </div>
                     <div class="form-group">
                         <label for="edit_alamat">Link Lokasi Google Maps</label>
-                        <input type="url" class="form-control" id="edit_alamat" name="alamat" placeholder="Salin link Google Maps di sini (contoh: https://maps.app.goo.gl/...)" required>
+                        <div class="input-group">
+                            <input type="url" class="form-control" id="edit_alamat" name="alamat" placeholder="Salin link Google Maps di sini..." required>
+                            <div class="input-group-append">
+                                <a href="https://www.google.com/maps" target="_blank" class="btn btn-outline-secondary">
+                                    <i class="fas fa-map-marker-alt"></i> Buka Google Maps
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="edit_deskripsi">Deskripsi UMKM</label>
@@ -142,11 +164,11 @@
                 <thead style="text-align: center;">
                     <tr>
                         <th style="width: 4.5%;">
-                          <div class="d-flex justify-content-center">
-                              <button id="toggleAllStatus" class="btn btn-sm btn-outline-secondary">
-                                  <i class="fas fa-check-square"></i>
-                              </button>
-                          </div>
+                            <div class="d-flex justify-content-center">
+                                <button id="toggleAllStatus" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-check-square"></i>
+                                </button>
+                            </div>
                         </th>
                         <th style="width: 4%;">No</th>
                         <th style="width: 10%;">Foto</th>
@@ -158,7 +180,7 @@
                         <th style="width: 9%;">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="umkmTableBody">
                     @forelse($umkm as $umkm)
                         <tr>
                             <td style="text-align: center; align-content: center;">
@@ -177,7 +199,19 @@
                             </td>
                             <td style="word-break: break-word; align-content: center;">{{ $umkm->nama_umkm }}</td>
                             <td style="word-break: break-word; align-content: center;">{{ $umkm->pemilik }}</td>
-                            <td style="word-break: break-word; align-content: center;">{{ $umkm->kontak }}</td>
+                            <td style="word-break: break-word; align-content: center;">
+                                @php
+                                  $kontak_wa = $umkm->kontak;
+                                  // Cek apakah nomor kontak dimulai dengan '0'
+                                  if (substr($kontak_wa, 0, 1) === '0') {
+                                    // Jika ya, ganti '0' di depan dengan '62' (kode negara Indonesia)
+                                    $kontak_wa = '62' . substr($kontak_wa, 1);
+                                  }
+                                @endphp
+                                <a href="https://wa.me/{{ $kontak_wa }}" target="_blank">
+                                  {{ $umkm->kontak }}
+                                </a>
+                            </td>
                             <td style="text-align: center; align-content: center;">
                                 <a href="{{ $umkm->alamat }}" target="_blank" style="word-break: break-word;">Lihat Lokasi</a>
                             </td>
@@ -265,6 +299,11 @@
 
     // Skrip untuk menangani perubahan status UMKM
     $(document).ready(function() {
+        // Hapus `xintegrity` dari script tags untuk mencegah error saat dijalankan di beberapa lingkungan
+        $('script[xintegrity]').each(function() {
+            $(this).removeAttr('xintegrity');
+        });
+        
         $('.umkm-status-toggle').on('change', function() {
             var umkm_id = $(this).data('id');
             var isChecked = $(this).is(':checked');
@@ -294,7 +333,7 @@
         // Skrip baru untuk tombol toggle all status
         $('#toggleAllStatus').on('click', function() {
             var allCheckboxes = $('.umkm-status-toggle');
-            var allChecked = allCheckboxes.length === allCheckboxes.filter(':checked').length;
+            var allChecked = allCheckboxes.length > 0 && allCheckboxes.length === allCheckboxes.filter(':checked').length;
             var newStatus = !allChecked;
 
             // Mengubah status semua checkbox
@@ -330,6 +369,28 @@
             } else {
                 $(this).html('<i class="fas fa-check-square"></i>'); // Ikon untuk 'pilih semua'
             }
+        });
+
+        // Skrip baru untuk fitur pencarian
+        function filterTable() {
+            var searchText = $('#searchInput').val().toLowerCase();
+            $('#umkmTableBody tr').each(function() {
+                var umkmName = $(this).find('td:eq(3)').text().toLowerCase();
+                var pemilikName = $(this).find('td:eq(4)').text().toLowerCase(); // Ambil nama pemilik dari kolom ke-4
+                if (umkmName.includes(searchText) || pemilikName.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        $('#searchInput').on('keyup', function() {
+            filterTable();
+        });
+
+        $('#searchButton').on('click', function() {
+            filterTable();
         });
     });
 </script>
