@@ -141,7 +141,13 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="table-layout: fixed;">
                 <thead style="text-align: center;">
                     <tr>
-                        <th style="width: 4.5%;"></th>
+                        <th style="width: 4.5%;">
+                          <div class="d-flex justify-content-center">
+                              <button id="toggleAllStatus" class="btn btn-sm btn-outline-secondary">
+                                  <i class="fas fa-check-square"></i>
+                              </button>
+                          </div>
+                        </th>
                         <th style="width: 4%;">No</th>
                         <th style="width: 10%;">Foto</th>
                         <th style="width: 18%;">Nama UMKM</th>
@@ -283,6 +289,47 @@
                     // Anda bisa menambahkan notifikasi error di sini
                 }
             });
+        });
+
+        // Skrip baru untuk tombol toggle all status
+        $('#toggleAllStatus').on('click', function() {
+            var allCheckboxes = $('.umkm-status-toggle');
+            var allChecked = allCheckboxes.length === allCheckboxes.filter(':checked').length;
+            var newStatus = !allChecked;
+
+            // Mengubah status semua checkbox
+            allCheckboxes.prop('checked', newStatus);
+
+            // Mengirim permintaan AJAX untuk setiap checkbox yang berubah
+            allCheckboxes.each(function() {
+                var umkm_id = $(this).data('id');
+                var isChecked = $(this).is(':checked');
+                var newStatusValue = isChecked ? 1 : 0;
+                
+                $.ajax({
+                    url: `{{ url('umkm/update-status') }}/${umkm_id}`,
+                    method: 'PUT',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        status: newStatusValue
+                    },
+                    success: function(response) {
+                        console.log('Status updated successfully for ID ' + umkm_id);
+                    },
+                    error: function(xhr) {
+                        console.error('Error updating status for ID ' + umkm_id + ':', xhr.responseText);
+                        // Jika gagal, kembalikan status checkbox yang bersangkutan
+                        $('#statusSwitch-' + umkm_id).prop('checked', !isChecked);
+                    }
+                });
+            });
+
+            // Mengubah ikon tombol
+            if (newStatus) {
+                $(this).html('<i class="fas fa-check-square"></i>'); // Ikon untuk 'batalkan semua'
+            } else {
+                $(this).html('<i class="fas fa-check-square"></i>'); // Ikon untuk 'pilih semua'
+            }
         });
     });
 </script>

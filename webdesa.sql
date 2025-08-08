@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Agu 2025 pada 03.48
+-- Waktu pembuatan: 08 Agu 2025 pada 08.19
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -29,6 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `beranda` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `is_main` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -83,21 +86,6 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `fotos`
---
-
-CREATE TABLE `fotos` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `file_path` varchar(255) NOT NULL,
-  `is_main` tinyint(1) NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -230,29 +218,15 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('BYZZxfbNHPZaRntM5qFkThNQWDDR5p8COUN74Wsf', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZkxtaGt6eXEyUGlUNktkR01QUWN5WXd4OENRUTFFV0NjaUlBTlJEVyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bWttIjt9fQ==', 1754531128);
+('d0b5FNck469n9bv46dyZgPh9L2JNTi4iXJZHGNwt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNWRvMjF3enlIUzlPOG5DTFM0MnhYZTRVV0xabVpOcElOQlcwU1Q4TSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bWttIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1754628349);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `slogans`
+-- Struktur dari tabel `umkms`
 --
 
-CREATE TABLE `slogans` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `text` text NOT NULL,
-  `is_main` tinyint(1) NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `umkm`
---
-
-CREATE TABLE `umkm` (
+CREATE TABLE `umkms` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `foto` varchar(255) DEFAULT NULL,
   `nama_umkm` varchar(255) DEFAULT NULL,
@@ -260,21 +234,19 @@ CREATE TABLE `umkm` (
   `kontak` varchar(255) DEFAULT NULL,
   `alamat` varchar(255) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `umkm`
+-- Dumping data untuk tabel `umkms`
 --
 
-INSERT INTO `umkm` (`id`, `foto`, `nama_umkm`, `pemilik`, `kontak`, `alamat`, `deskripsi`, `created_at`, `updated_at`) VALUES
-(1, 'bahasa', 'sehat', 'abadi', '+620849479474993', 'desa krenceng', 'ushaoa mejbeuakn', NULL, NULL),
-(2, 'C:\\xampp\\tmp\\php5A36.tmp', 'FOTO', 'Bu dewi', '+628518927303873', 'https://maps.google', 'tueihogkgd', '2025-08-06 15:24:21', '2025-08-06 15:24:21'),
-(4, 'C:\\xampp\\tmp\\php9BDF.tmp', 'FOTO', 'Bu dewi', '+628518927303873', 'https://maps.google', 'tueihogkgd', '2025-08-06 15:25:52', '2025-08-06 15:25:52'),
-(5, 'C:\\xampp\\tmp\\phpDB1B.tmp', 'PEMANDANGAN', 'bundA', '+628518927305786', 'https://maps.google', 'hebast dabvaguo', '2025-08-06 16:12:59', '2025-08-06 16:12:59'),
-(6, 'fotosa', 'sitindinr', 'toksodoshf', '+62403649374683542', 'jgakdbai  dgsds', 'f efdfedsvsdg', NULL, NULL),
-(7, 'C:\\xampp\\tmp\\php3196.tmp', 'hijau', 'sitioalj', '+628518303786873', 'https://maps.googlecvd', 'gfhfy5rtry', '2025-08-06 18:02:34', '2025-08-06 18:02:34');
+INSERT INTO `umkms` (`id`, `foto`, `nama_umkm`, `pemilik`, `kontak`, `alamat`, `deskripsi`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'j2gsIgF1rTZW8tSqA2njGpKKEvva35inXMGp19z7.png', 'FOTO', 'bundA', '+628518927303873', 'https://maps.googlecvd', 'mscnsda', 0, '2025-08-07 20:59:39', '2025-08-07 21:44:26'),
+(3, 'cDIBmqSJ1loyZheFhZWv0hvlcMksv4O43gogAFQo.png', 'FOTO', 'Bu dewi', '+628518303786873', 'https://maps.google', 'ssipfhpfa', 0, '2025-08-07 21:16:33', '2025-08-07 21:44:25'),
+(5, 'HayzJIBFb8swdly5pC3XDQAO3UydMIPOnBWH3517.jpg', 'FOTO', 'bundA', '+628518927305786', 'https://maps.google', 'johcwdpjvw[d', 0, '2025-08-07 21:18:48', '2025-08-07 21:44:25');
 
 -- --------------------------------------------------------
 
@@ -289,21 +261,6 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `videos`
---
-
-CREATE TABLE `videos` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `file_path` varchar(255) NOT NULL,
-  `is_main` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -342,12 +299,6 @@ ALTER TABLE `cache_locks`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
-
---
--- Indeks untuk tabel `fotos`
---
-ALTER TABLE `fotos`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `gallery`
@@ -401,15 +352,9 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
--- Indeks untuk tabel `slogans`
+-- Indeks untuk tabel `umkms`
 --
-ALTER TABLE `slogans`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `umkm`
---
-ALTER TABLE `umkm`
+ALTER TABLE `umkms`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -418,12 +363,6 @@ ALTER TABLE `umkm`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- Indeks untuk tabel `videos`
---
-ALTER TABLE `videos`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -445,12 +384,6 @@ ALTER TABLE `bumdes`
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `fotos`
---
-ALTER TABLE `fotos`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -484,27 +417,15 @@ ALTER TABLE `profil`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `slogans`
+-- AUTO_INCREMENT untuk tabel `umkms`
 --
-ALTER TABLE `slogans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `umkm`
---
-ALTER TABLE `umkm`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `umkms`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `videos`
---
-ALTER TABLE `videos`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 

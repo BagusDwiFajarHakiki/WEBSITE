@@ -51,7 +51,7 @@ class UMKMController extends Controller
     public function edit($id) : View
     {
         $umkm = umkm::findOrFail($id);
-        return view('pages.UMKM.edit', compact('umkm'));
+        return view('pages.UMKM.umkm', compact('umkm'));
     }
 
     public function update(Request $request, $id) : RedirectResponse
@@ -104,7 +104,7 @@ class UMKMController extends Controller
 
         return Redirect::route('umkm.index')->with('success', 'UMKM berhasil dihapus.');
     }
-
+    
     public function updateStatus(Request $request, Umkm $umkm)
 {
     $umkm->status = $request->status;
