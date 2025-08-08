@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\beranda;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class BerandaController extends Controller
 {
     public function video_profil()
     {
-        $video_profil = \App\Models\beranda::all();
+        // Ambil satu video terakhir (atau first) untuk ditampilkan
+        $video = beranda::latest()->first();
 
-        return view('pages.beranda.video_profil', [
-            'video_profil' => $video_profil,
-        ]);
+        return view('pages.beranda.video_profil', compact('video'));
     }
 
     public function tambah_video()
@@ -22,61 +22,39 @@ class BerandaController extends Controller
         return view('pages.beranda.video_profil');
     }
 
+    /**
+     * Simpan video baru — sebelum simpan, hapus file & record lama agar hanya ada 1 video.
+     */
     public function simpan_video(Request $request)
 {
-    try {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'file_path' => 'required|file|mimes:mp4,avi,mov|max:20480',
-            'is_main' => 'nullable|boolean',
-        ]);
+    // Pastikan PHP tidak menerima file di atas 20MB
+    ini_set('upload_max_filesize', '25M');
+    ini_set('post_max_size', '25M');
 
-        if ($request->hasFile('file_path')) {
-            $path = $request->file('file_path')->store('videos', 'public');
+    $request->validate([
+        'file_path' => 'required|mimes:mp4,mov,avi|max:25480', // 20MB = 20480KB
+    ]);
 
-            \App\Models\beranda::create([
-                'name' => $validated['name'],
-                'file_path' => $path,
-                'is_main' => $request->boolean('is_main'),
-            ]);
-
-            return redirect()->route('beranda.video_profil')->with('success', 'Video Profil berhasil ditambahkan.');
-        } else {
-            return redirect()->back()->withErrors(['file_path' => 'File video wajib diunggah.']);
+    // Hapus video lama kalau ada
+    $oldVideo = \App\Models\beranda::first();
+    if ($oldVideo) {
+        $oldPath = storage_path('app/public/' . $oldVideo->file_path);
+        if (file_exists($oldPath)) {
+            unlink($oldPath);
         }
-    } catch (\Exception $e) {
-        return redirect()->back()->withErrors(['exception' => $e->getMessage()]);
+        $oldVideo->delete();
     }
+
+    // Simpan video baru
+    $path = $request->file('file_path')->store('videos', 'public');
+
+    \App\Models\beranda::create([
+        'name' => $request->input('name', ''),
+        'file_path' => $path,
+        'is_main' => $request->has('is_main') ? 1 : 0,
+    ]);
+
+    return redirect()->route('video_profil')->with('success', 'Video berhasil diunggah.');
 }
 
-
-    public function update_video(Request $request, $id)
-    {
-        $beranda = \App\Models\beranda::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'file_path' => 'nullable|file|mimes:mp4,avi,mov|max:20480', // 20MB max
-            'is_main' => 'boolean',
-        ]);
-
-        $beranda->update($validated);
-
-        return redirect()->route('beranda.video_profil')->with('success', 'Data berhasil diperbarui.');
-    }
-
-    public function update_foto(Request $request, $id)
-    {
-        $beranda = \App\Models\beranda::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'file_path' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // 2MB max
-            'is_main' => 'boolean',
-        ]);
-
-        $beranda->update($validated);
-
-        return redirect()->route('beranda.video_profil')->with('success', 'Data berhasil diperbarui.');
-    }
-
-    
 }
