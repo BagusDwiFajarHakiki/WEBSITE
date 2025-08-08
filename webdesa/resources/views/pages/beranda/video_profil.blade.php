@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Upload Video Profil</h1>
+    <h1>Video Profil</h1>
 
     {{-- Alert popup error --}}
     @if ($errors->any())
