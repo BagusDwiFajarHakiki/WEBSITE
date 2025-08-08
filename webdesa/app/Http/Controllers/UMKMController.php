@@ -3,113 +3,105 @@
 namespace App\Http\Controllers;
 
 use App\Models\umkm;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 
 class UMKMController extends Controller
 {
-    /**
-     * Menampilkan semua data UMKM.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function umkm()
+    public function index() : View
     {
-        // Mengambil semua data umkm dari database
-        $umkms = umkm::all();
-
-        // Mengirimkan data ke view
-        return view('pages.UMKM.umkm', [
-            'umkms' => $umkms,
-        ]);
+        $umkm = umkm::latest()->paginate(6);
+        return view('pages.UMKM.umkm', compact('umkm'));
     }
 
-    /**
-     * Menyimpan data UMKM baru.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function simpan_umkm(Request $request)
+    public function create() : View
     {
-        // Validasi data yang masuk
-        $validation = $request->validate([
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        return view('pages.UMKM.umkm');
+    }
+
+    public function store(Request $request) : RedirectResponse
+    {
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3048',
             'nama_umkm' => 'required|string|max:255',
             'pemilik' => 'required|string|max:255',
-            'kontak' => 'required|string|max:50',
+            'kontak' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
         ]);
 
-        // Mengunggah file jika ada
-        if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('umkm', 'public');
-            $validation['foto'] = $path;
-        }
+        $gambar = $request->file('foto');
+        $gambar->storeAs('umkm', $gambar->hashName());
 
-        // Membuat record baru di database
-        umkm::create($validation);
+        umkm::create([
+            'foto'      => $gambar->hashName(),
+            'nama_umkm' => $request->nama_umkm,
+            'pemilik'   => $request->pemilik,
+            'kontak'    => $request->kontak,
+            'alamat'    => $request->alamat,
+            'deskripsi' => $request->deskripsi,
+        ]);
 
-        return redirect('/umkm')->with('success', 'UMKM berhasil ditambahkan.');
+        return Redirect::route('umkm.index')->with('success', 'UMKM berhasil ditambahkan.');
     }
 
-    /**
-     * Memperbarui data UMKM yang sudah ada.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update_umkm(Request $request, $id)
+    public function edit($id) : View
     {
-        // Validasi data yang masuk
-        $validation = $request->validate([
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        $umkm = umkm::findOrFail($id);
+        return view('pages.UMKM.edit', compact('umkm'));
+    }
+
+    public function update(Request $request, $id) : RedirectResponse
+    {
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3048',
             'nama_umkm' => 'required|string|max:255',
             'pemilik' => 'required|string|max:255',
-            'kontak' => 'required|string|max:50',
+            'kontak' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
         ]);
 
-        // Temukan data UMKM yang akan diperbarui
         $umkm = umkm::findOrFail($id);
-
-        // Jika ada file foto baru, unggah dan hapus foto lama
         if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($umkm->foto) {
-                Storage::disk('public')->delete($umkm->foto);
-            }
-            $path = $request->file('foto')->store('umkm', 'public');
-            $validation['foto'] = $path;
+            storage::delete('umkm/' . $umkm->foto);
+            $gambar = $request->file('foto');
+            $gambar->storeAs('umkm', $gambar->hashName());
+            $umkm->foto = $gambar->hashName();
+
+            $umkm->update([
+                'foto' => $gambar->hashName(),
+                'nama_umkm' => $request->nama_umkm,
+                'pemilik' => $request->pemilik,
+                'kontak' => $request->kontak,
+                'alamat' => $request->alamat,
+                'deskripsi' => $request->deskripsi
+            ]);
+
+        }else {
+            $umkm->update([
+            'nama_umkm' => $request->nama_umkm,
+            'pemilik' => $request->pemilik,
+            'kontak' => $request->kontak,
+            'alamat' => $request->alamat,
+            'deskripsi' => $request->deskripsi
+            ]);
         }
 
-        // Perbarui record di database
-        $umkm->update($validation);
-
-        return redirect('/umkm')->with('success', 'UMKM berhasil diupdate.');
+        return Redirect::route('umkm.index')->with('success', 'UMKM berhasil diperbarui.');
     }
 
-    /**
-     * Menghapus data UMKM dan gambar terkait.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function hapus_umkm($id)
+    public function destroy($id) : RedirectResponse
     {
         $umkm = umkm::findOrFail($id);
-        
-        // Hapus file gambar dari storage jika ada
         if ($umkm->foto) {
-            Storage::disk('public')->delete($umkm->foto);
+            Storage::delete('umkm/' . $umkm->foto);
         }
-
-        // Hapus data UMKM dari database
         $umkm->delete();
 
-        return redirect('/umkm')->with('success', 'UMKM berhasil dihapus.');
+        return Redirect::route('umkm.index')->with('success', 'UMKM berhasil dihapus.');
     }
 }

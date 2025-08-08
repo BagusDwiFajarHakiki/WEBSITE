@@ -5,14 +5,14 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">DATA UMKM</h1>
     <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#tambahUmkmModal">
-        <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data UMKM
+        <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
     </button>
 </div>
 
 <!-- Modal Tambah UMKM -->
 <div class="modal fade" id="tambahUmkmModal" tabindex="-1" role="dialog" aria-labelledby="tambahUmkmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="/simpan_umkm" method="POST" enctype="multipart/form-data">
+        <form action="{{route('umkm.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -59,7 +59,7 @@
 <!-- Modal Edit UMKM -->
 <div class="modal fade" id="editUmkmModal" tabindex="-1" role="dialog" aria-labelledby="editUmkmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form id="edit-umkm-form" method="POST" enctype="multipart/form-data">
+        <form id="editFormUmkm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="modal-content">
@@ -70,10 +70,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="edit_id" name="id">
                     <div class="form-group">
-                        <label for="edit_foto">Foto UMKM</label>
+                        <label for="edit_foto">Foto UMKM (Kosongkan jika tidak ingin diubah)</label>
                         <input type="file" class="form-control" id="edit_foto" name="foto" accept="image/*">
-                        <small class="form-text text-muted">Biarkan kosong jika tidak ingin mengubah foto.</small>
+                        <div class="mt-2" id="current_foto_container">
+                            <span class="text-muted">Foto saat ini:</span>
+                            <img id="current_foto" src="" alt="Foto UMKM" width="100">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="edit_nama_umkm">Nama UMKM</label>
@@ -98,7 +102,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-warning">Update</button>
+                    <button type="submit" class="btn btn-success">Update</button>
                 </div>
             </div>
         </form>
@@ -106,134 +110,145 @@
 </div>
 
 <!-- Modal Hapus UMKM -->
-<div class="modal fade" id="hapusUmkmModal" tabindex="-1" role="dialog" aria-labelledby="hapusUmkmModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteUmkmModal" tabindex="-1" role="dialog" aria-labelledby="deleteUmkmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form id="hapus-umkm-form" method="POST">
-            @csrf
-            @method('DELETE')
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="hapusUmkmModalLabel">Konfirmasi Hapus Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus data UMKM ini? Tindakan ini tidak dapat dibatalkan.</p>
-                </div>
-                <div class="modal-footer">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUmkmModalLabel">Konfirmasi Hapus Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin ingin menghapus data UMKM ini? Tindakan ini tidak dapat diurungkan.</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteFormUmkm" method="POST">
+                    @csrf
+                    @method('DELETE')
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-danger">Hapus</button>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
 <!-- Tabel Data UMKM -->
 <div class="card shadow mb-4">
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="table-layout: fixed;">
-        <thead style="text-align: center;">
-          <tr>
-            <th style="width: 4%;">No</th>
-            <th style="width: 10%;">Foto</th>
-            <th style="width: 18%;">Nama UMKM</th>
-            <th style="width: 11%;">Pemilik</th>
-            <th style="width: 17%;">Kontak</th>
-            <th style="width: 10%;">Alamat</th>
-            <th style="width: 20%;">Deskripsi</th>
-            <th style="width: 9%;">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          @forelse($umkms as $umkm)
-            <tr>
-              <td style="align-content: center; text-align: center;">{{ $loop->iteration }}</td>
-              <td>
-                @if($umkm->foto)
-                <img src="{{ asset('storage/' . $umkm->foto) }}" alt="Foto UMKM" width="90">
-                @else
-                <span class="text-muted">Tidak ada foto</span>
-                @endif
-              </td>
-              <td style="word-break: break-word; align-content: center;">{{ $umkm->nama_umkm }}</td>
-              <td style="word-break: break-word; align-content: center;">{{ $umkm->pemilik }}</td>
-              <td style="word-break: break-word; align-content: center;">{{ $umkm->kontak }}</td>
-              <td style="text-align: center; align-content: center;">
-                <a href="{{ $umkm->alamat }}" target="_blank" style="word-break: break-word;">Lihat Lokasi</a>
-              </td>
-              <td style="word-break: break-word; align-content: center;">{{ $umkm->deskripsi }}</td>
-              <td style="text-align: center; align-content: center;">
-                <!-- Tombol Edit -->
-                <button type="button" class="btn btn-warning btn-sm edit-btn"
-                  data-toggle="modal" data-target="#editUmkmModal"
-                  data-id="{{ $umkm->id }}"
-                  data-nama="{{ $umkm->nama_umkm }}"
-                  data-pemilik="{{ $umkm->pemilik }}"
-                  data-kontak="{{ $umkm->kontak }}"
-                  data-alamat="{{ $umkm->alamat }}"
-                  data-deskripsi="{{ $umkm->deskripsi }}">
-                  <i class="fas fa-fw fa-pen"></i>
-                </button>
-                <!-- Tombol Hapus -->
-                <button type="button" class="btn btn-danger btn-sm delete-btn"
-                  data-toggle="modal" data-target="#hapusUmkmModal"
-                  data-id="{{ $umkm->id }}">
-                  <i class="fas fa-fw fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="8" class="text-center">Tidak ada data UMKM.</td>
-            </tr>
-          @endforelse
-        </tbody>
-      </table>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="table-layout: fixed;">
+                <thead style="text-align: center;">
+                    <tr>
+                        <th style="width: 4%;">No</th>
+                        <th style="width: 10%;">Foto</th>
+                        <th style="width: 18%;">Nama UMKM</th>
+                        <th style="width: 11%;">Pemilik</th>
+                        <th style="width: 17%;">Kontak</th>
+                        <th style="width: 10%;">Alamat</th>
+                        <th style="width: 20%;">Deskripsi</th>
+                        <th style="width: 9%;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($umkm as $umkm)
+                        <tr>
+                            <td style="align-content: center; text-align: center;">{{ $loop->iteration }}</td>
+                            <td>
+                                @if($umkm->foto)
+                                <img src="{{ asset('storage/umkm/' . $umkm->foto) }}" alt="Foto UMKM" width="90">
+                                @else
+                                <span class="text-muted">Tidak ada foto</span>
+                                @endif
+                            </td>
+                            <td style="word-break: break-word; align-content: center;">{{ $umkm->nama_umkm }}</td>
+                            <td style="word-break: break-word; align-content: center;">{{ $umkm->pemilik }}</td>
+                            <td style="word-break: break-word; align-content: center;">{{ $umkm->kontak }}</td>
+                            <td style="text-align: center; align-content: center;">
+                                <a href="{{ $umkm->alamat }}" target="_blank" style="word-break: break-word;">Lihat Lokasi</a>
+                            </td>
+                            <td style="word-break: break-word; align-content: center;">{{ $umkm->deskripsi }}</td>
+                            <td style="text-align: center; align-content: center;">
+                                <div class="d-flex justify-content-center" style="gap: 5px;">
+                                    <!-- Tombol Edit -->
+                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editUmkmModal"
+                                        data-id="{{ $umkm->id }}"
+                                        data-nama="{{ $umkm->nama_umkm }}"
+                                        data-pemilik="{{ $umkm->pemilik }}"
+                                        data-kontak="{{ $umkm->kontak }}"
+                                        data-alamat="{{ $umkm->alamat }}"
+                                        data-deskripsi="{{ $umkm->deskripsi }}"
+                                        data-foto="{{ $umkm->foto ? asset('storage/umkm/' . $umkm->foto) : '' }}">
+                                        <i class="fas fa-fw fa-pen"></i>
+                                    </button>
+                                    <!-- Tombol Hapus -->
+                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteUmkmModal"
+                                        data-id="{{ $umkm->id }}">
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">Tidak ada data UMKM.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>
 
-@endsection
+<!-- Load jQuery, Popper.js, and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" xintegrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" xintegrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" xintegrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57B5h/qf/44j+pE34l7I7fF7K6yA0sA7I" crossorigin="anonymous"></script>
 
-@section('scripts')
-<!-- Pastikan jQuery sudah di-load sebelum script ini -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // Script untuk Modal Edit
-        $('#editUmkmModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Tombol yang memicu modal
-            var id = button.data('id');
-            var nama = button.data('nama_umkm');
-            var pemilik = button.data('pemilik');
-            var kontak = button.data('kontak');
-            var alamat = button.data('alamat');
-            var deskripsi = button.data('deskripsi');
+    // Skrip untuk mengisi modal edit
+    $('#editUmkmModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var umkm_id = button.data('id');
+        var nama_umkm = button.data('nama');
+        var pemilik = button.data('pemilik');
+        var kontak = button.data('kontak');
+        var alamat = button.data('alamat');
+        var deskripsi = button.data('deskripsi');
+        var foto_url = button.data('foto');
 
-            var modal = $(this);
-            modal.find('#edit_nama_umkm').val(nama);
-            modal.find('#edit_pemilik').val(pemilik);
-            modal.find('#edit_kontak').val(kontak);
-            modal.find('#edit_alamat').val(alamat);
-            modal.find('#edit_deskripsi').val(deskripsi);
+        var modal = $(this);
+        modal.find('#edit_id').val(umkm_id);
+        modal.find('#edit_nama_umkm').val(nama_umkm);
+        modal.find('#edit_pemilik').val(pemilik);
+        modal.find('#edit_kontak').val(kontak);
+        modal.find('#edit_alamat').val(alamat);
+        modal.find('#edit_deskripsi').val(deskripsi);
+        
+        // Atur action form
+        var updateUrl = `{{ url('umkm') }}/${umkm_id}`;
+        modal.find('#editFormUmkm').attr('action', updateUrl);
 
-            // Mengatur action form untuk submit ke route update yang benar
-            var formAction = "/update_umkm/" + id;
-            $('#edit-umkm-form').attr('action', formAction);
-        });
+        // Tampilkan foto saat ini jika ada
+        if (foto_url) {
+            modal.find('#current_foto').attr('src', foto_url);
+            modal.find('#current_foto_container').show();
+        } else {
+            modal.find('#current_foto_container').hide();
+        }
+    });
 
-        // Script untuk Modal Hapus
-        $('#hapusUmkmModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Tombol yang memicu modal
-            var id = button.data('id');
-
-            // Mengatur action form untuk submit ke route hapus yang benar
-            var formAction = "/hapus_umkm/" + id;
-            $('#hapus-umkm-form').attr('action', formAction);
-        });
+    // Skrip untuk mengisi modal hapus
+    $('#deleteUmkmModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var umkm_id = button.data('id');
+        
+        var modal = $(this);
+        // Atur action form hapus
+        var deleteUrl = `{{ url('umkm') }}/${umkm_id}`;
+        modal.find('#deleteFormUmkm').attr('action', deleteUrl);
     });
 </script>
+
 @endsection
