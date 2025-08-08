@@ -11,13 +11,6 @@
         </script>
     @endif
 
-    {{-- Alert popup success --}}
-    @if (session('success'))
-        <script>
-            alert("{{ session('success') }}");
-        </script>
-    @endif
-
     {{-- Form Upload Video --}}
     <form action="{{ route('beranda.simpan_video') }}" method="POST" enctype="multipart/form-data">
         @csrf
