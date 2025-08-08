@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,8 +13,12 @@ route::get('/', function () {
 });
 
 // ROUTE UMKM
-route::resource('/umkm', UMKMController::class);
+Route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UmkmController::class, 'updateStatus'])->name('umkm.update-status');
+
+//ROUTE PROFILS
+Route::resource('/profil', ProfilController::class);
+
 
 Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('beranda.video_profil');
 
