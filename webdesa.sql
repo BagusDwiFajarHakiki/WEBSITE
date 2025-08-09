@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Agu 2025 pada 08.19
+-- Waktu pembuatan: 09 Agu 2025 pada 05.09
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -189,14 +189,48 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profil`
+-- Struktur dari tabel `perangkats`
 --
 
-CREATE TABLE `profil` (
+CREATE TABLE `perangkats` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `jabatan` varchar(255) DEFAULT NULL,
+  `kontak` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `perangkats`
+--
+
+INSERT INTO `perangkats` (`id`, `foto`, `nama`, `jabatan`, `kontak`, `alamat`, `created_at`, `updated_at`) VALUES
+(2, 'profil/s7LMlUFWYGx1K2DweXonAC60BolBJlmiwba6TC6a.png', 'Bagus', 'ketua', '9865858', 'lajsdvadkw', '2025-08-08 18:30:42', '2025-08-08 18:32:38');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `profils`
+--
+
+CREATE TABLE `profils` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `profil` text DEFAULT NULL,
+  `visi` text DEFAULT NULL,
+  `misi` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `profils`
+--
+
+INSERT INTO `profils` (`id`, `profil`, `visi`, `misi`, `created_at`, `updated_at`) VALUES
+(1, NULL, NULL, NULL, '2025-08-08 16:48:47', '2025-08-08 16:48:47');
 
 -- --------------------------------------------------------
 
@@ -218,7 +252,27 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('d0b5FNck469n9bv46dyZgPh9L2JNTi4iXJZHGNwt', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNWRvMjF3enlIUzlPOG5DTFM0MnhYZTRVV0xabVpOcElOQlcwU1Q4TSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bWttIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1754628349);
+('tVASJvixVpEMACOWLT6sBDD3zFWTLuN9yyLsS3LM', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibHRZdFlMemo4MXYyVW9ENkh5TEFwYWFwcVBBdHByVlhQOG1wckpUTiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bWttIjt9fQ==', 1754708820);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `strukturs`
+--
+
+CREATE TABLE `strukturs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `gambar` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `strukturs`
+--
+
+INSERT INTO `strukturs` (`id`, `gambar`, `created_at`, `updated_at`) VALUES
+(2, 'profil/ovS5nC5kuHO1dTYCMzqOBkN7ACRjzc0iPyiRtKmp.png', '2025-08-08 16:53:21', '2025-08-08 16:53:21');
 
 -- --------------------------------------------------------
 
@@ -231,22 +285,13 @@ CREATE TABLE `umkms` (
   `foto` varchar(255) DEFAULT NULL,
   `nama_umkm` varchar(255) DEFAULT NULL,
   `pemilik` varchar(255) DEFAULT NULL,
-  `kontak` varchar(255) DEFAULT NULL,
+  `kontak` int(11) DEFAULT NULL,
   `alamat` varchar(255) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `umkms`
---
-
-INSERT INTO `umkms` (`id`, `foto`, `nama_umkm`, `pemilik`, `kontak`, `alamat`, `deskripsi`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'j2gsIgF1rTZW8tSqA2njGpKKEvva35inXMGp19z7.png', 'FOTO', 'bundA', '+628518927303873', 'https://maps.googlecvd', 'mscnsda', 0, '2025-08-07 20:59:39', '2025-08-07 21:44:26'),
-(3, 'cDIBmqSJ1loyZheFhZWv0hvlcMksv4O43gogAFQo.png', 'FOTO', 'Bu dewi', '+628518303786873', 'https://maps.google', 'ssipfhpfa', 0, '2025-08-07 21:16:33', '2025-08-07 21:44:25'),
-(5, 'HayzJIBFb8swdly5pC3XDQAO3UydMIPOnBWH3517.jpg', 'FOTO', 'bundA', '+628518927305786', 'https://maps.google', 'johcwdpjvw[d', 0, '2025-08-07 21:18:48', '2025-08-07 21:44:25');
 
 -- --------------------------------------------------------
 
@@ -338,9 +383,15 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
--- Indeks untuk tabel `profil`
+-- Indeks untuk tabel `perangkats`
 --
-ALTER TABLE `profil`
+ALTER TABLE `perangkats`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `profils`
+--
+ALTER TABLE `profils`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -350,6 +401,12 @@ ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sessions_user_id_index` (`user_id`),
   ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Indeks untuk tabel `strukturs`
+--
+ALTER TABLE `strukturs`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `umkms`
@@ -411,16 +468,28 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `profil`
+-- AUTO_INCREMENT untuk tabel `perangkats`
 --
-ALTER TABLE `profil`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `perangkats`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `profils`
+--
+ALTER TABLE `profils`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `strukturs`
+--
+ALTER TABLE `strukturs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `umkms`
 --
 ALTER TABLE `umkms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
