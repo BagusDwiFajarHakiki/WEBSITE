@@ -4,63 +4,102 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">DATA GALLERY</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
-        </a>
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#galleryModal">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Gallery
+        </button>
     </div>
 
-    <!-- Main Content -->
+    <!-- Tabel Data -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Tambah Artikel Berita</h6>
-        </div>
         <div class="card-body">
-            <form action="{{ route('pengumuman') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            @if($gallery->isEmpty())
+                <div class="text-center text-muted my-4">
+                    <i class="fas fa-info-circle fa-2x mb-2"></i>
+                    <p class="mb-0">Tidak ada data</p>
+                </div>
+            @else
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Judul</th>
+                                <th>Isi</th>
+                                <th>Gambar</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($galleries as $index => $gallery)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $gallery->judul }}</td>
+                                    <td>{{ ucfirst($gallery->isi) }}</td>
+                                    <td>
+                                        <img src="{{ asset('storage/'.$gallery->gambar) }}" alt="{{ $gallery->judul }}" width="80">
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('gallery.edit', $gallery->id) }}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('gallery.destroy', $gallery->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus data ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        </div>
+    </div>
 
-                <!-- Judul Berita -->
-                <div class="form-group">
-                    <label for="judul">Judul Berita</label>
-                    <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukkan judul berita" required>
+    <!-- Modal Tambah Gallery -->
+    <div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="galleryModalLabel">Tambah Artikel Berita</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
 
-                <!-- Kategori -->
-                <div class="form-group">
-                    <label for="kategori">Kategori</label>
-                    <select name="kategori" id="kategori" class="form-control" required>
-                        <option value="">-- Pilih Kategori --</option>
-                        <option value="politik">Politik</option>
-                        <option value="ekonomi">Ekonomi</option>
-                        <option value="pendidikan">Pendidikan</option>
-                        <option value="pariwisata">Pariwisata</option>
-                        <option value="lainnya">Lainnya</option>
-                    </select>
-                </div>
+                <form action="{{ route('pengumuman') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        
+                        <!-- Judul Berita -->
+                        <div class="form-group">
+                            <label for="judul">Judul</label>
+                            <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukkan judul galery" required>
+                        </div>
 
-                <!-- Tanggal Publish -->
-                <div class="form-group">
-                    <label for="tanggal">Tanggal Publish</label>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
-                </div>
+                        <!-- Upload Gambar -->
+                        <div class="form-group">
+                            <label for="gambar">Upload Gambar</label>
+                            <input type="file" name="gambar" id="gambar" class="form-control-file" accept="image/*" required>
+                        </div>
 
-                <!-- Upload Gambar -->
-                <div class="form-group">
-                    <label for="gambar">Upload Gambar</label>
-                    <input type="file" name="gambar" id="gambar" class="form-control-file" accept="image/*" required>
-                </div>
+                        <!-- Isi Berita -->
+                        <div class="form-group">
+                            <label for="isi">Isi Gallery</label>
+                            <textarea name="isi" id="isi" rows="6" class="form-control" placeholder="Tulis isi berita..." required></textarea>
+                        </div>
 
-                <!-- Isi Berita -->
-                <div class="form-group">
-                    <label for="isi">Isi Berita</label>
-                    <textarea name="isi" id="isi" rows="6" class="form-control" placeholder="Tulis isi berita..." required></textarea>
-                </div>
+                    </div>
 
-                <!-- Tombol -->
-                <div class="d-flex justify-content-end">
-                    <button type="reset" class="btn btn-secondary mr-2">Reset</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 @endsection
