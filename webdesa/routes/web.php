@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
@@ -16,8 +17,5 @@ route::get('/', function () {
 route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UmkmController::class, 'updateStatus'])->name('umkm.update-status');
 //ROUTE BERANDA
-Route::post('/simpan_video', [BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
-Route::get('/video_profil', [BerandaController::class, 'video_profil'])->name('video_profil');
-Route::get('/pengumuman', [BerandaController::class, 'pengumuman'])->name('pengumuman');
-Route::get('/pengumuman/tambah', [BerandaController::class, 'tambah_pengumuman'])->name('pengumuman.tambah');
-Route::post('/pengumuman/simpan', [BerandaController::class, 'simpanPengumuman'])->name('simpan_pengumuman');
+Route::post('/simpan_video', [App\Http\Controllers\BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
+Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('video_profil');
