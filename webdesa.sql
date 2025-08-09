@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Agu 2025 pada 05.09
+-- Waktu pembuatan: 09 Agu 2025 pada 08.14
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -96,6 +96,9 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `gallery` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `isi` text NOT NULL,
+  `gambar` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -189,6 +192,21 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `pengumuman`
+--
+
+CREATE TABLE `pengumuman` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `isi` text NOT NULL,
+  `gambar` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `perangkats`
 --
 
@@ -202,13 +220,6 @@ CREATE TABLE `perangkats` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `perangkats`
---
-
-INSERT INTO `perangkats` (`id`, `foto`, `nama`, `jabatan`, `kontak`, `alamat`, `created_at`, `updated_at`) VALUES
-(2, 'profil/s7LMlUFWYGx1K2DweXonAC60BolBJlmiwba6TC6a.png', 'Bagus', 'ketua', '9865858', 'lajsdvadkw', '2025-08-08 18:30:42', '2025-08-08 18:32:38');
 
 -- --------------------------------------------------------
 
@@ -224,13 +235,6 @@ CREATE TABLE `profils` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `profils`
---
-
-INSERT INTO `profils` (`id`, `profil`, `visi`, `misi`, `created_at`, `updated_at`) VALUES
-(1, NULL, NULL, NULL, '2025-08-08 16:48:47', '2025-08-08 16:48:47');
 
 -- --------------------------------------------------------
 
@@ -252,7 +256,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('tVASJvixVpEMACOWLT6sBDD3zFWTLuN9yyLsS3LM', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibHRZdFlMemo4MXYyVW9ENkh5TEFwYWFwcVBBdHByVlhQOG1wckpUTiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91bWttIjt9fQ==', 1754708820);
+('ravcylPNOExhxNTyRodjBXl6apywFGwlQyQsrvM7', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiS2ZnMmlTVkpIRkROMUVydFVSMG1oeFFVbXNCUlBjVWNzSXF5empaNyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wZW5ndW11bWFuIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1754718787);
 
 -- --------------------------------------------------------
 
@@ -267,13 +271,6 @@ CREATE TABLE `strukturs` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `strukturs`
---
-
-INSERT INTO `strukturs` (`id`, `gambar`, `created_at`, `updated_at`) VALUES
-(2, 'profil/ovS5nC5kuHO1dTYCMzqOBkN7ACRjzc0iPyiRtKmp.png', '2025-08-08 16:53:21', '2025-08-08 16:53:21');
-
 -- --------------------------------------------------------
 
 --
@@ -285,7 +282,7 @@ CREATE TABLE `umkms` (
   `foto` varchar(255) DEFAULT NULL,
   `nama_umkm` varchar(255) DEFAULT NULL,
   `pemilik` varchar(255) DEFAULT NULL,
-  `kontak` int(11) DEFAULT NULL,
+  `kontak` varchar(255) DEFAULT NULL,
   `alamat` varchar(255) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
@@ -383,6 +380,12 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indeks untuk tabel `pengumuman`
+--
+ALTER TABLE `pengumuman`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `perangkats`
 --
 ALTER TABLE `perangkats`
@@ -468,22 +471,28 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT untuk tabel `pengumuman`
+--
+ALTER TABLE `pengumuman`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `perangkats`
 --
 ALTER TABLE `perangkats`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `profils`
 --
 ALTER TABLE `profils`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `strukturs`
 --
 ALTER TABLE `strukturs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `umkms`
