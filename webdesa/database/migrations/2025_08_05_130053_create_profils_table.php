@@ -13,9 +13,25 @@ return new class extends Migration
     {
         Schema::create('profils', function (Blueprint $table) {
             $table->id();
-            $table->text('profil');
-            $table->text('visi');
-            $table->text('misi');
+            $table->text('profil')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('misi')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('strukturs', function (Blueprint $table) {
+            $table->id();
+            $table->string('gambar')->nullable();
+            $table->timestamps();
+        });
+
+        schema::create('perangkats', function (Blueprint $table) {
+            $table->id();
+            $table->string('foto')->nullable();
+            $table->string('nama')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->string('kontak')->nullable();
+            $table->string('alamat')->nullable();
             $table->timestamps();
         });
     }
@@ -26,5 +42,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('profils');
+        Schema::dropIfExists('strukturs');
+        Schema::dropIfExists('perangkats');
     }
 };

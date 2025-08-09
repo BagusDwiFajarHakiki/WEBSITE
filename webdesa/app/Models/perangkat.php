@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class profil extends Model
+class perangkat extends Model
 {
     use HasFactory;
-    protected $table = 'profils';
-    protected $fillable = ['profil','visi','misi'];
+    protected $table = 'perangkats';
+    protected $fillable = ['foto','nama','jabatan','kontak','alamat'];
 }

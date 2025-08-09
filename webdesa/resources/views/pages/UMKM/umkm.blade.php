@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label for="kontak">Nomor WhatsApp (Kontak)</label>
-                        <input type="text" class="form-control" id="kontak" name="kontak" placeholder="e.g., +6281234567890" required>
+                        <input type="number" class="form-control" id="kontak" name="kontak" placeholder="e.g., +6281234567890" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_alamat">Link Lokasi Google Maps</label>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         <label for="edit_kontak">Nomor WhatsApp (Kontak)</label>
-                        <input type="text" class="form-control" id="edit_kontak" name="kontak" placeholder="e.g., +6281234567890" required>
+                        <input type="number" class="form-control" id="edit_kontak" name="kontak" placeholder="e.g., +6281234567890" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_alamat">Link Lokasi Google Maps</label>
