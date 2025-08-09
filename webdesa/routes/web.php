@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\GalleryController;
 
 Route::get('/home', function () {
     return view('home.index');
@@ -44,4 +45,6 @@ Route::post('/simpan_video', [App\Http\Controllers\BerandaController::class, 'si
 Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('video_profil');
 
 //ROUTE GALLERY
-Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'gallery'])->name('gallery');
+Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
+Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
