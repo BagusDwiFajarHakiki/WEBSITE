@@ -5,6 +5,7 @@ use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\PengumumanController;
 
 Route::get('/home', function () {
     return view('home.index');
@@ -57,3 +58,15 @@ Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'vid
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
 Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
+
+//ROUTE PENGUMUMAN
+
+
+// Menampilkan halaman pengumuman
+Route::get('/pengumuman', [BerandaController::class, 'Pengumuman'])->name('pengumuman');
+
+// Simpan pengumuman baru
+Route::post('/pengumuman', [BerandaController::class, 'simpanPengumuman'])->name('simpan_pengumuman');
+
+Route::put('/pengumuman/{id}', [BerandaController::class, 'updatePengumuman'])->name('update_pengumuman');
+Route::delete('/pengumuman/{id}', [BerandaController::class, 'hapusPengumuman'])->name('hapus_pengumuman');
