@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
+
 class BerandaController extends Controller
 {
     public function video_profil()
@@ -62,8 +63,6 @@ public function pengumuman()
     {
         $pengumuman = Pengumuman::latest()->get();
         return view('pages.beranda.pengumuman', compact('pengumuman'));
-
-
     }
 
     // Form tambah pengumuman
@@ -96,5 +95,48 @@ public function pengumuman()
     return redirect()->back()->with('success', 'Pengumuman berhasil disimpan');
 }
 
+// Update pengumuman
+public function updatePengumuman(Request $request, $id)
+{
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'isi'   => 'required|string',
+        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    $pengumuman = Pengumuman::findOrFail($id);
+    $pengumuman->judul = $request->judul;
+    $pengumuman->isi   = $request->isi;
+
+    // Update gambar jika ada file baru
+    if ($request->hasFile('gambar')) {
+        // Hapus gambar lama kalau ada
+        if ($pengumuman->gambar && Storage::disk('public')->exists($pengumuman->gambar)) {
+            Storage::disk('public')->delete($pengumuman->gambar);
+        }
+
+        $path = $request->file('gambar')->store('pengumuman', 'public');
+        $pengumuman->gambar = $path;
+    }
+
+    $pengumuman->save();
+
+    return redirect()->back()->with('success', 'Pengumuman berhasil diperbarui');
+}
+
+// Hapus pengumuman
+public function hapusPengumuman($id)
+{
+    $pengumuman = Pengumuman::findOrFail($id);
+
+    // Hapus gambar dari storage
+    if ($pengumuman->gambar && Storage::disk('public')->exists($pengumuman->gambar)) {
+        Storage::disk('public')->delete($pengumuman->gambar);
+    }
+
+    $pengumuman->delete();
+
+    return redirect()->back()->with('success', 'Pengumuman berhasil dihapus');
+}
 
 }
