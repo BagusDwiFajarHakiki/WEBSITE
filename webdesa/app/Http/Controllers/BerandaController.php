@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\beranda;
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -56,5 +57,44 @@ class BerandaController extends Controller
 
     return redirect()->route('video_profil')->with('success', 'Video berhasil diunggah.');
 }
+
+public function pengumuman()
+    {
+        $pengumuman = Pengumuman::latest()->get();
+        return view('pages.beranda.pengumuman', compact('pengumuman'));
+
+
+    }
+
+    // Form tambah pengumuman
+    public function tambah_pengumuman()
+    {
+        return view('pages.beranda.pengumuman.create');
+    }
+
+    // Simpan pengumuman
+   public function simpanPengumuman(Request $request)
+{
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'isi'   => 'required|string',
+        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
+
+    $pengumuman = new Pengumuman();
+    $pengumuman->judul = $request->judul;
+    $pengumuman->isi   = $request->isi;
+
+    // Simpan gambar ke storage/app/public/pengumuman
+    if ($request->hasFile('gambar')) {
+        $path = $request->file('gambar')->store('pengumuman', 'public');
+        $pengumuman->gambar = $path; // Simpan path relatif ke database
+    }
+
+    $pengumuman->save();
+
+    return redirect()->back()->with('success', 'Pengumuman berhasil disimpan');
+}
+
 
 }

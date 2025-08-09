@@ -18,6 +18,14 @@ return new class extends Migration
             $table->boolean('is_main')->default(false);
             $table->timestamps();
         });
+
+        Schema::create('pengumuman', function (Blueprint $table) {
+        $table->id();
+        $table->string('judul');
+        $table->text('isi');
+        $table->string('gambar')->nullable();
+        $table->timestamps();
+        });
     }
 
     /**

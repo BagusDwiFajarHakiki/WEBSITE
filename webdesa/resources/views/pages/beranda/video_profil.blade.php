@@ -6,10 +6,12 @@
 
     {{-- Tampilkan video kalau ada --}}
     @if(isset($video) && $video->file_path)
-        <video width="640" height="360" controls autoplay muted playsinline>
-            <source src="{{ asset('storage/' . $video->file_path) }}" type="video/mp4">
-            Browser Anda tidak mendukung tag video.
-        </video>
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+    <video controls autoplay muted style="position: absolute; top:0; left:0; width:100%; height:100%;">
+        <source src="{{ asset('storage/'.$video->file_path) }}" type="video/mp4">
+    </video>
+</div>
+
     @else
         <p>Belum ada video.</p>
     @endif

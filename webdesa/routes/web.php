@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BerandaController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -15,6 +16,13 @@ route::get('/', function () {
 // ROUTE UMKM
 route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UMKMController::class, 'updateStatus'])->name('umkm.update-status');
+
+//ROUTE BERANDA
+Route::post('/simpan_video', [BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
+Route::get('/video_profil', [BerandaController::class, 'video_profil'])->name('video_profil');
+Route::get('/pengumuman', [BerandaController::class, 'pengumuman'])->name('pengumuman');
+Route::get('/pengumuman/tambah', [BerandaController::class, 'tambah_pengumuman'])->name('pengumuman.tambah');
+Route::post('/pengumuman/simpan', [BerandaController::class, 'simpanPengumuman'])->name('simpan_pengumuman');
 
 //ROUTE DATA PROFIL DESA
 Route::resource('/profil', ProfilController::class);
