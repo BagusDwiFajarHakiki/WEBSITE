@@ -34,6 +34,12 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('Maps', function (Blueprint $table) {
+            $table->id();
+            $table->string('peta')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -44,5 +50,6 @@ return new class extends Migration
         Schema::dropIfExists('profils');
         Schema::dropIfExists('strukturs');
         Schema::dropIfExists('perangkats');
+        Schema::dropIfExists('Maps');
     }
 };

@@ -34,39 +34,41 @@ class ProfilController extends Controller
         return response()->json(['message' => 'Data berhasil disimpan.']);
     }
 
-    public function indexs()
+    public function struktur()
     {
-        $struktur = struktur::first(); // Ambil satu data struktur
-        $perangkats = perangkat::all(); // Ambil semua data perangkat desa
-        return view('pages.profil.perangkat_desa', compact('struktur', 'perangkats'));
+        $struktur = Struktur::first(); // Asumsi hanya ada satu entri struktur
+        return view('pages.profil.struktur_desa', compact('struktur'));
     }
 
-    /**
-     * Simpan gambar struktur desa.
-     */
     public function storeStruktur(Request $request)
     {
         $request->validate([
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Cek jika sudah ada gambar sebelumnya, hapus terlebih dahulu
-        $oldStruktur = struktur::first();
-        if ($oldStruktur) {
+        // Hapus gambar lama jika ada
+        $oldStruktur = Struktur::first();
+        if ($oldStruktur && $oldStruktur->gambar) {
             Storage::disk('public')->delete($oldStruktur->gambar);
             $oldStruktur->delete();
         }
 
-        // Simpan gambar baru
-        $path = $request->file('gambar')->store('profil', 'public');
-        struktur::create(['gambar' => $path]);
+        $path = $request->file('gambar')->store('struktur_desa', 'public');
 
-        return back()->with('success', 'Gambar struktur desa berhasil diunggah.');
+        Struktur::create(['gambar' => $path]);
+
+        return redirect()->route('struktur.struktur')->with('success', 'Struktur desa berhasil diunggah.');
     }
 
     /**
      * Simpan data perangkat desa baru.
      */
+    public function perangkat()
+    {
+        $perangkats = Perangkat::all();
+        return view('pages.profil.perangkat_desa', compact('perangkats'));
+    }
+
     public function storePerangkat(Request $request)
     {
         $request->validate([
@@ -74,13 +76,12 @@ class ProfilController extends Controller
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
             'kontak' => 'nullable|string|max:255',
-            'alamat' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string',
         ]);
 
-        // Simpan foto
-        $path = $request->file('foto')->store('profil', 'public');
+        $path = $request->file('foto')->store('perangkat_desa', 'public');
 
-        perangkat::create([
+        Perangkat::create([
             'foto' => $path,
             'nama' => $request->nama,
             'jabatan' => $request->jabatan,
@@ -88,47 +89,39 @@ class ProfilController extends Controller
             'alamat' => $request->alamat,
         ]);
 
-        return back()->with('success', 'Data perangkat desa berhasil ditambahkan.');
+        return redirect()->route('perangkat.perangkat')->with('success', 'Perangkat desa berhasil ditambahkan.');
     }
 
-    /**
-     * Hapus data perangkat desa.
-     */
-    public function destroyPerangkat(perangkat $perangkat)
+    public function update(Request $request, Perangkat $perangkat)
+    {
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nama' => 'required|string|max:255',
+            'jabatan' => 'required|string|max:255',
+            'kontak' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('foto')) {
+            Storage::disk('public')->delete($perangkat->foto);
+            $path = $request->file('foto')->store('perangkat_desa', 'public');
+            $data['foto'] = $path;
+        }
+
+        $perangkat->update($data);
+
+        return redirect()->route('perangkat.perangkat')->with('success', 'Data perangkat desa berhasil diperbarui.');
+    }
+
+    public function destroy(Perangkat $perangkat)
     {
         Storage::disk('public')->delete($perangkat->foto);
         $perangkat->delete();
 
-        return back()->with('success', 'Data perangkat desa berhasil dihapus.');
+        return redirect()->route('perangkat.perangkat')->with('success', 'Data perangkat desa berhasil dihapus.');
     }
 
-    /**
-     * Update data perangkat desa.
-     */
-    public function updatePerangkat(Request $request, perangkat $perangkat)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
-            'kontak' => 'nullable|string|max:255',
-            'alamat' => 'nullable|string|max:255',
-            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        // Jika ada foto baru diunggah, hapus foto lama dan simpan yang baru
-        if ($request->hasFile('foto')) {
-            Storage::disk('public')->delete($perangkat->foto);
-            $path = $request->file('foto')->store('profil', 'public');
-            $perangkat->update(['foto' => $path]);
-        }
-
-        $perangkat->update([
-            'nama' => $request->nama,
-            'jabatan' => $request->jabatan,
-            'kontak' => $request->kontak,
-            'alamat' => $request->alamat,
-        ]);
-
-        return back()->with('success', 'Data perangkat desa berhasil diubah.');
-    }
+    
 }
