@@ -69,7 +69,7 @@
                     </button>
                 </div>
 
-                <form action="{{ route('pengumuman') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('gallery') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         

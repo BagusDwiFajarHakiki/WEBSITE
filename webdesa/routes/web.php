@@ -45,3 +45,4 @@ Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'vid
 
 //ROUTE GALLERY
 Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'gallery'])->name('gallery');
+Route::post('/gallery', [App\Http\Controllers\GalleryController::class, 'gallery'])->name('gallery.store');
