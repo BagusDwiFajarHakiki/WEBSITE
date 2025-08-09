@@ -43,5 +43,5 @@ Route::get('/tambah_video', [App\Http\Controllers\BerandaController::class, 'tam
 Route::post('/simpan_video', [App\Http\Controllers\BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
 Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('video_profil');
 
-//ROUTE KKN
+//ROUTE GALLERY
 Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'gallery'])->name('gallery');

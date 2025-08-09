@@ -15,7 +15,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Tambah Artikel Berita</h6>
         </div>
         <div class="card-body">
-            <form action="{{ route('pengumuman') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('gallery') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Judul Berita -->
