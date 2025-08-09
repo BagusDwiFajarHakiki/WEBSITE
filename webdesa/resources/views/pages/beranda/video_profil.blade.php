@@ -1,8 +1,16 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
-    <h1>Video Profil</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Video Profil</h1>
+
+    <!-- Tombol Ganti Video -->
+    <button type="button" class="btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#gantiVideoModal">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Ganti Video
+    </button>
+
+</div>
+
 
     {{-- Tampilkan video kalau ada --}}
     @if(isset($video) && $video->file_path)
@@ -10,18 +18,12 @@
     <video controls autoplay muted style="position: absolute; top:0; left:0; width:100%; height:100%;">
         <source src="{{ asset('storage/'.$video->file_path) }}" type="video/mp4">
     </video>
-</div>
 
     @else
         <p>Belum ada video.</p>
     @endif
 
     <br><br>
-
-    <!-- Tombol Ganti Video -->
-    <button type="button" class="btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#gantiVideoModal">
-        <i class="fas fa-plus fa-sm text-white-50"></i> Ganti Video
-    </button>
 
     <!-- Modal Ganti Video -->
     <div class="modal fade" id="gantiVideoModal" tabindex="-1" role="dialog" aria-labelledby="gantiVideoModalLabel" aria-hidden="true">
