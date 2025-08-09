@@ -3,24 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Bumdes;
 
 class BUMDesController extends Controller
 {
-    public function profil_bumdes()
+    public function index()
+{
+    return view('pages.BUMDes.profil_bumdes');
+}
+
+
+    public function update(Request $request)
     {
-        $profil_bumdes = \App\Models\bumdes::all();
-
-        return view('pages.BUMDes.profil_bumdes', [
-            'profil_bumdes' => $profil_bumdes,
+        $request->validate([
+            'deskripsi' => 'required|string',
         ]);
-    }
 
-    public function usaha_bumdes()
-    {
-        $usaha_bumdes = \App\Models\bumdes::all();
+        // Ambil record pertama atau bikin baru kalau belum ada
+        $bumdes = Bumdes::first();
+        if (!$bumdes) {
+            $bumdes = new Bumdes();
+        }
 
-        return view('pages.BUMDes.usaha_bumdes', [
-            'usaha_bumdes' => $usaha_bumdes,
-        ]);
+        $bumdes->deskripsi = $request->deskripsi;
+        $bumdes->save();
+
+        return redirect()->back()->with('success', 'Deskripsi BUMDes berhasil diperbarui.');
     }
 }

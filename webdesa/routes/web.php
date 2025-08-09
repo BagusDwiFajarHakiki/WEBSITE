@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\BUMDesController;
 
 Route::get('/home', function () {
     return view('home.index');
@@ -67,6 +68,14 @@ Route::get('/pengumuman', [BerandaController::class, 'Pengumuman'])->name('pengu
 
 // Simpan pengumuman baru
 Route::post('/pengumuman', [BerandaController::class, 'simpanPengumuman'])->name('simpan_pengumuman');
-
 Route::put('/pengumuman/{id}', [BerandaController::class, 'updatePengumuman'])->name('update_pengumuman');
 Route::delete('/pengumuman/{id}', [BerandaController::class, 'hapusPengumuman'])->name('hapus_pengumuman');
+
+// ROUTE BUMDes
+
+// BUMDes - Profil
+Route::get('/profil_bumdes', [BUMDesController::class, 'index'])->name('profil_bumdes');
+Route::post('/profil_bumdes', [BUMDesController::class, 'update'])->name('update_profil_bumdes');
+
+// BUMDes - Usaha
+Route::get('/usaha_bumdes', [BUMDesController::class, 'usaha'])->name('usaha_bumdes');

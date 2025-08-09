@@ -8,5 +8,5 @@ class bumdes extends Model
 {
     protected $table = 'bumdes';
 
-    protected $guarded = [];
+    protected $guarded = ['deskripsi'];
 }
