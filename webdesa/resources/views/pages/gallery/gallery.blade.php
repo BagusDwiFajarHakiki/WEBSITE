@@ -12,48 +12,46 @@
     <!-- Tabel Data -->
     <div class="card shadow mb-4">
         <div class="card-body">
-            @if($gallery->isEmpty())
-                <div class="text-center text-muted my-4">
-                    <i class="fas fa-info-circle fa-2x mb-2"></i>
-                    <p class="mb-0">Tidak ada data</p>
-                </div>
-            @else
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>No</th>
-                                <th>Judul</th>
-                                <th>Isi</th>
-                                <th>Gambar</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($galleries as $index => $gallery)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $gallery->judul }}</td>
-                                    <td>{{ ucfirst($gallery->isi) }}</td>
-                                    <td>
-                                        <img src="{{ asset('storage/'.$gallery->gambar) }}" alt="{{ $gallery->judul }}" width="80">
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('gallery.edit', $gallery->id) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <form action="{{ route('gallery.destroy', $gallery->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus data ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
+           @if($gallery->isEmpty())
+    <div class="text-center text-muted my-4">
+        <i class="fas fa-info-circle fa-2x mb-2"></i>
+        <p class="mb-0">Tidak ada data</p>
+    </div>
+@else
+    <div class="table-responsive">
+        <table class="table table-bordered" width="100%" cellspacing="0">
+            <thead class="thead-light">
+                <tr>
+                    <th>No</th>
+                    <th>Judul</th>
+                    <th>Isi</th>
+                    <th>Gambar</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($gallery as $index => $item)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $item->judul }}</td>
+                        <td>{{ ucfirst($item->isi) }}</td>
+                        <td>
+                            <img src="{{ asset('storage/'.$item->gambar) }}" alt="{{ $item->judul }}" width="80">
+                        </td>
+                        <td>
+                            <form action="{{ route('gallery.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus data ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endif
+
         </div>
     </div>
 
@@ -69,7 +67,7 @@
                     </button>
                 </div>
 
-                <form action="{{ route('gallery') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         

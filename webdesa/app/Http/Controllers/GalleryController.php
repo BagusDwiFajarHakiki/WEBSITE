@@ -3,38 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Gallery; // pastikan huruf besar kecil sesuai nama model
+use App\Models\gallery; // pastikan modelnya ada
+use Illuminate\Support\Facades\Storage;
+
 
 class GalleryController extends Controller
 {
-    // GET: Menampilkan halaman gallery
+    // Tampilkan data gallery
     public function index()
     {
-        $galleries = Gallery::all();
-        return view('pages.gallery.gallery', [
-            'galleries' => $galleries,
-        ]);
+        $gallery = gallery::all();
+        return view('pages.gallery.gallery', compact('gallery'));
     }
 
-    // POST: Menyimpan data gallery
+    // Simpan data gallery
     public function store(Request $request)
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'isi' => 'required|string'
         ]);
 
-        // Simpan file gambar ke storage/app/public/gallery
+        // Upload gambar
         $path = $request->file('gambar')->store('gallery', 'public');
 
-        // Simpan data ke database
-        Gallery::create([
+        gallery::create([
             'judul' => $request->judul,
             'isi' => $request->isi,
-            'gambar' => $path,
+            'gambar' => $path
         ]);
 
-        return redirect()->route('gallery.index')->with('success', 'Gallery berhasil ditambahkan!');
+        return redirect()->route('gallery.index')->with('success', 'Data gallery berhasil ditambahkan');
+    }
+
+    // Hapus data gallery
+    public function destroy($id)
+    {
+        $gallery = gallery::findOrFail($id);
+        if ($gallery->gambar) {
+            Storage::disk('public')->delete($gallery->gambar);
+        }
+        $gallery->delete();
+        return redirect()->route('gallery.index')->with('success', 'Data gallery berhasil dihapus');           
     }
 }
