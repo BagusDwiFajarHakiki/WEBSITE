@@ -5,9 +5,9 @@ use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/home', function () {
+    return view('home.index');
+});
 
 route::get('/', function () {
     return view('pages.dashboard');
