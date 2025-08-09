@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('gallery', function (Blueprint $table) {
             $table->id();
+            $table->string('judul');
+            $table->text('isi');
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

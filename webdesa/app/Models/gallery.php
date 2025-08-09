@@ -8,5 +8,5 @@ class gallery extends Model
 {
     protected $table = 'gallery';
 
-    protected $guarded = [];
+    protected $guarded = ['judul', 'isi', 'gambar'];
 }

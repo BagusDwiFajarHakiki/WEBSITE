@@ -32,9 +32,7 @@ Route::get('/ambil-profil-desa', [ProfilController::class,'show']);
 //ROUTE PERANGKAT DESA
 Route::get('/perangkat_desa', [ProfilController::class, 'indexs'])->name('perangkat.indexs');
 Route::post('/perangkat_desa/struktur', [ProfilController::class, 'storeStruktur'])->name('perangkat.struktur.store');
-Route::resource('/perangkat_desa/perangkat', ProfilController::class)->except([
-    'create', 'show', 'edit'
-]);
+Route::resource('/perangkat_desa/perangkat', ProfilController::class)->except(['create', 'show', 'edit']);
 Route::post('/perangkat_desa/perangkat', [ProfilController::class, 'storePerangkat'])->name('perangkat.store');
 Route::post('/perangkat_desa/update/{perangkat}', [ProfilController::class, 'updatePerangkat'])->name('perangkat.update');
 Route::delete('/perangkat_desa/delete/{perangkat}', [ProfilController::class, 'destroyPerangkat'])->name('perangkat.destroy');
@@ -44,3 +42,6 @@ Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'vid
 Route::get('/tambah_video', [App\Http\Controllers\BerandaController::class, 'tambah_video']);
 Route::post('/simpan_video', [App\Http\Controllers\BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
 Route::get('/video_profil', [App\Http\Controllers\BerandaController::class, 'video_profil'])->name('video_profil');
+
+//ROUTE KKN
+Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'gallery'])->name('gallery');
