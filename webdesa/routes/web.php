@@ -76,6 +76,9 @@ Route::delete('/pengumuman/{id}', [BerandaController::class, 'hapusPengumuman'])
 // BUMDes - Profil
 Route::get('/profil_bumdes', [BUMDesController::class, 'index'])->name('profil_bumdes');
 Route::post('/profil_bumdes', [BUMDesController::class, 'update'])->name('update_profil_bumdes');
+Route::get('/ambil-profil-bumdes', [BUMDesController::class, 'show'])->name('ambil_profil_bumdes');
+Route::post('/simpan-profil-bumdes', [BUMDesController::class, 'update'])->name('simpan_profil_bumdes');
+
 
 // BUMDes - Usaha
 Route::get('/usaha_bumdes', [BUMDesController::class, 'usaha'])->name('usaha_bumdes');

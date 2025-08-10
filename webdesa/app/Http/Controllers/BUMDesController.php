@@ -13,21 +13,23 @@ class BUMDesController extends Controller
 }
 
 
-    public function update(Request $request)
-    {
-        $request->validate([
-            'deskripsi' => 'required|string',
-        ]);
+   public function show()
+{
+    $bumdes = Bumdes::first();
+    return response()->json($bumdes);
+}
 
-        // Ambil record pertama atau bikin baru kalau belum ada
-        $bumdes = Bumdes::first();
-        if (!$bumdes) {
-            $bumdes = new Bumdes();
-        }
+public function update(Request $request)
+{
+    $request->validate([
+        'deskripsi' => 'required|string',
+    ]);
 
-        $bumdes->deskripsi = $request->deskripsi;
-        $bumdes->save();
+    $bumdes = Bumdes::first() ?? new Bumdes();
+    $bumdes->deskripsi = $request->deskripsi;
+    $bumdes->save();
 
-        return redirect()->back()->with('success', 'Deskripsi BUMDes berhasil diperbarui.');
-    }
+    return response()->json(['success' => true, 'message' => 'Deskripsi BUMDes berhasil diperbarui']);
+}
+
 }
