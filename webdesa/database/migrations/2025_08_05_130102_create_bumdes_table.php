@@ -18,6 +18,13 @@ return new class extends Migration
         $table->timestamps();
     });
 
+    Schema::create('listbumdes', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->text('deskripsi');
+        $table->string('fotopath');
+        $table->timestamps();
+    });
 
     }
 
@@ -27,5 +34,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('bumdes');
+        Schema::dropIfExists('listbumdes');
     }
 };
