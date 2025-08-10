@@ -76,9 +76,16 @@ Route::post('/simpan-profil-bumdes', [BUMDesController::class, 'update'])->name(
 
 
     // ========================
-    // route BUMDES-usaha
-    // ========================
-Route::get('/usaha_bumdes', [BUMDesController::class, 'usaha'])->name('usaha_bumdes');
+// route BUMDES-usaha
+// ========================
+Route::prefix('usaha_bumdes')->group(function () {
+    Route::get('/', [BUMDesController::class, 'usahaIndex'])->name('usaha_bumdes.index');
+    Route::post('/', [BUMDesController::class, 'usahaStore'])->name('usaha_bumdes.store');
+    Route::put('/{id}', [BUMDesController::class, 'usahaUpdate'])->name('usaha_bumdes.update');
+    Route::delete('/{id}', [BUMDesController::class, 'usahaDestroy'])->name('usaha_bumdes.destroy');
+});
+
+
 
     // ========================
     // route GALLERY

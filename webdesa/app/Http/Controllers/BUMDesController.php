@@ -42,7 +42,7 @@ class BUMDesController extends Controller
     public function usahaIndex()
     {
         $list = ListBumdes::all();
-        return view('pages.usaha_bumdes', compact('list'));
+        return view('pages.BUMDes.usaha_bumdes', compact('list'));
     }
 
     public function usahaStore(Request $request)

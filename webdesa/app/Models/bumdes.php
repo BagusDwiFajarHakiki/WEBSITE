@@ -12,16 +12,3 @@ class bumdes extends Model
 
     protected $guarded = ['deskripsi'];
 }
-
-// Model untuk usaha bumdes
-class ListBumdes extends Model
-{
-    use HasFactory;
-
-    protected $table = 'listbumdes';
-    protected $fillable = [
-        'name',
-        'deskripsi',
-        'fotopath',
-    ];
-}
