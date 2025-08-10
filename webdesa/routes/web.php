@@ -16,16 +16,22 @@ route::get('/', function () {
     return view('pages.dashboard');
 });
 
-// ROUTE UMKM
+    // ========================
+    // route UMKM
+    // ========================
 route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UMKMController::class, 'updateStatus'])->name('umkm.update-status');
 
-//ROUTE DATA PROFIL DESA
+    // ========================
+    // route PROFIL DESA
+    // ========================
 Route::resource('/profil', ProfilController::class);
 Route::post('/simpan-profil-desa', [ProfilController::class,'store']);
 Route::get('/ambil-profil-desa', [ProfilController::class,'show']);
 
-//ROUTE PERANGKAT DESA
+    // ========================
+    // route PERANGKAT DESA
+    // ========================
 Route::prefix('perangkat')->group(function () {
     Route::get('/', [ProfilController::class, 'perangkat'])->name('perangkat.perangkat');
     Route::post('/', [ProfilController::class, 'storePerangkat'])->name('perangkat.store');
@@ -33,19 +39,25 @@ Route::prefix('perangkat')->group(function () {
     Route::delete('/{perangkat}', [ProfilController::class, 'destroy'])->name('perangkat.destroy');
 });
 
-//ROUTE STRUKTUR DESA
+    // ========================
+    // route STRUKTUR DESA
+    // ========================
 Route::prefix('struktur')->group(function () {
     Route::get('/', [ProfilController::class, 'struktur'])->name('struktur.struktur');
     Route::post('/', [ProfilController::class, 'storeStruktur'])->name('struktur.store');
 });
 
-//ROUTE VIDEO PROFIL
+    // ========================
+    // route VIDEO PROFIL
+    // ========================
 Route::get('/video_profil', [BerandaController::class, 'video_profil'])->name('beranda.video_profil');
 Route::get('/tambah_video', [BerandaController::class, 'tambah_video']);
 Route::post('/simpan_video', [BerandaController::class, 'simpan_video'])->name('beranda.simpan_video');
 Route::get('/video_profil', [BerandaController::class, 'video_profil'])->name('video_profil');
 
-//ROUTE PENGUMUMAN
+    // ========================
+    // route PENGUMUMAN
+    // ========================
 //Menampilkan halaman pengumuman
 Route::get('/pengumuman', [BerandaController::class, 'Pengumuman'])->name('pengumuman');
 
@@ -54,18 +66,23 @@ Route::post('/pengumuman', [BerandaController::class, 'simpanPengumuman'])->name
 Route::put('/pengumuman/{id}', [BerandaController::class, 'updatePengumuman'])->name('update_pengumuman');
 Route::delete('/pengumuman/{id}', [BerandaController::class, 'hapusPengumuman'])->name('hapus_pengumuman');
 
-//ROUTE BUMDes
-//BUMDes - Profil
+    // ========================
+    // route BUMDES-profil
+    // ========================
 Route::get('/profil_bumdes', [BUMDesController::class, 'index'])->name('profil_bumdes');
 Route::post('/profil_bumdes', [BUMDesController::class, 'update'])->name('update_profil_bumdes');
 Route::get('/ambil-profil-bumdes', [BUMDesController::class, 'show'])->name('ambil_profil_bumdes');
 Route::post('/simpan-profil-bumdes', [BUMDesController::class, 'update'])->name('simpan_profil_bumdes');
 
 
-//BUMDes - Usaha
+    // ========================
+    // route BUMDES-usaha
+    // ========================
 Route::get('/usaha_bumdes', [BUMDesController::class, 'usaha'])->name('usaha_bumdes');
 
-//ROUTE GALLERY
+    // ========================
+    // route GALLERY
+    // ========================
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
 Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
