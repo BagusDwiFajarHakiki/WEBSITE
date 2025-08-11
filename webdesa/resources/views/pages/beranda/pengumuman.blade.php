@@ -10,36 +10,6 @@
         </button>
     </div>
 
-    <!-- Modal Tambah Pengumuman -->
-    <div class="modal fade" id="tambahPengumumanModal" tabindex="-1" aria-labelledby="tambahPengumumanLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tambahPengumumanLabel">Buat Pengumuman Baru</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('simpan_pengumuman') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="judul" class="form-label">Judul</label>
-                            <input type="text" class="form-control" id="judul" name="judul" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="isi" class="form-label">Isi Pengumuman</label>
-                            <textarea class="form-control" id="isi" name="isi" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="gambar" class="form-label">Gambar (opsional)</label>
-                            <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
         <!-- Daftar Pengumuman -->
     <div class="row">
         @if(isset($pengumuman) && count($pengumuman) > 0)
@@ -72,6 +42,37 @@
                                         data-bs-target="#hapusPengumumanModal{{ $item->id }}">
                                     Hapus
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         
+
+                    <!-- Modal Tambah Pengumuman -->
+                <div class="modal fade" id="tambahPengumumanModal" tabindex="-1" aria-labelledby="tambahPengumumanLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tambahPengumumanLabel">Buat Pengumuman Baru</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('simpan_pengumuman') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="judul" class="form-label">Judul</label>
+                                        <input type="text" class="form-control" id="judul" name="judul" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="isi" class="form-label">Isi Pengumuman</label>
+                                        <textarea class="form-control" id="isi" name="isi" rows="3" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gambar" class="form-label">Gambar (opsional)</label>
+                                        <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -136,7 +137,7 @@
                 </div>
 
             @endforeach
-        @else
+       @else
             <div class="col-12">
                 <p class="text-center text-muted">Belum ada pengumuman</p>
             </div>
