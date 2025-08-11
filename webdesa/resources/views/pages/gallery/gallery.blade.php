@@ -39,11 +39,14 @@
                             <img src="{{ asset('storage/'.$item->gambar) }}" alt="{{ $item->judul }}" width="80">
                         </td>
                         <td>
-                            <form action="{{ route('gallery.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus data ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                            </form>
+                           
+                                <a href="{{ route('gallery.edit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                <form action="{{ route('gallery.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus data ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                            
                         </td>
                     </tr>
                 @endforeach
@@ -83,7 +86,7 @@
                             <input type="file" name="gambar" id="gambar" class="form-control-file" accept="image/*" required>
                         </div>
 
-                        <!-- Isi Berita -->
+                        <!-- Isi Gallery -->
                         <div class="form-group">
                             <label for="isi">Isi Gallery</label>
                             <textarea name="isi" id="isi" rows="6" class="form-control" placeholder="Tulis isi berita..." required></textarea>
