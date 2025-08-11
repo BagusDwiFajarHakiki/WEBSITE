@@ -1,19 +1,17 @@
 @extends('layout.app')
 
 @section('content')
+<!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Data BUMDES PASIRAMAN</h1>
+        <!-- Tombol tambah pengumuman -->
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tambahModal">
+            + Tambah Bumdes
+        </button>
+    </div>
+
 <div class="container">
-    <h1 class="mb-4">Daftar Usaha BUMDes</h1>
-
-    {{-- Notifikasi sukses --}}
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    {{-- Tombol Tambah --}}
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahModal">
-        + Tambah Usaha
-    </button>
-
+   
     {{-- Daftar Usaha dalam Card --}}
     <div class="row">
         @forelse($list as $usaha)
@@ -132,4 +130,5 @@
         </div>
     </div>
 </div>
+
 @endsection

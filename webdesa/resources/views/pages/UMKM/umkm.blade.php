@@ -6,7 +6,7 @@
     <h1 class="h3 mb-0 text-gray-800">DATA UMKM</h1>
     <!-- Bagian Pencarian dan Tombol Tambah Data -->
     <div class="d-flex align-items-center">
-        <!-- Kolom Pencarian dengan lebar yang lebih pendek -->
+        <!-- Kolom Pencarian -->
         <div class="input-group mr-3" style="width: 300px;">
             <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama UMKM atau Pemilik..." aria-label="Cari Nama UMKM atau Pemilik" aria-describedby="searchButton">
         </div>
