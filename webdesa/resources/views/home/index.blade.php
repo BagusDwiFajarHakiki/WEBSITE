@@ -96,9 +96,14 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
     </style>
 </head>
+
 <body class="bg-[#E7F0E7] text-gray-900 font-sans">
+
+
+
     <header class="bg-gradient-to-r from-green-600 via-teal-500 to-green-400 p-4 text-white sticky top-0 z-30 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -172,6 +177,8 @@
                 </button>
             </div>
 
+/* Animasi fade in */
+
             <div class="flex-grow text-gray-800">
                 <a href="#" class="block px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">Beranda</a>
                 <div class="relative">
@@ -186,7 +193,7 @@
                         <a href="#" class="block px-4 py-2 border-b border-gray-100 hover:bg-green-100 transition-colors">Struktur Pemerintahan</a>
                     </div>
                 </div>
-                <a href="#" class="block px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">Layanan</a>
+                <a href="#xx" class="block px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">Layanan</a>
                 <a href="#" class="block px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">Potensi Desa</a>
                 <a href="#" class="block px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">Berita & Kegiatan</a>
                 <a href="#" class="block px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">Galeri</a>
@@ -195,23 +202,18 @@
     </header>
 
     <main>
-        <section class="p-0 relative rounded-b-3xl shadow-md overflow-hidden" id="hero-container">
-            <iframe
-                id="hero-video"
-                src="https://www.youtube.com/embed/1M6rOs3hKDc?autoplay=1&mute=1&controls=0&loop=1&playlist=1M6rOs3hKDc"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                class="absolute inset-0 w-full h-full object-cover rounded-b-3xl"
-                title="Profil Desa Pasiraman - 2023"
-            ></iframe>
+        
+        <section class="relative w-full h-[1080px] overflow-hidden">
+            <video autoplay muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+                <source src="{{ asset('videos/sony.mp4') }}" type="video/mp4">
+            </video>
             <div class="absolute inset-0 bg-black bg-opacity-30 flex justify-center items-center rounded-b-3xl">
                 <h2 class="text-white text-4xl md:text-6xl font-extrabold tracking-widest select-none drop-shadow-lg">
-                    SELAMAT DATANG
+                SELAMAT DATANG
                 </h2>
             </div>
         </section>
-
+            
         <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 fade-in">
             <h3 class="text-2xl font-bold text-center text-gray-800 select-none">Profil Desa Pasiraman</h3>
             <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
@@ -274,7 +276,7 @@
         <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 fade-in">
             <h5 class="text-2xl font-bold text-center text-gray-800 select-none">Potensi Desa</h5>
 
-            <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md">
+            <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md" id="xx">
                 <div class="flex justify-between items-center mb-4">
                     <h6 class="text-lg font-semibold select-none">UMKM Desa Pasiraman</h6>
                     <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-1 rounded-full transition" aria-label="Lihat Semua UMKM Desa Pasiraman">Lihat Semua</button>
@@ -388,7 +390,7 @@
                 } else {
                     profilMenu.classList.remove('opacity-100', 'visible');
                     profilMenu.classList.add('opacity-0', 'invisible');
-                }
+                } 
             });
 
             document.addEventListener('click', (e) => {
