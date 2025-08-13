@@ -24,7 +24,7 @@
     <hr class="sidebar-divider">
 
     <!-- Nav Item - Beranda Collapse Menu -->
-    <li class="nav-item {{ request()->is('video_profil') || request()->is('pengumuman') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('video_profil') || request()->is('kades') || request()->is('pengumuman') ? 'active' : '' }}">
         <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseBeranda"
             aria-expanded="true" aria-controls="collapseBeranda">
             <i class="fas fa-fw fa-home"></i>
@@ -34,6 +34,8 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Beranda Menu:</h6>
                 <a class="collapse-item" href="/video_profil"><i class="fas fa-video mr-2"></i>Video Profil</a>
+                <a class="collapse-item" href="/banner"><i class="fas fa-images mr-2"></i>Banner Utama</a>
+                <a class="collapse-item" href="/kades"><i class="fas fa-newspaper mr-2"></i>Data Kepala Desa</a>
                 <a class="collapse-item" href="/pengumuman"><i class="fas fa-bullhorn mr-2"></i>Pengumuman</a>
             </div>
         </div>
@@ -54,6 +56,14 @@
                 <a class="collapse-item" href="/struktur"><i class="fas fa-users mr-2"></i>Struktur Desa</a>
             </div>
         </div>
+    </li>
+
+    <!-- Nav Item - Statistik Collapse Menu -->
+    <li class="nav-item {{ request()->is('statistik') ? 'active' : '' }}">
+        <a class="nav-link" href="/statistik">
+            <i class="fas fa-fw fa-chart-bar"></i>
+            <span>STATISTIK DESA</span>
+        </a>
     </li>
 
     <!-- Nav Item - BUMDes Collapse Menu -->
@@ -91,7 +101,7 @@
     <li class="nav-item {{ request()->is('gallery') ? 'active' : '' }}">
         <a class="nav-link" href="/gallery">
             <i class="fas fa-fw fa-images"></i>
-            <span>GALLERY</span></a>
+            <span>BERITA</span></a>
     </li>
 
     <!-- Divider -->

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Gallery</h1>
+    <h1>Edit Berita</h1>
     <form action="{{ route('gallery.update', $item->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -17,7 +17,7 @@
         </div>
 
         <div class="form-group">
-            <label for="isi">Isi Gallery</label>
+            <label for="isi">Isi Berita</label>
             <textarea name="isi" id="isi" rows="6" class="form-control" required>{{ $item->isi }}</textarea>
         </div>
 

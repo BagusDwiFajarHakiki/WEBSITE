@@ -3,9 +3,9 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">DATA GALLERY</h1>
+        <h1 class="h3 mb-0 text-gray-800">DATA BERITA</h1>
         <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#galleryModal">
-            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Gallery
+            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Berita
         </button>
     </div>
 
@@ -60,7 +60,7 @@
                         <!-- Judul Berita -->
                         <div class="form-group">
                             <label for="judul">Judul</label>
-                            <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukkan judul galery" required>
+                            <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukkan judul berita" required>
                         </div>
 
                         <!-- Upload Gambar -->
@@ -71,7 +71,7 @@
 
                         <!-- Isi Gallery -->
                         <div class="form-group">
-                            <label for="isi">Isi Gallery</label>
+                            <label for="isi">Isi Berita</label>
                             <textarea name="isi" id="isi" rows="6" class="form-control" placeholder="Tulis isi berita..." required></textarea>
                         </div>
                     </div>

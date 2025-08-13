@@ -7,6 +7,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\BUMDesController;
+use App\Http\Controllers\MapController;
 
 Route::get('/home', function () {
     return view('home.index');
@@ -86,6 +87,10 @@ Route::prefix('usaha_bumdes')->group(function () {
 });
 
 
+// ========================
+// route MAPS
+// ========================
+Route::get('/map', [MapController::class, 'index']);
 
 // ========================
 // route GALLERY
