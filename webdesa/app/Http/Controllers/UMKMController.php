@@ -106,10 +106,10 @@ class UMKMController extends Controller
     }
     
     public function updateStatus(Request $request, Umkm $umkm)
-{
-    $umkm->status = $request->status;
-    $umkm->save();
-    
-    return response()->json(['message' => 'Status berhasil diperbarui!']);
-}
+    {
+        $umkm->status = $request->status;
+        $umkm->save();
+        
+        return response()->json(['message' => 'Status berhasil diperbarui!']);
+    }
 }

@@ -60,11 +60,11 @@
             }
         }
         
-        /* CSS untuk video profil kembali ke mode awal */
+        /* CSS untuk video profil */
         #hero-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%; /* Rasio 16:9 untuk desktop */
             overflow: hidden;
         }
         #hero-container iframe,
@@ -79,12 +79,9 @@
         }
         @media (max-width: 767px) {
             #hero-container {
-                padding-bottom: 133.33%; /* 3:4 aspect ratio (4 / 3 * 100) */
-            }
-            #hero-container img {
-                content: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4207908b-1f7c-473d-98d0-e1152a420516.png');
-                object-fit: cover;
-                object-position: center;
+                /* Menyesuaikan tinggi wadah dengan tinggi layar mobile */
+                padding-bottom: 0;
+                height: 100vh;
             }
         }
         

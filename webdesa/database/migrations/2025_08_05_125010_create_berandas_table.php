@@ -24,6 +24,7 @@ return new class extends Migration
         $table->string('judul');
         $table->text('isi');
         $table->string('gambar')->nullable();
+        $table->boolean('status')->default(0)->nullable();
         $table->timestamps();
         });
     }

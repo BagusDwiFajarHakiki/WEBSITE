@@ -1,23 +1,22 @@
 @extends('layout.app')
 
 @section('content')
-<!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">DATA UMKM</h1>
-    <!-- Bagian Pencarian dan Tombol Tambah Data -->
     <div class="d-flex align-items-center">
-        <!-- Kolom Pencarian -->
         <div class="input-group mr-3" style="width: 300px;">
             <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama UMKM atau Pemilik..." aria-label="Cari Nama UMKM atau Pemilik" aria-describedby="searchButton">
         </div>
-        <!-- Tombol Tambah Data -->
         <button type="button" class="btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#tambahUmkmModal">
             <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
         </button>
     </div>
 </div>
 
-<!-- Modal Tambah UMKM -->
+<div class="d-flex justify-content-center mt-4">
+    {{ $umkm->links('pagination::bootstrap-4') }}
+</div>
+
 <div class="modal fade" id="tambahUmkmModal" tabindex="-1" role="dialog" aria-labelledby="tambahUmkmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form action="{{route('umkm.store')}}" method="POST" enctype="multipart/form-data">
@@ -26,7 +25,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="tambahUmkmModalLabel">Tambah Data UMKM</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -47,9 +46,9 @@
                         <input type="number" class="form-control" id="kontak" name="kontak" placeholder="e.g., +6281234567890" required>
                     </div>
                     <div class="form-group">
-                        <label for="edit_alamat">Link Lokasi Google Maps</label>
+                        <label for="alamat">Link Lokasi Google Maps</label>
                         <div class="input-group">
-                            <input type="url" class="form-control" id="edit_alamat" name="alamat" placeholder="Salin link Google Maps di sini..." required>
+                            <input type="url" class="form-control" id="alamat" name="alamat" placeholder="Salin link Google Maps di sini..." required>
                             <div class="input-group-append">
                                 <a href="https://www.google.com/maps" target="_blank" class="btn btn-outline-secondary">
                                     <i class="fas fa-map-marker-alt"></i> Buka Google Maps
@@ -71,7 +70,6 @@
     </div>
 </div>
 
-<!-- Modal Edit UMKM -->
 <div class="modal fade" id="editUmkmModal" tabindex="-1" role="dialog" aria-labelledby="editUmkmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form id="editFormUmkm" method="POST" enctype="multipart/form-data">
@@ -81,7 +79,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="editUmkmModalLabel">Edit Data UMKM</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -131,14 +129,13 @@
     </div>
 </div>
 
-<!-- Modal Hapus UMKM -->
 <div class="modal fade" id="deleteUmkmModal" tabindex="-1" role="dialog" aria-labelledby="deleteUmkmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteUmkmModalLabel">Konfirmasi Hapus Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -156,160 +153,195 @@
     </div>
 </div>
 
-<!-- Tabel Data UMKM -->
-<div class="card shadow mb-4">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="table-layout: fixed;">
-                <thead style="text-align: center;">
-                    <tr>
-                        <th style="width: 4.5%;">
-                            <div class="d-flex justify-content-center">
-                                <button id="toggleAllStatus" class="btn btn-sm btn-outline-secondary">
-                                    <i class="fas fa-check-square"></i>
-                                </button>
-                            </div>
-                        </th>
-                        <th style="width: 4%;">No</th>
-                        <th style="width: 10%;">Foto</th>
-                        <th style="width: 18%;">Nama UMKM</th>
-                        <th style="width: 11%;">Pemilik</th>
-                        <th style="width: 15%;">Kontak</th>
-                        <th style="width: 10%;">Alamat</th>
-                        <th style="width: 17.5%;">Deskripsi</th>
-                        <th style="width: 9%;">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="umkmTableBody">
-                    @forelse($umkm as $umkm)
-                        <tr>
-                            <td style="text-align: center; align-content: center;">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input umkm-status-toggle" id="statusSwitch-{{ $umkm->id }}" data-id="{{ $umkm->id }}" {{ $umkm->status ? 'checked' : '' }}>
-                                    <label class="custom-control-label" for="statusSwitch-{{ $umkm->id }}"></label>
-                                </div>
-                            </td>
-                            <td style="align-content: center; text-align: center;">{{ $loop->iteration }}</td>
-                            <td>
-                                @if($umkm->foto)
-                                <img src="{{ asset('storage/umkm/' . $umkm->foto) }}" alt="Foto UMKM" width="90">
-                                @else
-                                <span class="text-muted">Tidak ada foto</span>
-                                @endif
-                            </td>
-                            <td style="word-break: break-word; align-content: center;">{{ $umkm->nama_umkm }}</td>
-                            <td style="word-break: break-word; align-content: center;">{{ $umkm->pemilik }}</td>
-                            <td style="word-break: break-word; align-content: center;">
-                                @php
-                                  $kontak_wa = $umkm->kontak;
-                                  // Cek apakah nomor kontak dimulai dengan '0'
-                                  if (substr($kontak_wa, 0, 1) === '0') {
-                                    // Jika ya, ganti '0' di depan dengan '62' (kode negara Indonesia)
-                                    $kontak_wa = '62' . substr($kontak_wa, 1);
-                                  }
-                                @endphp
-                                <a href="https://wa.me/{{ $kontak_wa }}" target="_blank">
-                                  {{ $umkm->kontak }}
-                                </a>
-                            </td>
-                            <td style="text-align: center; align-content: center;">
-                                <a href="{{ $umkm->alamat }}" target="_blank" style="word-break: break-word;">Lihat Lokasi</a>
-                            </td>
-                            <td style="word-break: break-word; align-content: center;">{{ $umkm->deskripsi }}</td>
-                            <td style="text-align: center; align-content: center;">
-                                <div class="d-flex justify-content-center" style="gap: 5px;">
-                                    <!-- Tombol Edit -->
-                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editUmkmModal"
-                                        data-id="{{ $umkm->id }}"
-                                        data-nama="{{ $umkm->nama_umkm }}"
-                                        data-pemilik="{{ $umkm->pemilik }}"
-                                        data-kontak="{{ $umkm->kontak }}"
-                                        data-alamat="{{ $umkm->alamat }}"
-                                        data-deskripsi="{{ $umkm->deskripsi }}"
-                                        data-foto="{{ $umkm->foto ? asset('storage/umkm/' . $umkm->foto) : '' }}">
-                                        <i class="fas fa-fw fa-pen"></i>
-                                    </button>
-                                    <!-- Tombol Hapus -->
-                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteUmkmModal"
-                                        data-id="{{ $umkm->id }}">
-                                        <i class="fas fa-fw fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center">Tidak ada data UMKM.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+<div class="modal fade" id="detailUmkmModal" tabindex="-1" role="dialog" aria-labelledby="detailUmkmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailUmkmModalLabel">Detail UMKM</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3">
+                    <img id="detail_foto" src="" alt="Foto UMKM" class="img-fluid rounded" style="max-height: 200px;">
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Nama UMKM:</strong> <span id="detail_nama_umkm"></span></li>
+                    <li class="list-group-item"><strong>Pemilik:</strong> <span id="detail_pemilik"></span></li>
+                    <li class="list-group-item"><strong>Kontak:</strong> <a id="detail_kontak" href="#" target="_blank"></a></li>
+                    <li class="list-group-item"><strong>Alamat:</strong> <a id="detail_alamat" href="#" target="_blank">Lihat Lokasi</a></li>
+                    <li class="list-group-item"><strong>Deskripsi:</strong> <p id="detail_deskripsi" class="mb-0"></p></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Load jQuery, Popper.js, and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" xintegrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" xintegrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" xintegrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57B5h/qf/44j+pE34l7I7fF7K6yA0sA7I" crossorigin="anonymous"></script>
+<div class="container-fluid">
+    <div class="row" id="umkmCardContainer">
+        @forelse($umkm as $data)
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input umkm-status-toggle" id="statusSwitch-{{ $data->id }}" data-id="{{ $data->id }}" {{ $data->status ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="statusSwitch-{{ $data->id }}"></label>
+                            </div>
+                            <div class="dropdown no-arrow">
+                                <a class="dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-header">Aksi:</div>
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#editUmkmModal"
+                                        data-id="{{ $data->id }}"
+                                        data-nama="{{ $data->nama_umkm }}"
+                                        data-pemilik="{{ $data->pemilik }}"
+                                        data-kontak="{{ $data->kontak }}"
+                                        data-alamat="{{ $data->alamat }}"
+                                        data-deskripsi="{{ $data->deskripsi }}"
+                                        data-foto="{{ $data->foto ? asset('storage/umkm/' . $data->foto) : '' }}">
+                                        <i class="fas fa-fw fa-pen text-warning"></i> Edit
+                                    </button>
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#deleteUmkmModal" data-id="{{ $data->id }}">
+                                        <i class="fas fa-fw fa-trash text-danger"></i> Hapus
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center" data-toggle="modal" data-target="#detailUmkmModal" 
+                            data-id="{{ $data->id }}"
+                            data-nama="{{ $data->nama_umkm }}"
+                            data-pemilik="{{ $data->pemilik }}"
+                            data-kontak="{{ $data->kontak }}"
+                            data-alamat="{{ $data->alamat }}"
+                            data-deskripsi="{{ $data->deskripsi }}"
+                            data-foto="{{ $data->foto ? asset('storage/umkm/' . $data->foto) : '' }}"
+                            style="cursor: pointer;">
+                            @if($data->foto)
+                                <img src="{{ asset('storage/umkm/' . $data->foto) }}" alt="Foto UMKM" class="img-fluid rounded mb-3" style="width: 100%; height: 200px; object-fit: cover;">
+                            @else
+                                <div class="bg-light d-flex justify-content-center align-items-center rounded mb-3" style="width: 100%; height: 200px;">
+                                    <span class="text-muted">Tidak ada foto</span>
+                                </div>
+                            @endif
+                            <h5 class="card-title text-truncate">{{ $data->nama_umkm }}</h5>
+                            <p class="card-text text-muted mb-0">Pemilik: {{ $data->pemilik }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="col-12">
+                <p class="text-center">Tidak ada data UMKM yang ditemukan.</p>
+            </div>
+        @endforelse
+    </div>
+
+    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57B5h/qf/44j+pE34l7I7fF7K6yA0sA7I" crossorigin="anonymous"></script>
 
 <script>
-    // Skrip untuk mengisi modal edit
-    $('#editUmkmModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var umkm_id = button.data('id');
-        var nama_umkm = button.data('nama');
-        var pemilik = button.data('pemilik');
-        var kontak = button.data('kontak');
-        var alamat = button.data('alamat');
-        var deskripsi = button.data('deskripsi');
-        var foto_url = button.data('foto');
-
-        var modal = $(this);
-        modal.find('#edit_id').val(umkm_id);
-        modal.find('#edit_nama_umkm').val(nama_umkm);
-        modal.find('#edit_pemilik').val(pemilik);
-        modal.find('#edit_kontak').val(kontak);
-        modal.find('#edit_alamat').val(alamat);
-        modal.find('#edit_deskripsi').val(deskripsi);
-        
-        // Atur action form
-        var updateUrl = `{{ url('umkm') }}/${umkm_id}`;
-        modal.find('#editFormUmkm').attr('action', updateUrl);
-
-        // Tampilkan foto saat ini jika ada
-        if (foto_url) {
-            modal.find('#current_foto').attr('src', foto_url);
-            modal.find('#current_foto_container').show();
-        } else {
-            modal.find('#current_foto_container').hide();
-        }
-    });
-
-    // Skrip untuk mengisi modal hapus
-    $('#deleteUmkmModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var umkm_id = button.data('id');
-        
-        var modal = $(this);
-        // Atur action form hapus
-        var deleteUrl = `{{ url('umkm') }}/${umkm_id}`;
-        modal.find('#deleteFormUmkm').attr('action', deleteUrl);
-    });
-
-    // Skrip untuk menangani perubahan status UMKM
     $(document).ready(function() {
         // Hapus `xintegrity` dari script tags untuk mencegah error saat dijalankan di beberapa lingkungan
         $('script[xintegrity]').each(function() {
             $(this).removeAttr('xintegrity');
         });
-        
+
+        // Skrip untuk mengisi modal edit
+        $('#editUmkmModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var umkm_id = button.data('id');
+            var nama_umkm = button.data('nama');
+            var pemilik = button.data('pemilik');
+            var kontak = button.data('kontak');
+            var alamat = button.data('alamat');
+            var deskripsi = button.data('deskripsi');
+            var foto_url = button.data('foto');
+
+            var modal = $(this);
+            modal.find('#edit_id').val(umkm_id);
+            modal.find('#edit_nama_umkm').val(nama_umkm);
+            modal.find('#edit_pemilik').val(pemilik);
+            modal.find('#edit_kontak').val(kontak);
+            modal.find('#edit_alamat').val(alamat);
+            modal.find('#edit_deskripsi').val(deskripsi);
+            
+            var updateUrl = `{{ url('umkm') }}/${umkm_id}`;
+            modal.find('#editFormUmkm').attr('action', updateUrl);
+
+            if (foto_url) {
+                modal.find('#current_foto').attr('src', foto_url);
+                modal.find('#current_foto_container').show();
+            } else {
+                modal.find('#current_foto_container').hide();
+            }
+        });
+
+        // Skrip untuk mengisi modal hapus
+        $('#deleteUmkmModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var umkm_id = button.data('id');
+            
+            var modal = $(this);
+            var deleteUrl = `{{ url('umkm') }}/${umkm_id}`;
+            modal.find('#deleteFormUmkm').attr('action', deleteUrl);
+        });
+
+        // Skrip untuk mengisi modal detail
+        $('#detailUmkmModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var nama_umkm = button.data('nama');
+            var pemilik = button.data('pemilik');
+            var kontak = button.data('kontak');
+            var alamat = button.data('alamat');
+            var deskripsi = button.data('deskripsi');
+            var foto_url = button.data('foto');
+
+            var modal = $(this);
+            modal.find('#detail_nama_umkm').text(nama_umkm);
+            modal.find('#detail_pemilik').text(pemilik);
+            modal.find('#detail_deskripsi').text(deskripsi);
+
+            // Kontak WhatsApp
+            var kontak_wa = kontak;
+            if (kontak_wa.startsWith('0')) {
+                kontak_wa = '62' + kontak_wa.substring(1);
+            }
+            modal.find('#detail_kontak').text(kontak);
+            modal.find('#detail_kontak').attr('href', `https://wa.me/${kontak_wa}`);
+
+            // Alamat
+            modal.find('#detail_alamat').attr('href', alamat);
+
+            // Foto
+            if (foto_url) {
+                modal.find('#detail_foto').attr('src', foto_url);
+                modal.find('#detail_foto').show();
+            } else {
+                modal.find('#detail_foto').hide();
+            }
+        });
+
+        // Skrip untuk menangani perubahan status UMKM
+        // Catatan: Ini memerlukan jQuery dan rute `umkm/update-status` yang benar di backend.
+        // Pastikan Anda sudah mengimpor jQuery di bagian atas, seperti yang telah dilakukan.
+        // Skrip ini dapat dipertahankan dari kode asli karena fungsinya masih relevan.
         $('.umkm-status-toggle').on('change', function() {
             var umkm_id = $(this).data('id');
             var isChecked = $(this).is(':checked');
             var newStatus = isChecked ? 1 : 0;
             
-            // Lakukan permintaan AJAX
             $.ajax({
                 url: `{{ url('umkm/update-status') }}/${umkm_id}`,
                 method: 'PUT',
@@ -319,27 +351,23 @@
                 },
                 success: function(response) {
                     console.log('Status updated successfully:', response);
-                    // Anda bisa menambahkan notifikasi sukses di sini
                 },
                 error: function(xhr) {
                     console.error('Error updating status:', xhr.responseText);
-                    // Jika ada error, kembalikan status checkbox ke kondisi semula
                     $('#statusSwitch-' + umkm_id).prop('checked', !isChecked);
-                    // Anda bisa menambahkan notifikasi error di sini
                 }
             });
         });
 
-        // Skrip baru untuk tombol toggle all status
+        // Skrip untuk tombol toggle all status
+        // Mengubah logika agar hanya bekerja pada card yang terlihat
         $('#toggleAllStatus').on('click', function() {
             var allCheckboxes = $('.umkm-status-toggle');
             var allChecked = allCheckboxes.length > 0 && allCheckboxes.length === allCheckboxes.filter(':checked').length;
             var newStatus = !allChecked;
-
-            // Mengubah status semua checkbox
+            
             allCheckboxes.prop('checked', newStatus);
 
-            // Mengirim permintaan AJAX untuk setiap checkbox yang berubah
             allCheckboxes.each(function() {
                 var umkm_id = $(this).data('id');
                 var isChecked = $(this).is(':checked');
@@ -357,26 +385,18 @@
                     },
                     error: function(xhr) {
                         console.error('Error updating status for ID ' + umkm_id + ':', xhr.responseText);
-                        // Jika gagal, kembalikan status checkbox yang bersangkutan
                         $('#statusSwitch-' + umkm_id).prop('checked', !isChecked);
                     }
                 });
             });
-
-            // Mengubah ikon tombol
-            if (newStatus) {
-                $(this).html('<i class="fas fa-check-square"></i>'); // Ikon untuk 'batalkan semua'
-            } else {
-                $(this).html('<i class="fas fa-check-square"></i>'); // Ikon untuk 'pilih semua'
-            }
         });
 
-        // Skrip baru untuk fitur pencarian
-        function filterTable() {
+        // Skrip untuk fitur pencarian
+        function filterCards() {
             var searchText = $('#searchInput').val().toLowerCase();
-            $('#umkmTableBody tr').each(function() {
-                var umkmName = $(this).find('td:eq(3)').text().toLowerCase();
-                var pemilikName = $(this).find('td:eq(4)').text().toLowerCase(); // Ambil nama pemilik dari kolom ke-4
+            $('#umkmCardContainer .col-lg-4').each(function() {
+                var umkmName = $(this).find('.card-title').text().toLowerCase();
+                var pemilikName = $(this).find('.card-text').text().toLowerCase();
                 if (umkmName.includes(searchText) || pemilikName.includes(searchText)) {
                     $(this).show();
                 } else {
@@ -386,11 +406,7 @@
         }
 
         $('#searchInput').on('keyup', function() {
-            filterTable();
-        });
-
-        $('#searchButton').on('click', function() {
-            filterTable();
+            filterCards();
         });
     });
 </script>

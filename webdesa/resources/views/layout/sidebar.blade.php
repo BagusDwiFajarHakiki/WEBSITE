@@ -49,7 +49,7 @@
         <div id="collapseProfilDesa" class="collapse" aria-labelledby="headingProfilDesa" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Profil Desa Menu:</h6>
-                <a class="collapse-item" href="/profil"><i class="fas fa-history mr-2"></i>Data Desa</a>
+                <a class="collapse-item" href="/profil"><i class="fas fa-history mr-2"></i>Informasi Desa</a>
                 <a class="collapse-item" href="/perangkat"><i class="fas fa-user mr-2"></i>Perangkat Desa</a>
                 <a class="collapse-item" href="/struktur"><i class="fas fa-users mr-2"></i>Struktur Desa</a>
             </div>

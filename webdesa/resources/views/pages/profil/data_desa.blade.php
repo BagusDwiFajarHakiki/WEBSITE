@@ -12,7 +12,7 @@
         <form id="formProfil">
             @csrf
             <div class="form-group">
-                <label for="profil">Profil Desa</label>
+                <label for="profil">Sejarah Desa</label>
                 <textarea class="form-control" id="profil" rows="3" name="profil" disabled></textarea>
             </div>
             <div class="form-group">
