@@ -87,9 +87,11 @@ Route::prefix('usaha_bumdes')->group(function () {
 
 
 
-    // ========================
-    // route GALLERY
-    // ========================
+// ========================
+// route GALLERY
+// ========================
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
+Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit'); // Baru ditambahkan
+Route::put('/gallery/{id}', [GalleryController::class, 'update'])->name('gallery.update'); // Baru ditambahkan
 Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');

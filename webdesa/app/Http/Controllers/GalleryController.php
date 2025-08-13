@@ -47,4 +47,40 @@ class GalleryController extends Controller
         $gallery->delete();
         return redirect()->route('gallery.index')->with('success', 'Data gallery berhasil dihapus');           
     }
+
+    public function edit($id)
+{
+    $item = Gallery::findOrFail($id);
+    return view('pages.gallery.edit', compact('item'));
+}
+
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'isi' => 'required|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $gallery = Gallery::findOrFail($id);
+        $gallery->judul = $request->judul;
+        $gallery->isi = $request->isi;
+
+        // Jika ada gambar baru yang diupload
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($gallery->gambar) {
+                Storage::delete($gallery->gambar);
+            }
+            $gallery->gambar = $request->file('gambar')->store('gallery');
+        }
+
+        $gallery->save();
+
+        return redirect()->route('gallery.index')->with('success', 'Data berhasil diperbarui.');
+    }
+
+
 }
