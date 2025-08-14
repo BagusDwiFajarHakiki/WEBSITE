@@ -40,6 +40,14 @@ return new class extends Migration
         $table->text('h2')->nullable();
         $table->timestamps();
         });
+
+        Schema::create('kades', function (Blueprint $table) {
+            $table->id();
+            $table->string('gambar')->nullable();
+            $table->string('nama')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -51,5 +59,6 @@ return new class extends Migration
         Schema::dropIfExists('pengumuman');
         Schema::dropIfExists('banners');
         Schema::dropIfExists('text_banners');
+        Schema::dropIfExists('kades');
     }
 };

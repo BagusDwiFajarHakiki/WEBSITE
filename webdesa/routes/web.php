@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\BUMDesController;
+use App\Http\Controllers\KadesController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\SettingController;
 
@@ -123,3 +124,9 @@ Route::delete('/banner/{id}', [BannersController::class, 'hapusBanner'])->name('
 Route::put('/banner/update-status/{id}', [BannersController::class, 'updateBannerStatus'])->name('banner.update-status');
 
 Route::post('/simpan-text', [BannersController::class,'store']);
+
+// ========================
+// route KEPALA DESA
+// ========================
+Route::get('/kades', [KadesController::class, 'index'])->name('kades');
+Route::post('/data-kepala-desa', [KadesController::class, 'store'])->name('kepala-desa.store');
