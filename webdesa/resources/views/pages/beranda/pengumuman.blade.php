@@ -24,6 +24,15 @@
                             <p class="card-text">{{ Str::limit($item->isi, 100) }}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
+                            <div class="form-check form-switch me-3">
+                                <input class="form-check-input pengumuman-status-toggle" 
+                                        type="checkbox" 
+                                        role="switch" 
+                                        id="statusToggle{{ $item->id }}" 
+                                        data-id="{{ $item->id }}"
+                                        @if($item->status == 1) checked @endif>
+                                <label class="form-check-label" for="statusToggle{{ $item->id }}">Aktif</label>
+                            </div>
                             <small class="text-muted">{{ $item->created_at->format('d M Y') }}</small>
                             <div>
                                 <button class="btn btn-warning btn-sm" 
@@ -57,21 +66,12 @@
                                         <input type="text" class="form-control" name="judul" value="{{ $item->judul }}" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="isi" class="form-label">Isi Pengumuman</label>
-                                        <textarea class="form-control" name="isi" rows="3" required>{{ $item->isi }}</textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="gambar" class="form-label">Gambar (opsional)</label>
+                                        <label for="gambar" class="form-label">Gambar</label>
                                         <input type="file" class="form-control" name="gambar" accept="image/*">
                                         @if($item->gambar)
                                             <small class="text-muted">Gambar saat ini:</small><br>
                                             <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar" style="max-width: 100px; margin-top: 5px;">
                                         @endif
-                                    </div>
-                                    <div class="mb-3 form-check form-switch">
-                                        <input type="hidden" name="status" value="0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="statusToggle{{ $item->id }}" name="status" value="1" @if($item->status == 1) checked @endif>
-                                        <label class="form-check-label" for="statusToggle{{ $item->id }}">Aktifkan Pengumuman</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </form>
@@ -125,17 +125,8 @@
                             <input type="text" class="form-control" id="judul" name="judul" required>
                         </div>
                         <div class="mb-3">
-                            <label for="isi" class="form-label">Isi Pengumuman</label>
-                            <textarea class="form-control" id="isi" name="isi" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="gambar" class="form-label">Gambar (opsional)</label>
+                            <label for="gambar" class="form-label">Gambar</label>
                             <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
-                        </div>
-                        <div class="mb-3 form-check form-switch">
-                            <input type="hidden" name="status" value="0">
-                            <input class="form-check-input" type="checkbox" role="switch" id="statusToggleTambah" name="status" value="0">
-                            <label class="form-check-label" for="statusToggleTambah">Aktifkan Pengumuman</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
@@ -143,4 +134,38 @@
             </div>
         </div>
     </div>
+
+    <script>
+// Fungsionalitas baru untuk sakelar status pengumuman
+    document.querySelectorAll('.pengumuman-status-toggle').forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            const pengumumanId = this.getAttribute('data-id');
+            const newStatus = this.checked ? 1 : 0;
+            
+            // Mengirim permintaan AJAX untuk memperbarui status
+            fetch(`/pengumuman/update-status/${pengumumanId}`, {
+                method: 'PUT',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: newStatus })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                // Tampilkan notifikasi atau pesan sukses
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Tampilkan notifikasi atau pesan error
+                alert('Gagal memperbarui status pengumuman.');
+                // Jika gagal, kembalikan sakelar ke posisi semula
+                this.checked = !this.checked;
+            });
+        });
+    });
+</script>
+
 @endsection

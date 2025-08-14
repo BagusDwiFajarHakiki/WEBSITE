@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pengumuman extends Model
+class text_banners extends Model
 {
     use HasFactory;
-    protected $table = 'pengumuman';
-    protected $fillable = ['judul', 'gambar','status'];
+    protected $table = 'text_banners';
+    protected $fillable = ['h1', 'h2'];
 }

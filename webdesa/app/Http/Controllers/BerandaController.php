@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\beranda;
 use App\Models\Pengumuman;
+use App\Models\banners;
+use App\Models\text_banners;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-
 
 class BerandaController extends Controller
 {
@@ -76,13 +76,11 @@ public function pengumuman()
 {
     $request->validate([
         'judul' => 'required|string|max:255',
-        'isi'   => 'required|string',
         'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
     $pengumuman = new Pengumuman();
     $pengumuman->judul = $request->judul;
-    $pengumuman->isi   = $request->isi;
 
     // Simpan gambar ke storage/app/public/pengumuman
     if ($request->hasFile('gambar')) {
@@ -100,13 +98,11 @@ public function updatePengumuman(Request $request, $id)
 {
     $request->validate([
         'judul' => 'required|string|max:255',
-        'isi'   => 'required|string',
         'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
     $pengumuman = Pengumuman::findOrFail($id);
     $pengumuman->judul = $request->judul;
-    $pengumuman->isi   = $request->isi;
 
     // Update gambar jika ada file baru
     if ($request->hasFile('gambar')) {
@@ -138,5 +134,19 @@ public function hapusPengumuman($id)
 
     return redirect()->back()->with('success', 'Pengumuman berhasil dihapus');
 }
+
+// Update status pengumuman
+public function updateStatus(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required|boolean',
+        ]);
+
+        $pengumuman = pengumuman::findOrFail($id);
+        $pengumuman->status = $validated['status'];
+        $pengumuman->save();
+
+        return response()->json(['message' => 'Status banner berhasil diperbarui.']);
+    }
 
 }

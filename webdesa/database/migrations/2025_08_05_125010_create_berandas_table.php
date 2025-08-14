@@ -22,13 +22,24 @@ return new class extends Migration
         Schema::create('pengumuman', function (Blueprint $table) {
         $table->id();
         $table->string('judul');
-        $table->text('isi');
         $table->string('gambar')->nullable();
         $table->boolean('status')->default(0)->nullable();
         $table->timestamps();
         });
-
         
+        Schema::create('banners', function (Blueprint $table) {
+        $table->id();
+        $table->string('gambar')->nullable();
+        $table->boolean('status')->default(0)->nullable();
+        $table->timestamps();
+        });
+        
+        Schema::create('text_banners', function (Blueprint $table) {
+        $table->id();
+        $table->text('h1')->nullable();
+        $table->text('h2')->nullable();
+        $table->timestamps();
+        });
     }
 
     /**
@@ -38,5 +49,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('beranda');
         Schema::dropIfExists('pengumuman');
+        Schema::dropIfExists('banners');
+        Schema::dropIfExists('text_banners');
     }
 };

@@ -8,26 +8,26 @@
     </div>
 
     <div class="card shadow mb-4">
-    <div class="card-body">
-        <form id="formProfil">
-            @csrf
-            <div class="form-group">
-                <label for="profil">Sejarah Desa</label>
-                <textarea class="form-control" id="profil" rows="3" name="profil" disabled></textarea>
-            </div>
-            <div class="form-group">
-                <label for="visi">Visi Desa</label>
-                <textarea class="form-control" id="visi" rows="3" name="visi" disabled></textarea>
-            </div>
-            <div class="form-group">
-                <label for="misi">Misi Desa</label>
-                <textarea class="form-control" id="misi" rows="5" name="misi" disabled></textarea>
-            </div>
-            <button type="button" class="btn btn-primary" id="btnSimpan" style="display:none;">Simpan</button>
-            <button type="button" class="btn btn-warning" id="btnEdit">Edit</button>
-        </form>
+        <div class="card-body">
+            <form id="formProfil">
+                @csrf
+                <div class="form-group">
+                    <label for="profil">Sejarah Desa</label>
+                    <textarea class="form-control" id="profil" rows="3" name="profil" disabled></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="visi">Visi Desa</label>
+                    <textarea class="form-control" id="visi" rows="3" name="visi" disabled></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="misi">Misi Desa</label>
+                    <textarea class="form-control" id="misi" rows="5" name="misi" disabled></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" id="btnSimpan" style="display:none;">Simpan</button>
+                <button type="button" class="btn btn-warning" id="btnEdit">Edit</button>
+            </form>
+        </div>
     </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

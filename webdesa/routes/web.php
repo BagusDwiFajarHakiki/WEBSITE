@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\BannersController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UMKMController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\BUMDesController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\SettingController;
@@ -67,6 +67,7 @@ Route::get('/pengumuman', [BerandaController::class, 'Pengumuman'])->name('pengu
 Route::post('/pengumuman', [BerandaController::class, 'simpanPengumuman'])->name('simpan_pengumuman');
 Route::put('/pengumuman/{id}', [BerandaController::class, 'updatePengumuman'])->name('update_pengumuman');
 Route::delete('/pengumuman/{id}', [BerandaController::class, 'hapusPengumuman'])->name('hapus_pengumuman');
+Route::put('/pengumuman/update-status/{id}', [BerandaController::class, 'updateStatus'])->name('pengumuman.update-status');
 
     // ========================
     // route BUMDES-profil
@@ -106,3 +107,19 @@ Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.stor
 Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit'); // Baru ditambahkan
 Route::put('/gallery/{id}', [GalleryController::class, 'update'])->name('gallery.update'); // Baru ditambahkan
 Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
+
+
+// ========================
+// route BANNER
+// ========================
+//Menampilkan halaman banner
+Route::get('/banner', [BannersController::class, 'banners'])->name('banner');
+Route::get('/ambil-text', [BannersController::class,'show']);
+
+//Simpan banner baru
+Route::post('/banner', [BannersController::class, 'simpanBanner'])->name('simpan_banner');
+Route::put('/banner/{id}', [BannersController::class, 'updateBanner'])->name('update_banner');
+Route::delete('/banner/{id}', [BannersController::class, 'hapusBanner'])->name('hapus_banner');
+Route::put('/banner/update-status/{id}', [BannersController::class, 'updateBannerStatus'])->name('banner.update-status');
+
+Route::post('/simpan-text', [BannersController::class,'store']);
