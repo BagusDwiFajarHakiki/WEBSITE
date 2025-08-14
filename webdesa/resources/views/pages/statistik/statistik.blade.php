@@ -1,102 +1,49 @@
-<!-- resources/views/data-desa.blade.php -->
 @extends('layout.app')
 
 @section('content')
-    <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">DATA DESA</h1>
+        <h1 class="h3 mb-0 text-gray-800">DATA STATISTIK DESA</h1>
     </div>
+
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form id="formProfil">
+            <form action="{{ route('statistik-desa.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="profil">Sejarah Desa</label>
-                    <textarea class="form-control" id="profil" rows="3" name="profil" disabled></textarea>
+                    <label for="luas_wilayah">Luas Wilayah (Ha)</label>
+                    <input type="number" step="0.01" class="form-control" id="luas_wilayah" name="luas_wilayah" value="{{ old('luas_wilayah', $statistik->luas_wilayah ?? '') }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="visi">Visi Desa</label>
-                    <textarea class="form-control" id="visi" rows="3" name="visi" disabled></textarea>
+                    <label for="jumlah_dusun">Jumlah Dusun</label>
+                    <input type="number" class="form-control" id="jumlah_dusun" name="jumlah_dusun" value="{{ old('jumlah_dusun', $statistik->jumlah_dusun ?? '') }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="misi">Misi Desa</label>
-                    <textarea class="form-control" id="misi" rows="5" name="misi" disabled></textarea>
+                    <label for="jumlah_penduduk">Jumlah Penduduk</label>
+                    <input type="number" class="form-control" id="jumlah_penduduk" name="jumlah_penduduk" value="{{ old('jumlah_penduduk', $statistik->jumlah_penduduk ?? '') }}" required>
                 </div>
-                <button type="button" class="btn btn-primary" id="btnSimpan" style="display:none;">Simpan</button>
-                <button type="button" class="btn btn-warning" id="btnEdit">Edit</button>
+                <div class="form-group">
+                    <label for="jumlah_rt">Jumlah RT</label>
+                    <input type="number" class="form-control" id="jumlah_rt" name="jumlah_rt" value="{{ old('jumlah_rt', $statistik->jumlah_rt ?? '') }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah_rw">Jumlah RW</label>
+                    <input type="number" class="form-control" id="jumlah_rw" name="jumlah_rw" value="{{ old('jumlah_rw', $statistik->jumlah_rw ?? '') }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="mata_pencaharian_utama">Mata Pencaharian Utama</label>
+                    <input type="text" class="form-control" id="mata_pencaharian_utama" name="mata_pencaharian_utama" value="{{ old('mata_pencaharian_utama', $statistik->mata_pencaharian_utama ?? '') }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>
     </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('formProfil');
-    const btnEdit = document.getElementById('btnEdit');
-    const btnSimpan = document.getElementById('btnSimpan');
-    const inputs = form.querySelectorAll('textarea');
-
-    // Fungsi untuk memuat data dari database
-    function loadData() {
-        fetch('/ambil-profil-desa')
-            .then(response => response.json())
-            .then(data => {
-                if (data) {
-                    document.getElementById('profil').value = data.profil;
-                    document.getElementById('visi').value = data.visi;
-                    document.getElementById('misi').value = data.misi;
-                    
-                    // Form tetap disabled karena sudah ada data
-                    inputs.forEach(input => input.disabled = true);
-                    btnEdit.style.display = 'block';
-                    btnSimpan.style.display = 'none';
-                } else {
-                    // Form enabled untuk pengisian pertama kali
-                    inputs.forEach(input => input.disabled = false);
-                    btnEdit.style.display = 'none';
-                    btnSimpan.style.display = 'block';
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    // Fungsi untuk mengaktifkan form
-    btnEdit.addEventListener('click', function () {
-        inputs.forEach(input => input.disabled = false);
-        btnEdit.style.display = 'none';
-        btnSimpan.style.display = 'block';
-    });
-
-    // Fungsi untuk menyimpan data
-    btnSimpan.addEventListener('click', function () {
-        // Ambil data dari form
-        const formData = new FormData(form);
-
-        fetch('/simpan-profil-desa', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert('Data berhasil disimpan!');
-            // Setelah berhasil, nonaktifkan form dan muat ulang data
-            inputs.forEach(input => input.disabled = true);
-            btnSimpan.style.display = 'none';
-            btnEdit.style.display = 'block';
-            loadData(); // Muat data terbaru dari database
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Gagal menyimpan data.');
-        });
-    });
-
-    // Panggil fungsi loadData saat halaman pertama kali dimuat
-    loadData();
-});
-</script>
-
 @endsection
