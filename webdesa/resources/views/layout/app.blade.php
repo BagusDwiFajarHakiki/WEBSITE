@@ -1,3 +1,9 @@
+@php
+    use App\Models\Setting;
+    $setting = Setting::first();
+    $logo = $setting ? $setting->logo_path : null;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +37,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('layout.sidebar')
+        @include('layout.sidebar', ['logo' => $logo])
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->

@@ -27,6 +27,8 @@ return new class extends Migration
         $table->boolean('status')->default(0)->nullable();
         $table->timestamps();
         });
+
+        
     }
 
     /**
@@ -35,5 +37,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('beranda');
+        Schema::dropIfExists('pengumuman');
     }
 };

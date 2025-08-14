@@ -1,10 +1,15 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center">
+        <div class="sidebar-brand-icon" style="cursor:pointer;" data-toggle="modal" data-target="#uploadLogoModal">
+            @if (isset($logo) && $logo)
+                <img src="{{ asset('storage/logos/' . $logo) }}" alt="Logo Desa" style="max-width:40px;max-height:40px;">
+            @else
+                <i class="fas fa-laugh-wink"></i>
+            @endif
         </div>
+
         <div class="sidebar-brand-text mx-3">ADMIN DESA PASIRAMAN</div>
     </a>
 
@@ -19,6 +24,29 @@
         </a>
     </li>
 
+    <!-- Modal -->
+        <div class="modal fade" id="uploadLogoModal" tabindex="-1" role="dialog" aria-labelledby="uploadLogoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <form action="{{ route('upload.logo') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadLogoModalLabel">Upload Logo Desa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" name="logo" class="form-control" accept="image/*" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
 
     <!-- Divider -->
     <hr class="sidebar-divider">

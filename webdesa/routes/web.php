@@ -8,6 +8,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\BUMDesController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/home', function () {
     return view('home.index');
@@ -77,13 +78,13 @@ Route::post('/simpan-profil-bumdes', [BUMDesController::class, 'update'])->name(
 
 
     // ========================
-// route BUMDES-usaha
-// ========================
+    // route BUMDES-usaha
+    // ========================
 Route::prefix('usaha_bumdes')->group(function () {
-    Route::get('/', [BUMDesController::class, 'usahaIndex'])->name('usaha_bumdes.index');
-    Route::post('/', [BUMDesController::class, 'usahaStore'])->name('usaha_bumdes.store');
-    Route::put('/{id}', [BUMDesController::class, 'usahaUpdate'])->name('usaha_bumdes.update');
-    Route::delete('/{id}', [BUMDesController::class, 'usahaDestroy'])->name('usaha_bumdes.destroy');
+Route::get('/', [BUMDesController::class, 'usahaIndex'])->name('usaha_bumdes.index');
+Route::post('/', [BUMDesController::class, 'usahaStore'])->name('usaha_bumdes.store');
+Route::put('/{id}', [BUMDesController::class, 'usahaUpdate'])->name('usaha_bumdes.update');
+Route::delete('/{id}', [BUMDesController::class, 'usahaDestroy'])->name('usaha_bumdes.destroy');
 });
 
 
@@ -91,6 +92,11 @@ Route::prefix('usaha_bumdes')->group(function () {
 // route MAPS
 // ========================
 Route::get('/map', [MapController::class, 'index']);
+
+// ========================
+// route LOGO DESA
+// ========================
+Route::post('/upload-logo', [SettingController::class, 'uploadLogo'])->name('upload.logo');
 
 // ========================
 // route GALLERY
