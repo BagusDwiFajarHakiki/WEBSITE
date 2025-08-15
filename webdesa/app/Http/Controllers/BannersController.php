@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class BannersController extends Controller
 {
-    public function banners()
+  public function banners()
     {
         $banner = banners::latest()->get();
         return view('pages.beranda.banner', compact('banner'));

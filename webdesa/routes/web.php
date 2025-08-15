@@ -16,6 +16,8 @@ Route::get('/home', function () {
     return view('home.index');
 });
 
+Route::get('/home', [BerandaController::class, 'index'])->name('home');
+
 route::get('/', function () {
     return view('pages.dashboard');
 });

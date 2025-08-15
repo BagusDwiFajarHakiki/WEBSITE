@@ -4,13 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\beranda;
 use App\Models\Pengumuman;
+use Illuminate\Http\Request;
+use App\Models\kades;
 use App\Models\banners;
 use App\Models\text_banners;
-use Illuminate\Http\Request;
+use App\Models\profil;
+use App\Models\StatistikDesa;
 use Illuminate\Support\Facades\Storage;
 
 class BerandaController extends Controller
 {
+    public function index()
+    {
+        // Ambil data video profil untuk halaman utama
+        $video = beranda::latest()->first();
+
+        // Ambil pengumuman jika diperlukan untuk halaman utama
+        $pengumuman = Pengumuman::where('status', 1)->latest()->take(3)->get();
+
+        // Ambil data kepala desa
+        $kepalaDesa = kades::select('gambar', 'nama', 'jabatan')->first();
+
+        // Ambil data banner
+        $banners = banners::select('gambar')->where('status', 1)->get();
+
+        $sejarah = profil::select('profil')->first();
+
+        $statistik = StatistikDesa::select('luas_wilayah','jumlah_dusun','jumlah_penduduk','jumlah_rt','jumlah_rw','mata_pencaharian_utama')->first();
+
+        // Ambil data text banner
+        $textBanner = text_banners::select('h1','h2')->first();
+
+        // Teruskan data ke view home.blade.php
+        return view('home.index', compact('video','pengumuman','kepalaDesa'));
+    }
+
     public function video_profil()
     {
         // Ambil satu video terakhir (atau first) untuk ditampilkan
