@@ -87,8 +87,8 @@
     </li>
 
     <!-- Nav Item - Statistik Collapse Menu -->
-    <li class="nav-item {{ request()->is('statistik') ? 'active' : '' }}">
-        <a class="nav-link" href="/statistik">
+    <li class="nav-item {{ request()->is('data-statistik-desa') ? 'active' : '' }}">
+        <a class="nav-link" href="/data-statistik-desa">
             <i class="fas fa-fw fa-chart-bar"></i>
             <span>STATISTIK DESA</span>
         </a>

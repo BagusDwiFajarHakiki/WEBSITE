@@ -10,6 +10,7 @@ use App\Http\Controllers\BUMDesController;
 use App\Http\Controllers\KadesController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StatistikDesaController;
 
 Route::get('/home', function () {
     return view('home.index');
@@ -130,3 +131,9 @@ Route::post('/simpan-text', [BannersController::class,'store']);
 // ========================
 Route::get('/kades', [KadesController::class, 'index'])->name('kades');
 Route::post('/data-kepala-desa', [KadesController::class, 'store'])->name('kepala-desa.store');
+
+// ========================
+// route STATISTIK DESA
+// ========================
+Route::get('/data-statistik-desa', [StatistikDesaController::class, 'index'])->name('statistik-desa.index');
+Route::post('/data-statistik-desa', [StatistikDesaController::class, 'store'])->name('statistik-desa.store');
