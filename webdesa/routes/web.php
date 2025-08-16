@@ -12,13 +12,13 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatistikDesaController;
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return view('home.index');
 });
 
-Route::get('/home', [BerandaController::class, 'index'])->name('home');
+Route::get('/', [BerandaController::class, 'index'])->name('home');
 
-route::get('/', function () {
+route::get('/admin', function () {
     return view('layout.app');
 });
 
