@@ -159,7 +159,7 @@
 
     <main>
         
-        <section class="relative w-full h-[720px] overflow-hidden">
+        <section class="relative w-full h-[750px] md:h-[800px] overflow-hidden">
             @if(isset($video) && $video->file_path)
                 <video autoplay muted loop class="absolute top-0 left-0 w-full h-full object-cover">
                     <source src="{{ asset('storage/' . $video->file_path) }}" type="video/mp4">
