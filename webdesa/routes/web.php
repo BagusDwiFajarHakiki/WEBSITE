@@ -19,7 +19,7 @@ Route::get('/home', function () {
 Route::get('/home', [BerandaController::class, 'index'])->name('home');
 
 route::get('/', function () {
-    return view('pages.dashboard');
+    return view('layout.app');
 });
 
     // ========================

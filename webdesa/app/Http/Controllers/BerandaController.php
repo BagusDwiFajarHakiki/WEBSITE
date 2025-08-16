@@ -7,9 +7,12 @@ use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use App\Models\kades;
 use App\Models\banners;
+use App\Models\ListBumdes;
 use App\Models\text_banners;
 use App\Models\profil;
 use App\Models\StatistikDesa;
+use App\Models\umkm;
+use App\Models\gallery;
 use Illuminate\Support\Facades\Storage;
 
 class BerandaController extends Controller
@@ -31,6 +34,12 @@ class BerandaController extends Controller
         $sejarah = profil::select('profil')->first();
 
         $statistik = StatistikDesa::select('luas_wilayah','jumlah_dusun','jumlah_penduduk','jumlah_rt','jumlah_rw','mata_pencaharian_utama')->first();
+
+        $umkm = umkm::select('foto','nama_umkm','pemilik','kontak','alamat','deskripsi')->where('status', 1)->get();
+
+        $bumdes = ListBumdes::select('name', 'deskripsi', 'fotopath')->first();
+
+        $galeri = gallery::select('judul', 'isi', 'gambar')->first();
 
         // Ambil data text banner
         $textBanner = text_banners::select('h1','h2')->first();

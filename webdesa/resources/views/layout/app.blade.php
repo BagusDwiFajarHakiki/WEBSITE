@@ -15,7 +15,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    @if($logo)
+        <link rel="icon" type="image/png" href="{{ asset('storage/logos/' . $logo) }}">
+        <meta property="og:image" content="{{ asset('storage/logos/' . $logo) }}">
+    @endif
     <title>Pasiraman - Dashboard</title>
 
     <!-- Custom fonts for this template-->

@@ -27,7 +27,7 @@ class KadesController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3048', // Validasi gambar
         ]);
 
         // Cari data yang sudah ada atau buat yang baru
