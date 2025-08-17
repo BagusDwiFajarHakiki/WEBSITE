@@ -14,7 +14,7 @@ use App\Http\Controllers\StatistikDesaController;
 use App\Http\Controllers\PerangkatController;
 
     // ========================
-    // route UMKM
+    // route HOME
     // ========================
 Route::get('/', function () {
     return view('home.index');
@@ -24,6 +24,30 @@ Route::get('/', [BerandaController::class, 'index'])->name('home');
 
 route::get('/admin', function () {
     return view('layout.app');
+});
+
+route::get('/visimisi', function () {
+    return view('home.subhome.visimisi');
+});
+
+route::get('/struktur_home', function () {
+    return view('home.subhome.struktur');
+});
+
+route::get('/statistik_home', function () {
+    return view('home.subhome.statistik');
+});
+
+route::get('/bumdes_home', function () {
+    return view('home.subhome.bumdes_home');
+});
+
+route::get('/umkm_home', function () {
+    return view('home.subhome.umkm_home');
+});
+
+route::get('/berita_kegiatan', function () {
+    return view('home.subhome.berita_kegiatan');
 });
 
     // ========================
