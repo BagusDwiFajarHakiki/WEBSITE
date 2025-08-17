@@ -30,7 +30,6 @@ class UMKMController extends Controller
             'pemilik' => 'required|string|max:255',
             'kontak' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
         ]);
 
         $gambar = $request->file('foto');
@@ -42,7 +41,6 @@ class UMKMController extends Controller
             'pemilik'   => $request->pemilik,
             'kontak'    => $request->kontak,
             'alamat'    => $request->alamat,
-            'deskripsi' => $request->deskripsi,
         ]);
 
         return Redirect::route('umkm.index')->with('success', 'UMKM berhasil ditambahkan.');
@@ -62,7 +60,6 @@ class UMKMController extends Controller
             'pemilik' => 'required|string|max:255',
             'kontak' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
         ]);
 
         $umkm = umkm::findOrFail($id);
@@ -78,7 +75,6 @@ class UMKMController extends Controller
                 'pemilik' => $request->pemilik,
                 'kontak' => $request->kontak,
                 'alamat' => $request->alamat,
-                'deskripsi' => $request->deskripsi
             ]);
 
         }else {
@@ -87,7 +83,6 @@ class UMKMController extends Controller
             'pemilik' => $request->pemilik,
             'kontak' => $request->kontak,
             'alamat' => $request->alamat,
-            'deskripsi' => $request->deskripsi
             ]);
         }
 

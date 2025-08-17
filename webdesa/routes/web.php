@@ -11,7 +11,11 @@ use App\Http\Controllers\KadesController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatistikDesaController;
+use App\Http\Controllers\PerangkatController;
 
+    // ========================
+    // route UMKM
+    // ========================
 Route::get('/', function () {
     return view('home.index');
 });
@@ -29,28 +33,35 @@ route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UMKMController::class, 'updateStatus'])->name('umkm.update-status');
 
     // ========================
-    // route PROFIL DESA
+    // route SEJARAH DESA
     // ========================
-Route::resource('/profil', ProfilController::class);
-Route::post('/simpan-profil-desa', [ProfilController::class,'store']);
-Route::get('/ambil-profil-desa', [ProfilController::class,'show']);
+Route::get('/sejarah', [ProfilController::class,'sejarah'])->name('sejarah');
+Route::post('/simpan-sejarah-desa', [ProfilController::class,'store']);
+Route::get('/ambil-sejarah-desa', [ProfilController::class,'show']);
+
+    // ========================
+    // route VISI MISI DESA
+    // ========================
+Route::get('/visi_misi', [ProfilController::class,'visi_misi'])->name('visi_misi');
+Route::post('/simpan-visi-misi', [ProfilController::class,'storevm']);
+Route::get('/ambil-visi-misi', [ProfilController::class,'showvm']);
 
     // ========================
     // route PERANGKAT DESA
     // ========================
 Route::prefix('perangkat')->group(function () {
-    Route::get('/', [ProfilController::class, 'perangkat'])->name('perangkat.perangkat');
-    Route::post('/', [ProfilController::class, 'storePerangkat'])->name('perangkat.store');
-    Route::put('/{perangkat}', [ProfilController::class, 'update'])->name('perangkat.update');
-    Route::delete('/{perangkat}', [ProfilController::class, 'destroy'])->name('perangkat.destroy');
+    Route::get('/', [PerangkatController::class, 'perangkat'])->name('perangkat.perangkat');
+    Route::post('/', [PerangkatController::class, 'storePerangkat'])->name('perangkat.store');
+    Route::put('/{perangkat}', [PerangkatController::class, 'update'])->name('perangkat.update');
+    Route::delete('/{perangkat}', [PerangkatController::class, 'destroy'])->name('perangkat.destroy');
 });
 
     // ========================
     // route STRUKTUR DESA
     // ========================
 Route::prefix('struktur')->group(function () {
-    Route::get('/', [ProfilController::class, 'struktur'])->name('struktur.struktur');
-    Route::post('/', [ProfilController::class, 'storeStruktur'])->name('struktur.store');
+    Route::get('/', [PerangkatController::class, 'struktur'])->name('struktur.struktur');
+    Route::post('/', [PerangkatController::class, 'storeStruktur'])->name('struktur.store');
 });
 
     // ========================

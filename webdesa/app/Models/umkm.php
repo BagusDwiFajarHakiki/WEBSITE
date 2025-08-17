@@ -14,6 +14,5 @@ class umkm extends Model
         'pemilik',
         'kontak',
         'alamat',
-        'deskripsi',
     ];
 }

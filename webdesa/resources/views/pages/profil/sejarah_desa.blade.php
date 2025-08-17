@@ -4,7 +4,7 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">DATA DESA</h1>
+        <h1 class="h3 mb-0 text-gray-800">SEJARAH DESA</h1>
     </div>
 
     <div class="card shadow mb-4">
@@ -13,15 +13,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="profil">Sejarah Desa</label>
-                    <textarea class="form-control" id="profil" rows="3" name="profil" disabled></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="visi">Visi Desa</label>
-                    <textarea class="form-control" id="visi" rows="3" name="visi" disabled></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="misi">Misi Desa</label>
-                    <textarea class="form-control" id="misi" rows="5" name="misi" disabled></textarea>
+                    <textarea class="form-control" id="profil" rows="10" name="profil" disabled></textarea>
                 </div>
                 <button type="button" class="btn btn-primary" id="btnSimpan" style="display:none;">Simpan</button>
                 <button type="button" class="btn btn-warning" id="btnEdit">Edit</button>
@@ -38,13 +30,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fungsi untuk memuat data dari database
     function loadData() {
-        fetch('/ambil-profil-desa')
+        fetch('/ambil-sejarah-desa')
             .then(response => response.json())
             .then(data => {
                 if (data) {
                     document.getElementById('profil').value = data.profil;
-                    document.getElementById('visi').value = data.visi;
-                    document.getElementById('misi').value = data.misi;
                     
                     // Form tetap disabled karena sudah ada data
                     inputs.forEach(input => input.disabled = true);
@@ -72,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ambil data dari form
         const formData = new FormData(form);
 
-        fetch('/simpan-profil-desa', {
+        fetch('/simpan-sejarah-desa', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')

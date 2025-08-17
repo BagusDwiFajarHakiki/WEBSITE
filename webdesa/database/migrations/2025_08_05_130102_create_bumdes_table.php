@@ -23,6 +23,7 @@ return new class extends Migration
         $table->string('name');
         $table->text('deskripsi');
         $table->string('fotopath');
+        $table->boolean('status')->default(0)->nullable();
         $table->timestamps();
     });
 

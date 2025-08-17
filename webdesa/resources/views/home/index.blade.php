@@ -197,7 +197,7 @@
 
         <br>
 
-        <section class="max-w-6xl mx-auto p-12 md:p-12 space-y-6">
+        <section class="max-w-7xl mx-auto p-12 md:p-12 space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-16 items-start">
                 {{-- Bagian Teks Profil Desa dan Statistik --}}
                 <div class="md:col-span-2 text-gray-900 max-w-3xl relative">
@@ -229,7 +229,7 @@
                 </div>
 
                 {{-- Kotak Kepala Desa di sisi kanan --}}
-                <div class="md:col-span-1 flex flex-col items-center bg-white rounded-xl shadow-lg p-6 border border-gray-200 h-[100%] md:h-[95%]">
+                <div class="md:col-span-1 flex flex-col items-center bg-white rounded-xl shadow-lg p-6 border border-gray-200 h-[100%] md:h-[100%]">
                     @if($kepalaDesa && $kepalaDesa->gambar)
                         <div class="w-40 h-40 rounded-full overflow-hidden mb-4 border-2 border-white shadow-md">
                             <img src="{{ asset('storage/kepala-desa/' . $kepalaDesa->gambar) }}" alt="{{ $kepalaDesa->nama }}" class="w-full h-full object-cover">
@@ -258,75 +258,71 @@
             </div>
         </section>
 
-        <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 fade-in">
-            <h5 class="text-2xl font-bold text-center text-gray-800 select-none">Potensi Desa</h5>
-
-            <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md" id="xx">
-                <div class="flex justify-between items-center mb-4">
-                    <h6 class="text-lg font-semibold select-none">UMKM Desa Pasiraman</h6>
-                    <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-1 rounded-full transition" aria-label="Lihat Semua UMKM Desa Pasiraman">Lihat Semua</button>
-                </div>
-                <div class="flex overflow-x-auto carousel-scrollbar space-x-4 scrollbar-hide pb-2">
-                    @if($umkm->count())
-                        @foreach($umkm as $item)
-                            <div class="min-w-[180px] bg-white rounded-xl shadow-md shrink-0 cursor-pointer"
-                                onclick="openUmkmModal({{ json_encode($item) }})">
-                                <img src="{{ asset('storage/umkm/' . $item->foto) }}" alt="{{ $item->nama_umkm }}" class="rounded-t-xl w-full h-36 object-cover" onerror="this.style.display='none'" />
-                                <div class="p-3 text-center text-gray-900 font-semibold text-sm select-none">{{ $item->nama_umkm }}</div>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="min-w-full rounded-lg border border-gray-300 bg-white flex justify-center items-center text-gray-600 italic select-none h-48">
-                            Belum ada data UMKM yang tersedia.
+        <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md" id="xx">
+            <div class="flex justify-between items-center mb-4">
+                <h6 class="text-lg font-semibold select-none">UMKM Desa Pasiraman</h6>
+                <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-1 rounded-full transition" aria-label="Lihat Semua UMKM Desa Pasiraman">Lihat Semua</button>
+            </div>
+            <div class="flex overflow-x-auto carousel-scrollbar space-x-4 scrollbar-hide pb-2">
+                @if($umkm->count())
+                    @foreach($umkm as $item)
+                        <div class="min-w-[180px] bg-white rounded-xl shadow-md shrink-0 cursor-pointer"
+                            onclick="openUmkmModal({{ json_encode($item) }})">
+                            <img src="{{ asset('storage/umkm/' . $item->foto) }}" alt="{{ $item->nama_umkm }}" class="rounded-t-xl w-full h-36 object-cover" onerror="this.style.display='none'" />
+                            <div class="p-3 text-center text-gray-900 font-semibold text-sm select-none">{{ $item->nama_umkm }}</div>
                         </div>
-                    @endif
-                </div>
-            </section>
+                    @endforeach
+                @else
+                    <div class="min-w-full rounded-lg border border-gray-300 bg-white flex justify-center items-center text-gray-600 italic select-none h-48">
+                        Belum ada data UMKM yang tersedia.
+                    </div>
+                @endif
+            </div>
+        </section>
 
-            <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md fade-in">
-                <div class="flex justify-between items-center mb-4">
-                    <h6 class="text-lg font-semibold select-none">BUMdes Desa Pasiraman</h6>
-                    <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-1 rounded-full transition" aria-label="Lihat Semua BUMDes Desa Pasiraman">Lihat Semua</button>
-                </div>
-                <div class="flex overflow-x-auto carousel-scrollbar space-x-4 scrollbar-hide pb-2">
-                    @if($bumdes->count())
-                        @foreach($bumdes as $item)
-                            <div class="min-w-[180px] bg-white rounded-xl shadow-md shrink-0 cursor-pointer"
-                                onclick="openBumdesModal({{ json_encode($item) }})">
-                                <img src="{{ asset('storage/' . $item->fotopath) }}" alt="{{ $item->name }}" class="rounded-t-xl w-full h-36 object-cover" onerror="this.style.display='none'" />
-                                <div class="p-3 text-center text-gray-900 font-semibold text-sm select-none">{{ $item->name }}</div>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="min-w-full rounded-lg border border-gray-300 bg-white flex justify-center items-center text-gray-600 italic select-none h-48">
-                            Belum ada data BUMDes yang tersedia.
+        <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h6 class="text-lg font-semibold select-none">BUMdes Desa Pasiraman</h6>
+                <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-1 rounded-full transition" aria-label="Lihat Semua BUMDes Desa Pasiraman">Lihat Semua</button>
+            </div>
+            <div class="flex overflow-x-auto carousel-scrollbar space-x-4 scrollbar-hide pb-2">
+                @if($bumdes->count())
+                    @foreach($bumdes as $item)
+                        <div class="min-w-[180px] bg-white rounded-xl shadow-md shrink-0 cursor-pointer"
+                            onclick="openBumdesModal({{ json_encode($item) }})">
+                            <img src="{{ asset('storage/' . $item->fotopath) }}" alt="{{ $item->name }}" class="rounded-t-xl w-full h-36 object-cover" onerror="this.style.display='none'" />
+                            <div class="p-3 text-center text-gray-900 font-semibold text-sm select-none">{{ $item->name }}</div>
                         </div>
-                    @endif
-                </div>
-            </section>
+                    @endforeach
+                @else
+                    <div class="min-w-full rounded-lg border border-gray-300 bg-white flex justify-center items-center text-gray-600 italic select-none h-48">
+                        Belum ada data BUMDes yang tersedia.
+                    </div>
+                @endif
+            </div>
+        </section>
 
-            <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md fade-in">
-                <div class="flex justify-between items-center mb-2">
-                    <h5 class="text-lg font-semibold select-none">Galeri Kegiatan Desa</h5>
-                    <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-1 rounded-full transition" aria-label="Lihat Semua Galeri Kegiatan Desa">Lihat Semua</button>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    @if($galeri->count())
-                        @foreach($galeri as $item)
-                            <div class="relative group rounded-lg overflow-hidden cursor-pointer" onclick="openGaleriModal({{ json_encode($item) }})">
-                                <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105" />
-                                <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <p class="text-white text-center text-sm font-medium p-2">{{ $item->judul }}</p>
-                                </div>
+        <section class="max-w-6xl mx-auto p-6 md:p-12 space-y-6 bg-white rounded-xl shadow-md fade-in">
+            <div class="flex justify-between items-center mb-2">
+                <h5 class="text-lg font-semibold select-none">Galeri Kegiatan Desa</h5>
+                <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-1 rounded-full transition" aria-label="Lihat Semua Galeri Kegiatan Desa">Lihat Semua</button>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                @if($galeri->count())
+                    @foreach($galeri as $item)
+                        <div class="relative group rounded-lg overflow-hidden cursor-pointer" onclick="openGaleriModal({{ json_encode($item) }})">
+                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105" />
+                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <p class="text-white text-center text-sm font-medium p-2">{{ $item->judul }}</p>
                             </div>
-                        @endforeach
-                    @else
-                        <div class="col-span-full rounded-lg border border-gray-300 bg-white flex justify-center items-center text-gray-600 italic select-none h-48">
-                            Belum ada galeri yang tersedia.
                         </div>
-                    @endif
-                </div>
-            </section>
+                    @endforeach
+                @else
+                    <div class="col-span-full rounded-lg border border-gray-300 bg-white flex justify-center items-center text-gray-600 italic select-none h-48">
+                        Belum ada galeri yang tersedia.
+                    </div>
+                @endif
+            </div>
         </section>
         
         <section class="max-w-6xl mx-auto p-6 md:p-12 bg-black bg-opacity-70 text-white rounded-xl shadow-xl space-y-6 fade-in">
@@ -386,11 +382,6 @@
 
                         <p><strong>Alamat:</strong></p>
                         <p><a id="modal-umkm-alamat" href="#" target="_blank" class="text-blue-600 hover:underline">Lihat Lokasi</a></p>
-                    </div>
-                    
-                    <div class="mt-4 leading-relaxed text-sm text-gray-700">
-                        <p><strong>Deskripsi:</strong></p>
-                        <p class="mt-1 text-justify"><span id="modal-umkm-deskripsi"></span></p>
                     </div>
                 </div>
             </div>
@@ -508,7 +499,6 @@
         const modalUmkmPemilik = document.getElementById('modal-umkm-pemilik');
         const modalUmkmKontak = document.getElementById('modal-umkm-kontak');
         const modalUmkmAlamat = document.getElementById('modal-umkm-alamat');
-        const modalUmkmDeskripsi = document.getElementById('modal-umkm-deskripsi');
 
         function formatPhoneNumber(phone) {
             let formatted = phone.replace(/\D/g, '');
@@ -532,8 +522,6 @@
             modalUmkmAlamat.href = `https://www.google.com/maps/search/?api=1&query=$${encodedAddress}`;
             modalUmkmAlamat.textContent = 'Lihat Lokasi';
 
-            modalUmkmDeskripsi.innerHTML = data.deskripsi;
-            
             umkmModal.classList.add('open');
             document.body.style.overflow = 'hidden';
         }

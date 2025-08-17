@@ -7,7 +7,7 @@
         <div class="input-group mr-3" style="width: 300px;">
             <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama UMKM atau Pemilik..." aria-label="Cari Nama UMKM atau Pemilik" aria-describedby="searchButton">
         </div>
-        <button type="button" class="btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#tambahUmkmModal">
+        <button type="button" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#tambahUmkmModal">
             <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
         </button>
     </div>
@@ -55,10 +55,6 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="deskripsi">Deskripsi UMKM</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -115,10 +111,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="edit_deskripsi">Deskripsi UMKM</label>
-                        <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="3" required></textarea>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -171,7 +163,6 @@
                     <li class="list-group-item"><strong>Pemilik:</strong> <span id="detail_pemilik"></span></li>
                     <li class="list-group-item"><strong>Kontak:</strong> <a id="detail_kontak" href="#" target="_blank"></a></li>
                     <li class="list-group-item"><strong>Alamat:</strong> <a id="detail_alamat" href="#" target="_blank">Lihat Lokasi</a></li>
-                    <li class="list-group-item"><strong>Deskripsi:</strong> <p id="detail_deskripsi" class="mb-0"></p></li>
                 </ul>
             </div>
             <div class="modal-footer">
@@ -192,6 +183,7 @@
                                 <input type="checkbox" class="custom-control-input umkm-status-toggle" id="statusSwitch-{{ $data->id }}" data-id="{{ $data->id }}" {{ $data->status ? 'checked' : '' }}>
                                 <label class="custom-control-label" for="statusSwitch-{{ $data->id }}"></label>
                             </div>
+                            <small class="text-muted">{{ $data->updated_at->format('d M Y') }}</small>
                             <div class="dropdown no-arrow">
                                 <a class="dropdown-toggle text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -204,7 +196,6 @@
                                         data-pemilik="{{ $data->pemilik }}"
                                         data-kontak="{{ $data->kontak }}"
                                         data-alamat="{{ $data->alamat }}"
-                                        data-deskripsi="{{ $data->deskripsi }}"
                                         data-foto="{{ $data->foto ? asset('storage/umkm/' . $data->foto) : '' }}">
                                         <i class="fas fa-fw fa-pen text-warning"></i> Edit
                                     </button>
@@ -221,7 +212,6 @@
                             data-pemilik="{{ $data->pemilik }}"
                             data-kontak="{{ $data->kontak }}"
                             data-alamat="{{ $data->alamat }}"
-                            data-deskripsi="{{ $data->deskripsi }}"
                             data-foto="{{ $data->foto ? asset('storage/umkm/' . $data->foto) : '' }}"
                             style="cursor: pointer;">
                             @if($data->foto)
@@ -266,7 +256,6 @@
             var pemilik = button.data('pemilik');
             var kontak = button.data('kontak');
             var alamat = button.data('alamat');
-            var deskripsi = button.data('deskripsi');
             var foto_url = button.data('foto');
 
             var modal = $(this);
@@ -305,13 +294,11 @@
             var pemilik = button.data('pemilik');
             var kontak = button.data('kontak');
             var alamat = button.data('alamat');
-            var deskripsi = button.data('deskripsi');
             var foto_url = button.data('foto');
 
             var modal = $(this);
             modal.find('#detail_nama_umkm').text(nama_umkm);
             modal.find('#detail_pemilik').text(pemilik);
-            modal.find('#detail_deskripsi').text(deskripsi);
 
             // Kontak WhatsApp
             var kontak_wa = kontak;

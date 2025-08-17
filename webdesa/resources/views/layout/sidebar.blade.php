@@ -17,8 +17,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
-        <a class="nav-link" href="/">
+    <li class="nav-item {{ request()->is('/admin') ? 'active' : '' }}">
+        <a class="nav-link" href="/admin">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>DASHBOARD</span>
         </a>
@@ -70,7 +70,7 @@
     </li>
 
     <!-- Nav Item - Profil Desa Collapse Menu -->
-    <li class="nav-item {{ request()->is('profil_desa') || request()->is('sejarah_desa') || request()->is('visi_misi') || request()->is('perangkat_desa') || request()->is('peta_desa') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('sejarah_desa') || request()->is('visi_misi') ? 'active' : '' }}">
         <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseProfilDesa"
             aria-expanded="true" aria-controls="collapseProfilDesa">
             <i class="fas fa-fw fa-id-card"></i>
@@ -79,9 +79,24 @@
         <div id="collapseProfilDesa" class="collapse" aria-labelledby="headingProfilDesa" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Profil Desa Menu:</h6>
-                <a class="collapse-item" href="/profil"><i class="fas fa-history mr-2"></i>Informasi Desa</a>
-                <a class="collapse-item" href="/perangkat"><i class="fas fa-user mr-2"></i>Perangkat Desa</a>
+                <a class="collapse-item" href="/sejarah"><i class="fas fa-history mr-2"></i>Sejarah Desa</a>
+                <a class="collapse-item" href="/visi_misi"><i class="fas fa-user mr-2"></i>Visi Misi</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Perangkat Desa Collapse Menu -->
+    <li class="nav-item {{ request()->is('perangkat_desa') || request()->is('struktur_desa') ? 'active' : '' }}">
+        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePerangkatDesa"
+            aria-expanded="true" aria-controls="collapsePerangkatDesa">
+            <i class="fas fa-fw fa-id-card"></i>
+            <span>PERANGKAT DESA</span>
+        </a>
+        <div id="collapsePerangkatDesa" class="collapse" aria-labelledby="headingPerangkatDesa" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Perangkat Desa Menu:</h6>
                 <a class="collapse-item" href="/struktur"><i class="fas fa-users mr-2"></i>Struktur Desa</a>
+                <a class="collapse-item" href="/perangkat"><i class="fas fa-user mr-2"></i>Aparatur Desa</a>
             </div>
         </div>
     </li>

@@ -5,7 +5,7 @@
         <h1 class="h3 mb-0 text-gray-800">Video Profil</h1>
 
         <!-- Tombol Ganti Video -->
-        <button type="button" class="btn btn-sm btn-success shadow-sm" data-toggle="modal" data-target="#gantiVideoModal">
+        <button type="button" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#gantiVideoModal">
             <i class="fas fa-plus fa-sm text-white-50"></i> Ganti Video
         </button>
 
