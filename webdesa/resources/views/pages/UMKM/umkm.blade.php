@@ -264,7 +264,6 @@
             modal.find('#edit_pemilik').val(pemilik);
             modal.find('#edit_kontak').val(kontak);
             modal.find('#edit_alamat').val(alamat);
-            modal.find('#edit_deskripsi').val(deskripsi);
             
             var updateUrl = `{{ url('umkm') }}/${umkm_id}`;
             modal.find('#editFormUmkm').attr('action', updateUrl);

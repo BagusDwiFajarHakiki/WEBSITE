@@ -198,7 +198,7 @@
         <br>
 
         <section class="max-w-7xl mx-auto p-12 md:p-12 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-16 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-16 items-start">
                 {{-- Bagian Teks Profil Desa dan Statistik --}}
                 <div class="md:col-span-2 text-gray-900 max-w-3xl relative">
                     <h4 class="font-bold text-blue-500 select-none md:text-left">Tentang Kami</h4>
@@ -212,7 +212,7 @@
                         @endif
                     </p>
 
-                    <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="grid grid-cols-2 gap-4">
                         @if($statistik)
                         {{-- Kotak Luas Wilayah --}}
                         <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 flex flex-col items-center justify-center text-center h-full">
@@ -229,7 +229,7 @@
                 </div>
 
                 {{-- Kotak Kepala Desa di sisi kanan --}}
-                <div class="md:col-span-1 flex flex-col items-center bg-white rounded-xl shadow-lg p-6 border border-gray-200 h-[100%] md:h-[100%]">
+                <div class="md:col-span-1 flex flex-col items-center bg-white rounded-xl shadow-lg p-6 border border-gray-200 h-[100%]">
                     @if($kepalaDesa && $kepalaDesa->gambar)
                         <div class="w-40 h-40 rounded-full overflow-hidden mb-4 border-2 border-white shadow-md">
                             <img src="{{ asset('storage/kepala-desa/' . $kepalaDesa->gambar) }}" alt="{{ $kepalaDesa->nama }}" class="w-full h-full object-cover">
@@ -419,79 +419,6 @@
     </div>
 
     <script>
-        // Existing dropdown accessibility toggle for desktop
-        const profilButton = document.getElementById('profilDropdownButton');
-        const profilMenu = document.getElementById('profilDropdownMenu');
-
-        if (profilButton && profilMenu) {
-            profilButton.addEventListener('click', () => {
-                const expanded = profilButton.getAttribute('aria-expanded') === 'true';
-                profilButton.setAttribute('aria-expanded', String(!expanded));
-                if (!expanded) {
-                    profilMenu.classList.remove('opacity-0', 'invisible');
-                    profilMenu.classList.add('opacity-100', 'visible');
-                } else {
-                    profilMenu.classList.remove('opacity-100', 'visible');
-                    profilMenu.classList.add('opacity-0', 'invisible');
-                } 
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!profilButton.contains(e.target) && !profilMenu.contains(e.target)) {
-                    profilButton.setAttribute('aria-expanded', 'false');
-                    profilMenu.classList.remove('opacity-100', 'visible');
-                    profilMenu.classList.add('opacity-0', 'invisible');
-                }
-            });
-        }
-
-        // New JavaScript for mobile hamburger menu
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
-        
-        // Mobile Profil Dropdown
-        const mobileProfilDropdownButton = document.getElementById('mobile-profil-dropdown-button');
-        const mobileProfilDropdownMenu = document.getElementById('mobile-profil-dropdown-menu');
-        const mobileProfilChevron = document.getElementById('mobile-profil-chevron');
-
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('open');
-            mobileMenuOverlay.classList.toggle('open');
-        }
-
-        mobileMenuButton.addEventListener('click', toggleMobileMenu);
-        mobileMenuCloseButton.addEventListener('click', toggleMobileMenu);
-        mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
-
-        mobileProfilDropdownButton.addEventListener('click', () => {
-            mobileProfilDropdownMenu.classList.toggle('hidden');
-            mobileProfilChevron.classList.toggle('rotate-180');
-        });
-
-        // JavaScript for scroll-triggered animation
-        const fadeInElements = document.querySelectorAll('.fade-in');
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.2
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        fadeInElements.forEach(element => {
-            observer.observe(element);
-        });
-
         // UMKM Modal Functionality
         const umkmModal = document.getElementById('umkm-modal');
         const modalUmkmFoto = document.getElementById('modal-umkm-foto');
