@@ -12,6 +12,7 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatistikDesaController;
 use App\Http\Controllers\PerangkatController;
+use App\Http\Controllers\AuthController;
 
     // ========================
     // route HOME
@@ -21,10 +22,6 @@ Route::get('/', function () {
 });
 
 Route::get('/', [BerandaController::class, 'index'])->name('home');
-
-route::get('/admin', function () {
-    return view('layout.app');
-});
 
 route::get('/visimisi', function () {
     return view('home.subhome.visimisi');
@@ -49,6 +46,19 @@ route::get('/bumdes_home', function () {
 route::get('/berita_kegiatan', function () {
     return view('home.subhome.berita_kegiatan');
 });
+
+// Rute untuk menampilkan formulir login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
+// Rute untuk memproses data login (POST request)
+Route::post('/login', [AuthController::class, 'login']);
+
+// Rute untuk logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+route::get('/admin', function () {
+    return view('layout.app');
+})->middleware('auth')->name('dashboard');
 
     // ========================
     // route UMKM

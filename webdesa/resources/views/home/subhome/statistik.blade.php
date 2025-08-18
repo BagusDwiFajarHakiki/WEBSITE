@@ -19,6 +19,7 @@
     <title>Desa Pasiraman - Statistik Desa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -157,7 +158,7 @@
     </style>
 </head>
 
-<body class="bg-gradient-to-b from-blue-50 to-indigo-50 text-gray-800 min-h-screen">
+<body class="bg-gray-50 text-gray-800">
 
     @include('home.header', ['logo' => $logo])
 

@@ -24,7 +24,15 @@
     @endif
     <title>Desa Pasiraman - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f9ff;
+        }
+        
         /* Custom scrollbar untuk carousel */
         .carousel-scrollbar::-webkit-scrollbar {
             height: 6px;
@@ -153,7 +161,7 @@
     </style>
 </head>
 
-<body class="bg-[#E7F0E7] text-gray-900 font-sans">
+<body class="bg-gray-50 text-gray-800">
 
     @include('home.header', ['logo' => $logo])
 
@@ -172,7 +180,7 @@
             @endif
             <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-end justify-center items-center">
                 @if($banners->count())
-                    <div class="flex gap-10 justify-center items-center">
+                    <div class="flex gap-6 justify-center items-center flex-col md:flex-row">
                         @foreach($banners as $banner)
                             @if($banner->gambar)
                                 <img src="{{ asset('storage/' . $banner->gambar) }}" alt="Banner Desa" class="max-h-40 md:max-h-64 w-auto rounded-lg object-contain" />

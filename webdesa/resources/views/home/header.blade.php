@@ -13,11 +13,10 @@
         
         <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-0">
             <span class="flex items-center space-x-2">
-                <i class="fas fa-envelope"></i>
+                <i class="fas fa-clock"></i>
                 <span>Senin - Sabtu : </span>
             </span>
             <span class="flex items-center space-x-2">
-                <i class="fas fa-phone-alt"></i>
                 <span>08.00 - 16.00 WIB</span>
             </span>
         </div>
@@ -91,8 +90,8 @@
                 @endif
             </div>
                 <div>
-                    <h1 class="font-semibold text-lg text-gray-900 select-none">Desa Pasiraman</h1>
-                    <p class="text-sm select-none">Kecamatan Wonotirto</p>
+                    <h1 class="font-semibold text-gray-900 select-none">Desa Pasiraman</h1>
+                    <p class="text-xs select-none">Kecamatan Wonotirto</p>
                 </div>
             </div>
             <button id="mobile-menu-close-button" class="text-gray-500 hover:text-gray-700 transition focus:outline-none">
