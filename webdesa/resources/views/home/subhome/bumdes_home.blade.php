@@ -6,7 +6,7 @@
     $setting = Setting::first();
     $logo = $setting ? $setting->logo_path : null;
     $usaha = bumdes::first();
-    $list = ListBumdes::first();
+    $list = ListBumdes::all();
 
 @endphp
 
@@ -119,34 +119,36 @@
             @endif
         </div>
 
-        <!-- Perbaikan 4: Gunakan grid Tailwind untuk layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @if($list)
-                <div class="news-card bg-white rounded-lg shadow-md overflow-hidden">
-                    @if($list->fotopath)
-                        <div class="news-image overflow-hidden">
-                            <img src="{{ asset('storage/' . $list->fotopath) }}" 
-                                class="w-full h-48 object-cover" 
-                                alt="Foto Usaha">
-                        </div>
-                    @else
-                        <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
-                            <span class="text-gray-500">Tidak ada foto</span>
-                        </div>
-                    @endif
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold mb-2">{{ $list->name ?? 'Nama Usaha' }}</h2>
-                        <p class="text-gray-700">
-                            {{ $list->deskripsi ? Str::limit($list->deskripsi, 100) : 'Deskripsi belum tersedia' }}
-                        </p>
+<!-- card data -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @if($list && count($list) > 0)
+        @foreach($list as $item)
+            <div class="news-card bg-white rounded-lg shadow-md overflow-hidden">
+                @if($item->fotopath)
+                <div class="news-image overflow-hidden">
+                    <img src="{{ asset('storage/' . $item->fotopath) }}" 
+                        class="w-full h-48 object-cover" 
+                        alt="Foto Usaha">
+                </div>
+                @else
+                    <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
+                        <span class="text-gray-500">Tidak ada foto</span>
                     </div>
+                @endif
+                <div class="p-4">
+                    <h2 class="text-xl font-bold mb-2">{{ $item->name ?? 'Nama Usaha' }}</h2>
+                    <p class="text-gray-700">
+                        {{ $item->deskripsi ? Str::limit($item->deskripsi, 100) : 'Deskripsi belum tersedia' }}
+                    </p>
                 </div>
-            @else
-                <div class="col-span-full text-center py-8">
-                    <p class="text-gray-500">Data usaha belum tersedia</p>
-                </div>
-            @endif
+            </div>
+        @endforeach
+    @else
+        <div class="col-span-full text-center py-8">
+            <p class="text-gray-500">Data usaha belum tersedia</p>
         </div>
+    @endif
+</div>
     </main>
 
     @include('home.footer')
