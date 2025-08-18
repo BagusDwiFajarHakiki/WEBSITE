@@ -1,7 +1,10 @@
 @php
     use App\Models\Setting;
+    use App\Models\Bumdes; // Perbaikan 1: Gunakan model Bumdes yang benar
+    
     $setting = Setting::first();
     $logo = $setting ? $setting->logo_path : null;
+    $usaha = Bumdes::first(); // Perbaikan 2: Ambil data pertama dari model Bumdes
 @endphp
 
 <!DOCTYPE html>
@@ -21,10 +24,9 @@
             height: 6px;
         }
         .carousel-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #22c55e; /* Tailwind Green-500 */
+            background-color: #22c55e;
             border-radius: 10px;
         }
-        /* Smooth horizontal scroll */
         .carousel-scrollbar {
             scroll-behavior: smooth;
         }
@@ -76,11 +78,45 @@
 
     @include('home.header', ['logo' => $logo])
 
-    <main>
+    <main class="container mx-auto p-4 md:p-8">
+        <!-- Perbaikan 3: Hapus form yang tidak perlu -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h1 class="text-2xl font-bold mb-4">BUMDES desa Pasiraman</h1>
+            @if($usaha && $usaha->deskripsi)
+                <p class="text-gray-700">{{ $usaha->deskripsi }}</p>
+            @else
+                <p class="text-gray-500">Deskripsi belum tersedia</p>
+            @endif
+        </div>
 
+        <!-- Perbaikan 4: Gunakan grid Tailwind untuk layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @if($usaha)
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    @if($usaha->fotopath)
+                        <img src="{{ asset('storage/' . $usaha->fotopath) }}" 
+                             class="w-full h-48 object-cover" 
+                             alt="Foto Usaha">
+                    @else
+                        <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
+                            <span class="text-gray-500">Tidak ada foto</span>
+                        </div>
+                    @endif
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold mb-2">{{ $usaha->name ?? 'Nama Usaha' }}</h2>
+                        <p class="text-gray-700">
+                            {{ $usaha->deskripsi ? Str::limit($usaha->deskripsi, 100) : 'Deskripsi belum tersedia' }}
+                        </p>
+                    </div>
+                </div>
+            @else
+                <div class="col-span-full text-center py-8">
+                    <p class="text-gray-500">Data usaha belum tersedia</p>
+                </div>
+            @endif
+        </div>
     </main>
 
     @include('home.footer')
-
 </body>
 </html>

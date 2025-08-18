@@ -1,7 +1,10 @@
 @php
     use App\Models\Setting;
+    use App\Models\Profil;
+    
     $setting = Setting::first();
     $logo = $setting ? $setting->logo_path : null;
+    $profil = Profil::first(); // Get profile data directly in view
 @endphp
 
 <!DOCTYPE html>
@@ -21,10 +24,9 @@
             height: 6px;
         }
         .carousel-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #22c55e; /* Tailwind Green-500 */
+            background-color: #22c55e;
             border-radius: 10px;
         }
-        /* Smooth horizontal scroll */
         .carousel-scrollbar {
             scroll-behavior: smooth;
         }
@@ -73,14 +75,30 @@
 </head>
 
 <body class="bg-[#E7F0E7] text-gray-900 font-sans">
-
     @include('home.header', ['logo' => $logo])
 
-    <main>
-
+    <main class="container mx-auto p-4 md:p-8">
+        <section>
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Visi & Misi Desa</h1>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold text-gray-700">Visi Desa</h2>
+                    <div class="bg-gray-100 rounded-lg p-4 mt-2 border border-gray-200">
+                        <p class="text-gray-800">{{ $profil->visi ?? 'Belum ada data visi' }}</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-700">Misi Desa</h2>
+                    <div class="bg-gray-100 rounded-lg p-4 mt-2 border border-gray-200">
+                        <p class="text-gray-800" style="white-space: pre-line">{{ $profil->misi ?? 'Belum ada data misi' }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     @include('home.footer')
-
 </body>
 </html>

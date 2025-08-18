@@ -17,6 +17,12 @@ class UMKMController extends Controller
         return view('pages.UMKM.umkm', compact('umkm'));
     }
 
+    public function umkm_home() : View
+    {
+        $umkm = umkm::latest()->paginate(6);
+        return view('home.subhome.umkm_home', compact('umkm'));
+    }
+
     public function create() : View
     {
         return view('pages.UMKM.umkm');

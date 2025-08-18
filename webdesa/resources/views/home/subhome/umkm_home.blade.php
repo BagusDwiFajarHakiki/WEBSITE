@@ -76,10 +76,30 @@
 
     @include('home.header', ['logo' => $logo])
 
-    <main>
-
+    <main class="container mx-auto p-4 md:p-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @forelse($umkm as $data)
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    @if($data->foto)
+                        <img src="{{ asset('storage/umkm/' . $data->foto) }}" alt="Foto UMKM {{ $data->nama_umkm }}" class="w-full h-48 object-cover object-center">
+                    @else
+                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                            <span class="text-gray-500 text-sm">Tidak ada foto</span>
+                        </div>
+                    @endif
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-1 truncate">{{ $data->nama_umkm }}</h3>
+                        <p class="text-sm text-gray-600">Pemilik: {{ $data->pemilik }}</p>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-full">
+                    <p class="text-center text-gray-500 text-xl">Tidak ada data UMKM yang ditemukan.</p>
+                </div>
+            @endforelse
+        </div>
     </main>
-
+    
     @include('home.footer')
 
 </body>
