@@ -42,9 +42,9 @@ route::get('/bumdes_home', function () {
     return view('home.subhome.bumdes_home');
 });
 
-route::get('/umkm_home', function () {
-    return view('home.subhome.umkm_home');
-});
+// route::get('/umkm_home', function () {
+//     return view('home.subhome.umkm_home');
+// });
 
 route::get('/berita_kegiatan', function () {
     return view('home.subhome.berita_kegiatan');
@@ -55,6 +55,7 @@ route::get('/berita_kegiatan', function () {
     // ========================
 route::resource('/umkm', UMKMController::class);
 Route::put('/umkm/update-status/{umkm}', [UMKMController::class, 'updateStatus'])->name('umkm.update-status');
+Route::get('/umkm_home', [UMKMController::class,'umkm_home']);
 
     // ========================
     // route SEJARAH DESA

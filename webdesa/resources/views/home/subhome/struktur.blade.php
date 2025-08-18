@@ -1,7 +1,10 @@
 @php
-    use App\Models\Setting;
+    use App\Models\Setting; // Import model setting
+    use App\Models\Struktur; // Import model struktur
+    
     $setting = Setting::first();
     $logo = $setting ? $setting->logo_path : null;
+    $struktur = Struktur::first(); // Ambil data struktur
 @endphp
 
 <!DOCTYPE html>
@@ -73,14 +76,21 @@
 </head>
 
 <body class="bg-[#E7F0E7] text-gray-900 font-sans">
-
     @include('home.header', ['logo' => $logo])
 
-    <main>
-
+    <main class="container mx-auto p-4 md:p-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Struktur Organisasi Desa</h1>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            @if ($struktur && $struktur->gambar)
+                <img src="{{ asset('storage/' . $struktur->gambar) }}" alt="Struktur Organisasi Desa" class="w-full h-auto object-cover">
+            @else
+                <div class="flex items-center justify-center p-8 text-gray-500 text-lg">
+                    <p class="text-center">Gambar struktur desa belum diunggah.</p>
+                </div>
+            @endif
+        </div>
     </main>
 
     @include('home.footer')
-
 </body>
 </html>
