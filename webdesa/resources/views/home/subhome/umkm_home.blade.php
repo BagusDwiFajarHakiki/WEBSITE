@@ -1,5 +1,6 @@
 @php
     use App\Models\Setting;
+    
     $setting = Setting::first();
     $logo = $setting ? $setting->logo_path : null;
 @endphp
