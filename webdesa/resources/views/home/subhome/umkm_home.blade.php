@@ -1,6 +1,6 @@
 @php
     use App\Models\Setting;
-    
+
     $setting = Setting::first();
     $logo = $setting ? $setting->logo_path : null;
 @endphp
@@ -16,7 +16,34 @@
     @endif
     <title>Desa Pasiraman - UMKM</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+
+        .news-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-image {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .news-card:hover .news-image {
+            transform: scale(1.05);
+        }
+
+
         /* Custom scrollbar untuk carousel */
         .carousel-scrollbar::-webkit-scrollbar {
             height: 6px;
@@ -78,11 +105,19 @@
     @include('home.header', ['logo' => $logo])
 
     <main class="container mx-auto p-4 md:p-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+            <h1 class="text-2xl font-bold mb-4">UMKM desa Pasiraman</h1>
+            <p class="text-gray-700">lorem ipsum dolor sit amet</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($umkm as $data)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="news-card bg-white rounded-lg shadow-md overflow-hidden">
                     @if($data->foto)
+                        <div class="news-image overflow-hidden">
                         <img src="{{ asset('storage/umkm/' . $data->foto) }}" alt="Foto UMKM {{ $data->nama_umkm }}" class="w-full h-48 object-cover object-center">
+                        </div>
                     @else
                         <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
                             <span class="text-gray-500 text-sm">Tidak ada foto</span>
