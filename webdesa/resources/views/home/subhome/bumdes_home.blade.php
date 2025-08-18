@@ -1,10 +1,13 @@
 @php
     use App\Models\Setting;
-    use App\Models\Bumdes; // Perbaikan 1: Gunakan model Bumdes yang benar
-    
+    use App\Models\ListBumdes;
+    use App\Models\bumdes;
+
     $setting = Setting::first();
     $logo = $setting ? $setting->logo_path : null;
-    $usaha = Bumdes::first(); // Perbaikan 2: Ambil data pertama dari model Bumdes
+    $usaha = bumdes::first();
+    $list = ListBumdes::all();
+
 @endphp
 
 <!DOCTYPE html>
@@ -18,14 +21,33 @@
     @endif
     <title>Desa Pasiraman - BUMDes</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8fafc;
+
+        .news-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
         }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-image {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .news-card:hover .news-image {
+            transform: scale(1.05);
+        }
+
 
         /* Custom scrollbar untuk carousel */
         .carousel-scrollbar::-webkit-scrollbar {
@@ -88,7 +110,7 @@
 
     <main class="container mx-auto p-4 md:p-8">
         <!-- Perbaikan 3: Hapus form yang tidak perlu -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="news-card bg-white rounded-lg shadow-md p-4 mb-6">
             <h1 class="text-2xl font-bold mb-4">BUMDES desa Pasiraman</h1>
             @if($usaha && $usaha->deskripsi)
                 <p class="text-gray-700">{{ $usaha->deskripsi }}</p>
@@ -97,32 +119,36 @@
             @endif
         </div>
 
-        <!-- Perbaikan 4: Gunakan grid Tailwind untuk layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @if($usaha)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    @if($usaha->fotopath)
-                        <img src="{{ asset('storage/' . $usaha->fotopath) }}" 
-                             class="w-full h-48 object-cover" 
-                             alt="Foto Usaha">
-                    @else
-                        <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
-                            <span class="text-gray-500">Tidak ada foto</span>
-                        </div>
-                    @endif
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold mb-2">{{ $usaha->name ?? 'Nama Usaha' }}</h2>
-                        <p class="text-gray-700">
-                            {{ $usaha->deskripsi ? Str::limit($usaha->deskripsi, 100) : 'Deskripsi belum tersedia' }}
-                        </p>
+<!-- card data -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @if($list && count($list) > 0)
+        @foreach($list as $item)
+            <div class="news-card bg-white rounded-lg shadow-md overflow-hidden">
+                @if($item->fotopath)
+                <div class="news-image overflow-hidden">
+                    <img src="{{ asset('storage/' . $item->fotopath) }}" 
+                        class="w-full h-48 object-cover" 
+                        alt="Foto Usaha">
+                </div>
+                @else
+                    <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
+                        <span class="text-gray-500">Tidak ada foto</span>
                     </div>
+                @endif
+                <div class="p-4">
+                    <h2 class="text-xl font-bold mb-2">{{ $item->name ?? 'Nama Usaha' }}</h2>
+                    <p class="text-gray-700">
+                        {{ $item->deskripsi ? Str::limit($item->deskripsi, 100) : 'Deskripsi belum tersedia' }}
+                    </p>
                 </div>
-            @else
-                <div class="col-span-full text-center py-8">
-                    <p class="text-gray-500">Data usaha belum tersedia</p>
-                </div>
-            @endif
+            </div>
+        @endforeach
+    @else
+        <div class="col-span-full text-center py-8">
+            <p class="text-gray-500">Data usaha belum tersedia</p>
         </div>
+    @endif
+</div>
     </main>
 
     @include('home.footer')
