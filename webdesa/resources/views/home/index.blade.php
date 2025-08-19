@@ -38,7 +38,7 @@
             height: 6px;
         }
         .carousel-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #22c55e; /* Tailwind Green-500 */
+            background-color: #004cff; /* Tailwind Green-500 */
             border-radius: 10px;
         }
         /* Smooth horizontal scroll */
@@ -161,7 +161,7 @@
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-blue-100 text-gray-800">
 
     @include('home.header', ['logo' => $logo])
 

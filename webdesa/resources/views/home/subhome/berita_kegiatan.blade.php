@@ -17,6 +17,8 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
         :root {
             --primary: #1e40af;
             --secondary: #3b82f6;
@@ -101,9 +103,50 @@
                 margin-bottom: 20px;
             }
         }
+
+        /* Styles untuk mobile menu */
+        @media (max-width: 767px) {
+            #mobile-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                bottom: 0;
+                width: 60%;
+                max-width: 320px;
+                height: 100%;
+                overflow-y: auto;
+                z-index: 40;
+                transition: right 0.3s ease-in-out;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+            }
+
+            #mobile-menu.open {
+                right: 0;
+            }
+
+            #mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 39;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            }
+
+            #mobile-menu-overlay.open {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 text-gray-800">
     @include('home.header', ['logo' => $logo])
 
     <main class="container mx-auto px-4 py-8">

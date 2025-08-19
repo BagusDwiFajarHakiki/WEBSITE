@@ -25,7 +25,7 @@
 
 <header class="bg-white bg-opacity-80 p-4 text-gray-800 sticky top-0 z-30 shadow-md backdrop-blur-sm">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="{{ url('/home') }}" class="flex items-center space-x-3 group" style="text-decoration: none;">
+        <a href="{{ url('/') }}" class="flex items-center space-x-3 group" style="text-decoration: none;">
             <div class="sidebar-brand-icon" style="cursor:pointer;" data-toggle="modal" data-target="#uploadLogoModal">
                 @if (isset($logo) && $logo)
                     <img src="{{ asset('storage/logos/' . $logo) }}" alt="Logo Desa" style="max-width:50px;max-height:50px;">
